@@ -1,58 +1,118 @@
-import React, {Component} from 'react';
-import {TouchableOpacity,Dimensions,View,Text,ScrollView} from 'react-native';
-const ScreenHeight=Dimensions.get('window').height;
-const ScreenWidth=Dimensions.get('window').width;
-import {AppText,LogoAndName,AppImage,AppBTN,AppTextInput} from '../Common/';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Dimensions, View, ScrollView } from 'react-native';
+const ScreenHeight = Dimensions.get('window').height;
+const ScreenWidth = Dimensions.get('window').width;
+import { AppText, LogoAndName, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import {fontPixel,heightPixel,widthPixel} from '../Common/Utils/PixelNormalization';
+import { heightPixel } from '../Common/Utils/PixelNormalization';
+import { LoginForm } from './Components/';
+import auth from '@react-native-firebase/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadUser, saveUser } from "../../redux/slices/userSlice";
+import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
 
-class Login extends React.Component{
+export default function Login(props) {
 
-  goHome(){
-    this.props.navigation.reset({
-                index: 0,
-                routes: [{name: 'Home'}],
-              });
+  const [initializing, setInitializing] = useState(true);
+  const [status, setStatus] = useState(0);
+
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const userSlice = useSelector(state => state.user);
+  const loginSlice = useSelector(state => state.login);
+  //User Reducers
+  const LoadUser = () => { dispatch(loadUser()); }
+  const SaveUser = (data) => { dispatch(saveUser(data)); }
+  //Login Reducers
+  const LoginAPI = (data) => { dispatch(loginAPI(data)); }
+  const GetUserFireStoreAPI = (data) => { dispatch(getUserFireStoreAPI(data)); }
+
+  const {
+    userState,
+    userIsLoading
+  } = userSlice;
+
+  const {
+    loginState,
+    loginIsSuccess,
+    loginGetDataSuccess,
+    loginIsLoading
+  } = loginSlice;
+
+  useEffect(() => {
+    if (userState) {
+      moveToNextScreen();
+      return;
+    }
+    if (loginGetDataSuccess) {
+      SaveUser(loginState);
+      return;
+    }
+    if (loginIsSuccess) {
+      GetUserFireStoreAPI(loginState.Email);
+      return;
+    }
+    if (status == 0) {
+      auth().onAuthStateChanged(onAuthStateChanged);
+      callLoadUserData();
+      return;
+    }
+  }, [status, loginIsSuccess, loginGetDataSuccess, userState]);
+
+  function onAuthStateChanged() {
+    if (initializing) setInitializing(false);
   }
 
-  onForgotPasswordClick(){
-    this.props.navigation.navigate('ForgetPass');
+  async function callLoadUserData() {
+    await LoadUser();
+    setStatus(1);
   }
 
-  onSignInClick(){
-    this.goHome();
+  function moveToNextScreen() {
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
   }
 
-  onSkipClick(){
-    this.goHome();
+  function onForgotPasswordClick() {
+    props.navigation.navigate('ForgetPass');
   }
 
-  onSignUpClick(){
-    this.props.navigation.navigate('Register');
+  function onSkipClick() {
+    moveToNextScreen();
   }
 
-  render() {
-    return (
-      <ScrollView>
-        <View style={{alignItems:'center',height:ScreenHeight*0.9675,width:ScreenWidth}}>
-            <LogoAndName/>
-            <AppText marginTop={27} text="Welcome back" size={24}/>
-            <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'}/>
-            <AppTextInput marginTop={40} keyboardType={'email-address'}/>
-            <AppTextInput marginTop={10} name={'lock'} secureTextEntry placeholder={'Password'}/>
-            <TouchableOpacity onPress={()=>this.onForgotPasswordClick()} style={{marginTop:heightPixel(10)}}><AppText text={"Forget Password?"} color={GLOBAL.Color.darkGrey}
-            size={14} fontFamily={'Montserrat-SemiBold'}/>
-            </TouchableOpacity>
-            <AppBTN onPress={()=>this.onSignInClick()} text={'Login'} marginTop={45}/>
-            <AppBTN onPress={()=>this.onSkipClick()} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15}/>
-            <View style={{marginTop:heightPixel(80),flexDirection:'row'}}>
-              <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'}/>
-              <TouchableOpacity onPress={()=>this.onSignUpClick()}><AppText text={" Sign up"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'}/></TouchableOpacity>
-            </View>
+  function onSignUpClick() {
+    props.navigation.navigate('Register');
+  }
+
+  if (initializing || userIsLoading)
+    return <AppLoader />
+
+
+  const onSubmit = data => {
+    const {
+      Email,
+      Password
+    } = data;
+    LoginAPI({ Email: Email, Password: Password });
+  };
+
+  return (
+    <ScrollView>
+      <View style={{ alignItems: 'center', height: ScreenHeight * 0.9675, width: ScreenWidth }}>
+        <LogoAndName />
+        <AppText marginTop={27} text="Welcome back" size={24} />
+        <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
+        <LoginForm loading={loginIsLoading} onForgotPasswordClick={onForgotPasswordClick} onSubmit={onSubmit} />
+        <AppBTN onPress={onSkipClick} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15} />
+        <View style={{ marginTop: heightPixel(80), flexDirection: 'row' }}>
+          <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
+          <TouchableOpacity onPress={onSignUpClick}><AppText text={" Sign up"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>
         </View>
-      </ScrollView>
-    );
-  }
+      </View>
+    </ScrollView>
+  );
 }
-
-export default Login;

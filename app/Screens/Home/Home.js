@@ -1,40 +1,56 @@
-import React, {Component} from 'react';
-import {View,StyleSheet,Text,ScrollView} from 'react-native';
-import {AppTopBar,AppSearchBar,AppFlatList,AppImage,AppBottomBar,AppHorListOfItems} from '../Common/';
-import {BigPromo,TwoPromos,WideBanner} from './Components/';
-import {fontPixel,normalize,heightPixel,widthPixel} from '../Common/Utils/PixelNormalization';
-import Data from '../MockData/data';
+import React, { useEffect } from 'react';
+import { View, ScrollView } from 'react-native';
+import { AppBottomBar, AppLoader, AppHorListOfItems, AppSearchBar } from '../Common/';
+import { BigPromo, TwoPromos, WideBanner } from './Components/';
+import { heightPixel } from '../Common/Utils/PixelNormalization';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadData } from "../../redux/slices/homeSlice";
 
-class Home extends React.Component{
+export default function Home(props) {
 
-  render() {
-    return (
-      <View style={{height:'100%',width:'100%'}}>
-        <View style={{height:'10%',width:'100%'}}><AppSearchBar/></View>
-        <View style={{marginTop:normalize(3),height:'82%',width:'100%'}}>
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const homeSlice = useSelector(state => state.home);
+  //Home Reducers
+  const LoadData = () => { dispatch(loadData()); }
+
+  const {
+    homeState,
+    homeIsLoading
+  } = homeSlice;
+
+  useEffect(() => {
+    LoadData();
+  }, []);
+
+  if (homeIsLoading)
+    return <AppLoader />
+
+  return (
+    <View style={{ height: '100%', width: '100%' }}>
+      <AppSearchBar />
+      <View style={{ marginTop: '1%', height: '82%', width: '100%' }}>
         <ScrollView>
-          <View style={{alignItems:'center'}}>
-            <BigPromo/>
-            <TwoPromos/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-1.png')}/>
-            <AppHorListOfItems data={Data.Home.MostOrdered}/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-2.png')}/>
-            <AppHorListOfItems title={'New Products'} data={Data.Home.NewProducts}/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-3.png')}/>
-            <AppHorListOfItems title={'Prefumes'} data={Data.Home.Perfumes}/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-4.png')}/>
-            <AppHorListOfItems title={'Clothes'} data={Data.Home.Clothes}/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-5.png')}/>
-            <WideBanner source={require('./Components/SamplePhotos/WideBanner1-6.png')}/>
-            <AppHorListOfItems title={'Electric'} data={Data.Home.Electric}/>
-            <View style={{height:heightPixel(10)}}/>
+          <View style={{ alignItems: 'center' }}>
+            <BigPromo data={homeState[0].data} />
+            <TwoPromos data={homeState[4].data} />
+            <WideBanner data={homeState[5].data[0].image} />
+            <AppHorListOfItems data={homeState[2].data} />
+            <WideBanner data={homeState[5].data[1].image} />
+            <AppHorListOfItems data={homeState[3].data} />
+            <WideBanner data={homeState[5].data[2].image} />
+            <AppHorListOfItems data={homeState[1].data[0].products} />
+            <WideBanner data={homeState[5].data[3].image} />
+            <AppHorListOfItems data={homeState[1].data[1].products} />
+            <WideBanner data={homeState[5].data[4].image} />
+            <WideBanner data={homeState[5].data[5].image} />
+            <AppHorListOfItems data={homeState[1].data[2].products} />
+            <View style={{ height: heightPixel(10) }} />
           </View>
         </ScrollView>
-        </View>
-        <AppBottomBar choosed={0}/>
       </View>
-    );
-  }
+      <AppBottomBar choosed={0} />
+    </View>
+  );
 }
-
-export default Home;

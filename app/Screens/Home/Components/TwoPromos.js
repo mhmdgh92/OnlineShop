@@ -1,24 +1,35 @@
 import React from 'react';
-import {View} from 'react-native';
-const GLOBAL = require('../../Common/Globals');
-import {heightPixel,widthPixel} from '../../Common/Utils/PixelNormalization';
-const {AppImage} = require('../../Common/');
-import Swiper from 'react-native-swiper';
+import { View } from 'react-native';
+import { widthPixel } from '../../Common/Utils/PixelNormalization';
+const { AppImage } = require('../../Common/');
 
-  const TwoPromos = (props) => {
+const TwoPromos = (props) => {
 
-    function ImgItem(props){
-      return(
-        <AppImage source={props.source} width={167.5} height={120}/>
-      );
-    }
-
+  function ImgItem(props) {
     return (
-      <View style={{flexDirection:'row',justifyContent:'space-between',width:widthPixel(350)}}>
-          <ImgItem source={require('./SamplePhotos/TwoPromos1-1.png')}/>
-          <ImgItem source={require('./SamplePhotos/TwoPromos1-2.png')}/>
-      </View>
+      <AppImage source={{ uri: props.source }} width={167.5} height={120} />
     );
+  }
+
+  function imgs(data) {
+    let returnedImgs = [];
+    data.map((item) => {
+      returnedImgs.push(
+        <ImgItem key={item.id} source={item.image} />
+      );
+    })
+    return returnedImgs;
+  }
+
+  const {
+    data
+  } = props;
+
+  return (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: widthPixel(350) }}>
+      {imgs(data)}
+    </View>
+  );
 }
 
 export default TwoPromos;

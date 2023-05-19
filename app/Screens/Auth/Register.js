@@ -1,58 +1,93 @@
-import React, {Component} from 'react';
-import {TouchableOpacity,Dimensions,View,Text,ScrollView} from 'react-native';
-const ScreenHeight=Dimensions.get('window').height;
-const ScreenWidth=Dimensions.get('window').width;
-import {AppText,LogoAndName,AppImage,AppBTN,AppTextInput,AppCheckBox} from '../Common/';
+import React, { useEffect } from 'react';
+import { TouchableOpacity, Dimensions, View, Alert, ScrollView } from 'react-native';
+const ScreenHeight = Dimensions.get('window').height;
+const ScreenWidth = Dimensions.get('window').width;
+import { AppText, LogoAndName, AppBTN, AppTextInput, AppCheckBox } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import {fontPixel,heightPixel,widthPixel} from '../Common/Utils/PixelNormalization';
+import { heightPixel } from '../Common/Utils/PixelNormalization';
+import { useSelector, useDispatch } from 'react-redux';
+import { RegisterForm } from './Components/';
+import { saveUser } from "../../redux/slices/userSlice";
+import { registerAPI, setUserFireStoreAPI } from "../../redux/slices/registerSlice";
 
-class Register extends React.Component{
+export default function Register(props) {
 
-onSignInClick(){
-  this.props.navigation.navigate('Login');
-}
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const userSlice = useSelector(state => state.user);
+  const registerSlice = useSelector(state => state.register);
+  //User Reducers
+  const SaveUser = (data) => { dispatch(saveUser(data)); }
+  //Register Reducers
+  const RegisterAPI = (data) => { dispatch(registerAPI(data)); }
+  const SetUserFireStoreAPI = (data) => { dispatch(setUserFireStoreAPI(data)); }
 
-onSignUpClick(){
-  this.props.navigation.reset({
-              index: 0,
-              routes: [{name: 'Home'}],
-            });
-}
+  const {
+    userState
+  } = userSlice;
 
-onPrivacyClick(){
-  this.props.navigation.navigate('Privacy');
-}
+  const {
+    registerState,
+    registerIsLoading,
+    registerSetDataSuccess,
+    registerIsSuccess
+  } = registerSlice;
 
-onTermsClick(){
-  this.props.navigation.navigate('Terms');
-}
+  useEffect(() => {
+    if (userState) {
+      moveToNextScreen();
+      return;
+    }
 
-  render() {
-    return (
-      <ScrollView>
-        <View style={{alignItems:'center',height:ScreenHeight*0.95,width:ScreenWidth}}>
-            <LogoAndName/>
-            <AppText marginTop={20} text="New account" size={26}/>
-            <AppText marginTop={2} text={"Register"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'}/>
-            <AppTextInput marginTop={10} keyboardType={'email-address'}/>
-            <AppTextInput marginTop={10} keyboardType={'numeric'} name={'cellphone'} placeholder={'Phone'}/>
-            <AppTextInput marginTop={10} secureTextEntry name={'lock'} placeholder={'Password'}/>
-            <AppTextInput marginTop={10} secureTextEntry name={'lock'} placeholder={'Password confirmation'}/>
-            <View style={{marginTop:heightPixel(15),flexDirection:'row',justifyContent:'center'}}>
-              <AppCheckBox/>
-              <AppText text={"\t \t I agree to the "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'}/>
-              <TouchableOpacity onPress={()=>this.onPrivacyClick()}><AppText text={"privacy policy"} textStyle={{textDecorationLine:'underline'}} color={'blue'} size={12} fontFamily={'Montserrat-SemiBold'}/></TouchableOpacity>
-              <AppText text={" and "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'}/>
-              <TouchableOpacity onPress={()=>this.onTermsClick()}><AppText text={"terms of use"} color={'blue'} textStyle={{textDecorationLine:'underline'}} size={12} fontFamily={'Montserrat-SemiBold'}/></TouchableOpacity>
-            </View>
-            <AppBTN marginTop={40} onPress={()=>this.onSignUpClick()} text={'Register'}/>
-            <View style={{marginTop:heightPixel(55),flexDirection:'row'}}>
-              <AppText text={"Have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'}/>
-              <TouchableOpacity onPress={()=>this.onSignInClick()}><AppText text={" Sign in"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'}/></TouchableOpacity>
-            </View>
-        </View>
-      </ScrollView>
-    );
+    if (registerSetDataSuccess) {
+      SaveUser(registerState);
+      return;
+    }
+
+    if (registerIsSuccess) {
+      SetUserFireStoreAPI(registerState);
+      return;
+    }
+
+  }, [userState, registerIsSuccess, registerSetDataSuccess]);
+
+  function moveToNextScreen() {
+    //Status 4
+    props.navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
   }
+
+  function onPrivacyClick() {
+    props.navigation.navigate('Privacy');
+  }
+
+  function onTermsClick() {
+    props.navigation.navigate('Terms');
+  }
+
+  function onSignInClick() {
+    props.navigation.navigate('Login');
+  }
+
+  const onSubmit = data => {
+    RegisterAPI(data);
+  };
+
+  return (
+    <ScrollView>
+      <View style={{ alignItems: 'center', height: ScreenHeight * 0.95, width: ScreenWidth }}>
+        <LogoAndName />
+        <AppText marginTop={20} text="New account" size={26} />
+        <AppText marginTop={2} text={"Register"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
+        <RegisterForm onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} loading={registerIsLoading} onSubmit={onSubmit} />
+        <View style={{ marginTop: heightPixel(55), flexDirection: 'row' }}>
+          <AppText text={"Have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
+          <TouchableOpacity onPress={onSignInClick}><AppText text={" Sign in"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
-export default Register;

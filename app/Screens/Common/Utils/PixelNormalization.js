@@ -1,15 +1,15 @@
-import {View,Dimensions, Platform, PixelRatio,Text} from 'react-native';
-const {width: ScreenWidth,height: ScreenHeight,} = Dimensions.get('window');
+import { View, Dimensions, Platform, PixelRatio, Text } from 'react-native';
+const { width: ScreenWidth, height: ScreenHeight, } = Dimensions.get('window');
 // based on iPhone 11 Pro
 const heightBaseScale = ScreenHeight / 812;
 const widthBaseScale = ScreenWidth / 375;
 function normalizeVal(size, based = 'width') {
- const newSize = (based === 'height') ?
-                 size * heightBaseScale : size * widthBaseScale;
- return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  const newSize = (based === 'height') ?
+    size * heightBaseScale : size * widthBaseScale;
+  return Math.round(PixelRatio.roundToNearestPixel(newSize));
 }
 
-const normalize=(size) =>{
+const normalize = (size) => {
   const newSize = size * widthBaseScale;
   if (Platform.OS === 'ios') {
     return Math.round(PixelRatio.roundToNearestPixel(newSize))

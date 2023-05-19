@@ -1,33 +1,40 @@
-import React from 'react';
-import {View,StyleSheet} from 'react-native';
-const GLOBAL = require('../../Common/Globals');
-import {heightPixel} from '../../Common/Utils/PixelNormalization';
-const {AppImage} = require('../../Common/');
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { heightPixel } from '../../Common/Utils/PixelNormalization';
+const { AppImage } = require('../../Common/');
 import Swiper from 'react-native-swiper';
 
-  const BigPromo = (props) => {
+const BigPromo = (props) => {
 
-function ImgItem(props){
-  return(
-    <AppImage source={props.source} width={350} height={220}/>
-  );
-}
-
+  function ImgItem(data) {
     return (
-      <View style={{height:heightPixel(210)}}>
-          <Swiper autoplay>
-            <View style={styles.slide1}>
-              <ImgItem source={require('./SamplePhotos/BigPromo1-1.png')}/>
-            </View>
-              <View style={styles.slide1}>
-                <ImgItem source={require('./SamplePhotos/BigPromo1-2.png')}/>
-              </View>
-              <View style={styles.slide1}>
-                <ImgItem source={require('./SamplePhotos/BigPromo1-3.png')}/>
-              </View>
-          </Swiper>
+      <View style={styles.slide1}>
+        <AppImage source={{ uri: data.source }} width={350} height={220} />
       </View>
     );
+  }
+
+  function imgs(data) {
+    let returnedImgs = [];
+    data.map((item) => {
+      returnedImgs.push(
+        <ImgItem key={item.id} source={item.image} />
+      );
+    })
+    return returnedImgs;
+  }
+
+  const {
+    data
+  } = props;
+  return (<View/>)//T,R
+  return (
+    <View style={{ height: heightPixel(180) }}>
+      <Swiper autoplay>
+        {imgs(data)}
+      </Swiper >
+    </View >
+  );
 }
 
 const styles = StyleSheet.create({

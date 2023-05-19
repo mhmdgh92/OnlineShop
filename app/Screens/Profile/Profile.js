@@ -1,37 +1,99 @@
-import React, {Component} from 'react';
-import {Dimensions,View,ScrollView} from 'react-native';
-const ScreenWidth=Dimensions.get('window').width;
-import {AppRoundedImage,AppTextInput,AppTopBar,AppText,AppBTN,AppBottomBar} from '../Common/';
-const GLOBAL = require('../Common/Globals');
-import {fontPixel,heightPixel,widthPixel,tstOne} from '../Common/Utils/PixelNormalization';
+import React, { useState, useEffect } from 'react';
+import { Dimensions, View, ScrollView, Alert } from 'react-native';
+const ScreenWidth = Dimensions.get('window').width;
+import { AppRoundedImage, AppTextInput, AppTopBar, AppText, AppBTN, AppBottomBar } from '../Common/';
+import { heightPixel } from '../Common/Utils/PixelNormalization';
+import user from '../../user';
+import firestore from '@react-native-firebase/firestore';
+import { ProfileForm } from './Components/';
 
-class Profile extends React.Component{
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View style={{alignItems:'center',
-          flexDirection:'column',
-          height:heightPixel(787),width:ScreenWidth}}>
-            <AppTopBar/>
-          <AppRoundedImage marginTop={10} width={110} height={115}/>
-          <AppTextInput marginTop={15} name={'account'} placeholder={'First name'}/>
-          <AppTextInput marginTop={5} name={'account'} placeholder={'Last name'}/>
-          <AppTextInput marginTop={5} name={'cellphone'} keyboardType={'numeric'} placeholder={'Phone'}/>
-          <AppTextInput marginTop={5}/>
-          <AppText marginTop={14} text={"Change your password"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'}/>
-          <AppTextInput marginTop={15} name={'lock'} secureTextEntry placeholder={'Password'}/>
-          <AppTextInput marginTop={5} name={'lock'} secureTextEntry placeholder={'New password'}/>
-          <AppTextInput marginTop={5} name={'lock'} secureTextEntry placeholder={'Confirm new password'}/>
-          <AppBTN text={'Save'} marginTop={20}/>
-          </View>
-        </ScrollView>
-        <AppBottomBar choosed={4}/>
-      </View>
-    );
+export default function Profile(props) {
+
+  const [data, setData] = useState(getDataFirstState());
+  const [loading, setLoading] = useState(false);
+
+  const {
+    Status,
+    FirstName,
+    LastName,
+    Phone,
+    Email
+  } = data;
+
+  const {
+    firstName,
+    lastName,
+    phone,
+    email
+  } = user.userObj;
+
+  function getDataFirstState() {
+    return { Status: 0, FirstName: firstName, LastName: lastName, Phone: phone, Email: email }
   }
+
+  useEffect(() => {
+    if (!loading && Status === 1)
+      saveClicked();
+  }, [data]);
+
+  function saveClicked() {
+    setLoading(true)
+    saveUserDataFireStore();
+  }
+
+  async function saveUserDataFireStore() {
+    await firestore()
+      .collection('users')
+      .doc(Email)
+      .set({
+        firstName: '' + FirstName,
+        lastName: '' + LastName,
+        phone: '' + Phone
+      })
+      .then(() => {
+        saveUserDataLocally();
+      });
+  }
+
+  async function saveUserDataLocally() {
+    const userSavedAcc = user.userObj;
+    userSavedAcc.firstName = FirstName;
+    userSavedAcc.lastName = LastName;
+    userSavedAcc.phone = Phone;
+    await user.saveData(userSavedAcc);
+    Alert.alert('Your info saved successfully!');
+    setThisData(0)
+    setLoading(false)
+  }
+
+  const onSubmit = data => {
+    const {
+      FirstName,
+      LastName,
+      Phone
+    } = data;
+    setThisData(1, FirstName, LastName, Phone);
+  };
+
+  function setThisData(status, firstName, lastName, phone) {
+    setData({ Status: status, FirstName: firstName, LastName: lastName, Phone: phone, Email: email });
+  }
+
+  return (
+    <View>
+      <ScrollView>
+        <View style={{
+          alignItems: 'center',
+          flexDirection: 'column',
+          height: heightPixel(787), width: ScreenWidth
+        }}>
+          <AppTopBar />
+          <AppRoundedImage marginTop={30} width={110} height={115} />
+          <ProfileForm loading={loading} onSubmitClicked={onSubmit} userObj={user.userObj} />
+        </View>
+      </ScrollView>
+      <AppBottomBar choosed={4} />
+    </View>
+  );
+
 }
-
-
-
-export default Profile;
