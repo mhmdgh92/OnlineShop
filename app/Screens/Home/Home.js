@@ -4,7 +4,7 @@ import { AppBottomBar, AppLoader, AppHorListOfItems, AppSearchBar } from '../Com
 import { BigPromo, TwoPromos, WideBanner } from './Components/';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadData } from "../../redux/slices/homeSlice";
+import { loadHomeData } from "../../redux/slices/homeSlice";
 
 export default function Home(props) {
 
@@ -13,7 +13,7 @@ export default function Home(props) {
   //States
   const homeSlice = useSelector(state => state.home);
   //Home Reducers
-  const LoadData = () => { dispatch(loadData()); }
+  const LoadHomeData = () => { dispatch(loadHomeData()); }
 
   const {
     homeState,
@@ -21,7 +21,7 @@ export default function Home(props) {
   } = homeSlice;
 
   useEffect(() => {
-    LoadData();
+    LoadHomeData();
   }, []);
 
   if (homeIsLoading)

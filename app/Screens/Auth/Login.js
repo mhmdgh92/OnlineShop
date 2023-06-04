@@ -72,7 +72,7 @@ export default function Login(props) {
   function moveToNextScreen() {
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' }],
+      routes: [{ name: 'Home' }],//T,Home
     });
   }
 

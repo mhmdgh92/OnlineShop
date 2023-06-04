@@ -38,7 +38,7 @@ export const setUserFireStoreAPI = createAsyncThunk('setUserFireStoreAPI', async
     .collection('users')
     .doc(Email)
     .set({
-      phone: Phone
+      Phone: Phone
     })
     .then(() => {
       Alert.alert('User account created successfully!');

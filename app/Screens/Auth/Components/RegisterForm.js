@@ -18,7 +18,7 @@ export default function RegisterForm(props) {
 
     return (
         <View>
-            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'Email'} placeholder={'Email'} />
+            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'email'} placeholder={'Email'} />
             <AppController keyboardType={'numeric'} iconName={'cellphone'} rules={phoneRules()} control={control} error={errors.Phone} name={'Phone'} placeholder={'Phone'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.Password} name={'Password'} placeholder={'Password'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.ConfirmPassword} name={'ConfirmPassword'} placeholder={'Confirm Password'} />

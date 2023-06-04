@@ -1,5 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//////////////////////
+// USER OBJECT
+// FirstName
+// LastName
+// Phone
+// Email
+//////////////////////
+
 export default class user {
 
     static userObj = null;

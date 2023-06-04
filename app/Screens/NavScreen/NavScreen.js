@@ -19,7 +19,7 @@ export default function NavScreen(props) {
   const {
     userRemoveSuccess
   } = userSlice;
-
+  
   useEffect(() => {
     console.log('userRemoveSuccess:' + userRemoveSuccess)
     if (userRemoveSuccess)

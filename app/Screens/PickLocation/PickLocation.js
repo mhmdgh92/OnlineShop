@@ -75,14 +75,14 @@ class PickLocation extends React.Component {
     this.setState({ loading: true });
     await firestore()
       .collection('users')
-      .doc(user.userObj.email)
+      .doc(user.userObj.Email)
       .update({
         'orders': firestore.FieldValue.arrayUnion(this.getOrderObj())
       });
 
     await firestore()
       .collection('users')
-      .doc(user.userObj.email)
+      .doc(user.userObj.Email)
       .update({
         ['currentOrder']: firestore.FieldValue.delete(),
       });

@@ -34,13 +34,12 @@ const AppController = (props) => {
       <Controller
         control={control}
         rules={rules}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({ field: { onChange, onBlur } }) => (
           <AppTextInput
             secureTextEntry={secureTextEntry}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
             defaultValue={defaultValue}
             marginTop={10}
             name={iconName}

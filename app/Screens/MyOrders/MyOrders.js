@@ -25,7 +25,7 @@ class MyOrders extends React.Component {
   async LoadData() {
     await firestore()
       .collection('users')
-      .doc(user.userObj.email)
+      .doc(user.userObj.Email)
       .get()
       .then(documentSnapshot => {
         this.setState({ data: documentSnapshot.data().orders, loading: false });

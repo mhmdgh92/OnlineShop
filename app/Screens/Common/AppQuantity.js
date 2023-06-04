@@ -7,8 +7,6 @@ const AppQuantity = (props) => {
 
   const [quantity, setQuantity] = useState(props.quantity ? props.quantity : 1);
 
-  console.log(props)
-
   const incAmount = () => {
     setQuantity(quantity + 1);
     triggerEvents(true);

@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import firestore from '@react-native-firebase/firestore';
 
 const initialState = {
-  homeState: [],
+  homeState: null,
   homeIsLoading: true,
   homeErrorMessage: ''
 }
 
-export const loadData = createAsyncThunk('loadData', async () => {
+export const loadHomeData = createAsyncThunk('loadHomeData', async () => {
   let res = [];
   await firestore()
     .collection('home')
@@ -26,15 +26,15 @@ export const homeSlice = createSlice({
   initialState,
   reducers: {
   }, extraReducers: {
-    [loadData.pending]: (state) => {
+    [loadHomeData.pending]: (state) => {
       state.homeIsLoading = true;
     },
-    [loadData.fulfilled]: (state, { payload }) => {
+    [loadHomeData.fulfilled]: (state, { payload }) => {
       if (payload)
         state.homeState = payload;
       state.homeIsLoading = false;
       state.homeErrorMessage = '';
-    }, [loadData.rejected]: (state, { payload }) => {
+    }, [loadHomeData.rejected]: (state, { payload }) => {
       state.homeIsLoading = false;
       state.homeErrorMessage = payload;
     }

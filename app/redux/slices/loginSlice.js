@@ -25,7 +25,7 @@ export const loginAPI = createAsyncThunk('loginAPI', async (data) => {
     .then(() => {
       res = Email;
     }).catch(error => {
-      if (error.code === 'auth/email-already-in-use')
+      if (error.code === 'auth/Email-already-in-use')
         res = Email;
       Alert.alert(error.code);
     });

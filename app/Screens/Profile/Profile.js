@@ -1,82 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, View, ScrollView, Alert } from 'react-native';
 const ScreenWidth = Dimensions.get('window').width;
-import { AppRoundedImage, AppTextInput, AppTopBar, AppText, AppBTN, AppBottomBar } from '../Common/';
+import { AppRoundedImage, AppTopBar, AppBottomBar } from '../Common/';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
-import user from '../../user';
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveUser } from "../../redux/slices/userSlice";
+import { saveProfile } from "../../redux/slices/profileSlice";
 import { ProfileForm } from './Components/';
 
 export default function Profile(props) {
 
-  const [data, setData] = useState(getDataFirstState());
-  const [loading, setLoading] = useState(false);
+
+  const [onUpdateProfile, setOnUpdateProfile] = useState(false);
+
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const userSlice = useSelector(state => state.user);
+  const profileSlice = useSelector(state => state.profile);
+  //Profile Reducers
+  const SaveProfile = (data) => { dispatch(saveProfile(data)); }
+  //User Reducers
+  const SaveUser = (data) => { dispatch(saveUser(data)); }
 
   const {
-    Status,
-    FirstName,
-    LastName,
-    Phone,
-    Email
-  } = data;
+    userState
+  } = userSlice;
 
   const {
-    firstName,
-    lastName,
-    phone,
-    email
-  } = user.userObj;
-
-  function getDataFirstState() {
-    return { Status: 0, FirstName: firstName, LastName: lastName, Phone: phone, Email: email }
-  }
+    updateProfileLoading,
+    profileState
+  } = profileSlice;
 
   useEffect(() => {
-    if (!loading && Status === 1)
-      saveClicked();
-  }, [data]);
+    if (onUpdateProfile && profileState) {
+      saveUserNewProfile(profileState);
+      return;
+    }
+  }, [profileState]);
 
-  function saveClicked() {
-    setLoading(true)
-    saveUserDataFireStore();
-  }
+  const onSubmit = async (data) => {
+    await SaveProfile(data);
+    setOnUpdateProfile(true);
+  };
 
-  async function saveUserDataFireStore() {
-    await firestore()
-      .collection('users')
-      .doc(Email)
-      .set({
-        firstName: '' + FirstName,
-        lastName: '' + LastName,
-        phone: '' + Phone
-      })
-      .then(() => {
-        saveUserDataLocally();
-      });
-  }
-
-  async function saveUserDataLocally() {
-    const userSavedAcc = user.userObj;
-    userSavedAcc.firstName = FirstName;
-    userSavedAcc.lastName = LastName;
-    userSavedAcc.phone = Phone;
-    await user.saveData(userSavedAcc);
-    Alert.alert('Your info saved successfully!');
-    setThisData(0)
-    setLoading(false)
-  }
-
-  const onSubmit = data => {
+  async function saveUserNewProfile(newInfo) {
+    setOnUpdateProfile(false);
+    const newUserState = JSON.parse(JSON.stringify(userState));
     const {
       FirstName,
       LastName,
       Phone
-    } = data;
-    setThisData(1, FirstName, LastName, Phone);
-  };
-
-  function setThisData(status, firstName, lastName, phone) {
-    setData({ Status: status, FirstName: firstName, LastName: lastName, Phone: phone, Email: email });
+    } = newInfo;
+    newUserState.FirstName = FirstName;
+    newUserState.LastName = LastName;
+    newUserState.Phone = Phone;
+    await SaveUser(newUserState);
+    Alert.alert('Profile updated successfully!');
   }
 
   return (
@@ -89,7 +69,7 @@ export default function Profile(props) {
         }}>
           <AppTopBar />
           <AppRoundedImage marginTop={30} width={110} height={115} />
-          <ProfileForm loading={loading} onSubmitClicked={onSubmit} userObj={user.userObj} />
+          <ProfileForm loading={updateProfileLoading} onSubmitClicked={onSubmit} userObj={userState} />
         </View>
       </ScrollView>
       <AppBottomBar choosed={4} />

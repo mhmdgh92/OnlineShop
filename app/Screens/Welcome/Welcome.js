@@ -33,7 +33,7 @@ class Welcome extends React.Component {
   moveToNextScreen() {
     this.props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],//T,Register => Login
+      routes: [{ name: 'Login' }],//T,Login
     });
   }
 

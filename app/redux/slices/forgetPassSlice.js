@@ -14,7 +14,7 @@ export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (Em
   await auth()
     .sendPasswordResetEmail(Email)
     .then(() => {
-      Alert.alert('Password reset email has been sent!');
+      Alert.alert('Password reset Email has been sent!');
       res = true;
     })
     .catch(error => {

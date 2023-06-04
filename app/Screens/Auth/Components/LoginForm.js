@@ -19,7 +19,7 @@ export default function LoginForm(props) {
 
     return (
         <View>
-            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'Email'} placeholder={'Email'} />
+            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'email'} placeholder={'Email'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.Password} name={'Password'} placeholder={'Password'} />
             <TouchableOpacity onPress={onForgotPasswordClick} style={{ marginTop: heightPixel(10) }}><AppText text={"Forget Password?"} color={GLOBAL.Color.darkGrey}
                 size={14} fontFamily={'Montserrat-SemiBold'} />

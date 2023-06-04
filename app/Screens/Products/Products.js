@@ -1,56 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppFlatList, AppLoader, AppProductItem } from '../Common/';
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadProductsData } from "../../redux/slices/productsSlice";
 
-class Products extends React.Component {
+export default function Products(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      loading: true,
-    }
-  }
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const productsSlice = useSelector(state => state.products);
+  //products Reducers
+  const LoadProductsData = (data) => { dispatch(loadProductsData(data)); }
 
-  async componentDidMount() {
-    await this.LoadData();
-  }
+  const {
+    secitionID,
+    secitionName
+  } = props.route.params;
 
-  async LoadData() {
-    const { secitionID, secitionName } = this.props.route.params;
-    await firestore()
-      .collection('products')
-      .doc(secitionID.toString())
-      .get()
-      .then(documentSnapshot => {
-        this.setState({ secitionName: secitionName, data: documentSnapshot.data().data, loading: false })
-      });
-  }
+  const {
+    productsState,
+    productsIsLoading
+  } = productsSlice;
 
-  render() {
+  useEffect(() => {
+    LoadProductsData({ secitionID: secitionID, secitionName: secitionName });
+  }, []);
 
-    const {
-      loading,
-      data,
-      secitionName
-    } = this.state;
+  if (productsIsLoading)
+    return <AppLoader />
 
-    if (loading)
-      return <AppLoader />
-
-    return (
-      <View style={{ alignItems: 'center' }}>
-        <AppTopBar title={secitionName} />
-        <View style={{ height: '100%', width: '95%' }}>
-          <AppFlatList style={{ width: '100%' }} numColumns={2} data={data}
-            renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
-          <View style={{ height: '16%' }} />
-        </View>
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <AppTopBar title={secitionName} />
+      <View style={{ height: '100%', width: '95%' }}>
+        <AppFlatList style={{ width: '100%' }} numColumns={2} data={productsState.data}
+          renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
+        <View style={{ height: '16%' }} />
       </View>
-    );
-  }
+    </View>
+  );
 }
-
-export default Products;

@@ -16,6 +16,7 @@ export const loadUser = createAsyncThunk('loadUser', async () => {
 })
 
 export const saveUser = createAsyncThunk('saveUser', async (data) => {
+  userState = data;
   await AsyncStorage.setItem('user', JSON.stringify(data));
   return data;
 })

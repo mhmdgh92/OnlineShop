@@ -1,58 +1,72 @@
-import React from 'react';
-import { View, TextInput, Dimensions, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Dimensions } from 'react-native';
 const { width: ScreenWidth, height: ScreenHeight, } = Dimensions.get('window');
 import { heightPixel, normalize } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN, AppBottomBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import CartItem from './Components/CartItem';
-import { connect } from 'react-redux';
-import user from '../../user';
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 
-class Cart extends React.Component {
+export default function Cart(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      subTotal: 0,
-      shipping: 10,
-      data: null,
-      fullLoading: true,
-      loading: false
-    }
-  }
+  // quantity: 1,
+  // addToCartLoading: false,
+  const [shipping, setShipping] = useState(10);
+  const [subTotal, setSubTotal] = useState(0);
+  const [cartData, setCartData] = useState(null);
+  const [onUpdateCart, setOnUpdateCart] = useState(false);
 
-  async componentDidMount() {
-    this.LoadData();
-  }
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const userSlice = useSelector(state => state.user);
+  const cartSlice = useSelector(state => state.cart);
+  //Reducers
+  const LoadCartData = (data) => { dispatch(loadCartData(data)); }
+  const UpdateCart = (data) => { dispatch(updateCart(data)); }
 
-  async LoadData() {
-    await firestore()
-      .collection('users')
-      .doc(user.userObj.email)
-      .get()
-      .then(documentSnapshot => {
-        this.setState({ data: documentSnapshot.data().currentOrder.cart, fullLoading: false });
-        this.calculateTotal();
-      }).catch(error => {
-        this.setState({ data: null, fullLoading: false });
+  const {
+    userState
+  } = userSlice;
+
+  const {
+    cartState,
+    cartIsLoading,
+    updateCartLoading,
+    cartHasUpdated
+  } = cartSlice;
+
+  useEffect(() => {
+    if (onUpdateCart && cartHasUpdated) {
+      setOnUpdateCart(false);
+      props.navigation.navigate('Shipping', {
+        cart: cartData
       });
-  }
+    }
+    else if (cartData) {
+      calculateTotal();
+    }
+    else if (cartState) {
+      setCartData(cartState);
+    }
+    else if (userState) {
+      LoadCartData({ Email: userState.Email });
+    }
+  }, [cartState, cartData, cartHasUpdated]);
 
-  calculateTotal() {
+  function calculateTotal() {
     let subTotal = 0;
-    const { data } = this.state;
-
-    data.map((item) => {
+    console.log(JSON.stringify(cartData))
+    cartData.map((item) => {
       const curItemQuantitiy = Number(item.quantity);
       const curItemPrice = Number(item.price);
-      const total = Number(curItemQuantitiy * curItemPrice);
       subTotal += Number(curItemQuantitiy * curItemPrice);
     });
-    this.setState({ subTotal: subTotal });
+    setSubTotal(subTotal);
   }
 
-  billItem = (name, price, withoutBottomBorder) => {
+  const billItem = (name, price, withoutBottomBorder) => {
     return (
       <View style={{
         justifyContent: 'space-between', borderBottomWidth: withoutBottomBorder ? 0 : 1,
@@ -64,48 +78,28 @@ class Cart extends React.Component {
     )
   }
 
-  async onFinalizeClicked() {
-    this.setState({ loading: true })
-    const { data } = this.state;
-    await firestore()
-      .collection('users')
-      .doc(user.userObj.email)
-      .update({
-        'currentOrder.cart': data
-      });
-    this.props.navigation.navigate('Shipping', {
-      cart: data
-    });
+  function onFinalizeClicked() {
+    const data = { Email: userState.Email, updatedCart: cartData }
+    setOnUpdateCart(true);
+    UpdateCart(data);
   }
 
   onPlusOrMinusQuantity = (itemID, plusOrMinus) => {
-    const {
-      subTotal,
-      data
-    } = this.state;
+    const tempCartData = JSON.parse(JSON.stringify(cartData));
     if (plusOrMinus) {
-      data[itemID].quantity++;
-      this.setState({ data: data, subTotal: subTotal + (data[itemID].price) })
+      tempCartData[itemID].quantity++;
+      setSubTotal(subTotal + (cartData[itemID].price));
     }
     else {
-      data[itemID].quantity--;
-      this.setState({ data: data, subTotal: subTotal - (data[itemID].price) })
+      tempCartData[itemID].quantity--;
+      setSubTotal(subTotal - (cartData[itemID].price));
     }
+    setCartData(tempCartData);
   }
 
   MyScrollableView = () => {
-    const {
-      subTotal,
-      shipping,
-      fullLoading,
-      data,
-      loading
-    } = this.state;
 
-    if (fullLoading)
-      return <AppLoader />
-
-    if (!data)
+    if (!cartState)
       return (
         <View style={{ justifyContent: 'center', alignItems: 'center', height: '80%', width: '100%' }}>
           <AppIcon name={'cart-off'} color={GLOBAL.Color.grey} size={170} />
@@ -118,45 +112,33 @@ class Cart extends React.Component {
       <View style={{ width: '100%', height: '100%' }}>
         <View style={{ width: ScreenWidth, height: ScreenHeight * .88, alignItems: 'center' }}>
           <View style={{ width: '100%', height: heightPixel(330) }}>
-            <AppFlatList numColumns={1} data={data}
-              renderItem={({ id, item }) => <CartItem key={id} item={item} onPlusOrMinusQuantity={this.onPlusOrMinusQuantity} />} />
+            <AppFlatList numColumns={1} data={cartData}
+              renderItem={({ id, item }) => <CartItem key={id} item={item} onPlusOrMinusQuantity={onPlusOrMinusQuantity} />} />
           </View>
           <View style={{ alignItems: 'center', flexDirection: 'row', marginTop: heightPixel(30), width: '85%', height: '7%', borderRadius: normalize(30), backgroundColor: 'white' }}>
             <TextInput editable={false} placeholder={'\tPromo Code'} style={{ width: '65%' }} />
             <AppBTN text={'Apply'} textSize={17} height={'100%'} width={'35%'} />
           </View>
           <View style={{ alignItems: 'center', marginTop: heightPixel(25), width: '85%', height: '16%', borderRadius: normalize(15), backgroundColor: 'white' }}>
-            {this.billItem('Sub Total', '$' + subTotal)}
-            {this.billItem('Shipping', '$' + shipping)}
-            {this.billItem('Total', '$' + Number(subTotal + shipping), true)}
+            {billItem('Sub Total', '$' + subTotal)}
+            {billItem('Shipping', '$' + shipping)}
+            {billItem('Total', '$' + Number(subTotal + shipping), true)}
           </View>
-          <AppBTN loading={loading} marginTop={22} text={'Finalize Order'} onPress={() => this.onFinalizeClicked()} />
+          <AppBTN loading={updateCartLoading} marginTop={22} text={'Finalize Order'} onPress={() => onFinalizeClicked()} />
         </View>
       </View>
     );
   }
 
-  render() {
+  if (cartIsLoading)
+    return <AppLoader />
 
-    const {
-      fullLoading,
-      data
-    } = this.state;
+  return (
 
-    return (
-      <View style={{ height: '100%', width: '100%' }}>
-        <AppTopBar title={'My Cart'} />
-        {this.MyScrollableView()}
-        <AppBottomBar choosed={3} />
-      </View>
-    );
-  }
+    <View style={{ height: '100%', width: '100%' }}>
+      <AppTopBar title={'My Cart'} />
+      {MyScrollableView()}
+      <AppBottomBar choosed={3} />
+    </View>
+  );
 }
-
-function mapStateToProps(state) {
-  return {
-    count: state.count
-  }
-};
-
-export default connect(mapStateToProps)(Cart)

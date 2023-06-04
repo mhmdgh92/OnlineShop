@@ -7,15 +7,22 @@ const { AppImage, AppText, AppIcon, AppQuantity } = require('../../Common/');
 const CartItem = (props) => {
 
   const {
+    key,
+    item,
+    onPlusOrMinusQuantity
+  } = props;
+
+  const {
     id,
     name,
     link,
     price,
     quantity
-  } = props.item;
+  } = item;
+
 
   function plusOrMinusQuantity(plusOrMinus) {
-    props.onPlusOrMinusQuantity(id, plusOrMinus);
+    onPlusOrMinusQuantity(id, plusOrMinus);
   }
 
   return (

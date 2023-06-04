@@ -1,58 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
 import SectionItem from './Components/SectionItem';
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadSectionsData } from "../../redux/slices/sectionsSlice";
 
-class Sections extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      loading: true,
-    }
-  }
+export default function Sections() {
 
-  async componentDidMount() {
-    await this.LoadData();
-  }
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const sectionsSlice = useSelector(state => state.sections);
+  //sections Reducers
+  const LoadSectionsData = () => { dispatch(loadSectionsData()); }
 
-  async LoadData() {
-    await firestore()
-      .collection('sections')
-      .get()
-      .then(documentSnapshot => {
-        let newData = [];
+  const {
+    sectionsState,
+    sectionsIsLoading
+  } = sectionsSlice;
 
-        documentSnapshot.docs.map((item) => {
-          let newSectionItem = item.data();
-          newSectionItem.name = item.id;
-          newData.push(newSectionItem);
-        })
+  useEffect(() => {
+    LoadSectionsData();
+  }, []);
 
-        this.setState({ data: newData, loading: false })
-      });
-  }
+  console.log('sectionsIsLoading:' + sectionsIsLoading)
 
-  render() {
+  if (sectionsIsLoading)
+    return <AppLoader />
 
-    const {
-      loading,
-      data
-    } = this.state;
-
-    if (loading)
-      return <AppLoader />
-
-    return (
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <AppTopBar title={'Main Sections'} />
-        <AppFlatList numColumns={2} data={data} renderItem={({ item }) => <SectionItem item={item} />} />
-        <AppBottomBar choosed={1} />
-      </View>
-    );
-  }
+  return (
+    <View style={{ flex: 1, alignItems: 'center' }}>
+      <AppTopBar title={'Main Sections'} />
+      <AppFlatList numColumns={2} data={sectionsState} renderItem={({ item, id }) => <SectionItem key={id} item={item} />} />
+      <AppBottomBar choosed={1} />
+    </View>
+  );
 }
-
-export default Sections;

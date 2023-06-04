@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 const GLOBAL = require('./Globals');
-import { normalize, widthPixel, heightPixel } from './Utils/PixelNormalization';
+import { heightPixel } from './Utils/PixelNormalization';
 import { AppText, AppIcon, AppImage } from './';
 import * as RootNavigation from '../../RootNav.js';
 
