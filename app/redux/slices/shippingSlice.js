@@ -10,13 +10,13 @@ const initialState = {
 
 export const sendShippingInfo = createAsyncThunk('sendShippingInfo', async (data) => {
   const {
-    Email,
+    email,
     shippingInfo
   } = data;
   let res = false;
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .update({
       'currentOrder.shippingAddress': shippingInfo
     }).then(() => {

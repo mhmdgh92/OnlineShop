@@ -12,19 +12,19 @@ const initialState = {
 export const saveProfile = createAsyncThunk('saveProfile', async (data) => {
   let res = null;
   const {
-    FirstName,
-    LastName,
-    Phone,
-    Email
+    firstName,
+    lastName,
+    phone,
+    email
   } = data;
 
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .set({
-      FirstName: '' + FirstName,
-      LastName: '' + LastName,
-      Phone: '' + Phone
+      firstName: '' + firstName,
+      lastName: '' + lastName,
+      phone: '' + phone
     })
     .then(() => {
       res = data;

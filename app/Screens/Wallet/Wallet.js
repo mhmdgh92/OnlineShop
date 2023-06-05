@@ -13,7 +13,7 @@ class Wallet extends React.Component {
     this.state = {
       loading: true,
       balance: 0,
-      userName: user.userObj.FirstName + ' ' + user.userObj.LastName
+      userName: user.userObj.firstName + ' ' + user.userObj.lastName
     }
   }
 

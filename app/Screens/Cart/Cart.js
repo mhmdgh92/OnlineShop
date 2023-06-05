@@ -14,8 +14,9 @@ export default function Cart(props) {
   // addToCartLoading: false,
   const [shipping, setShipping] = useState(10);
   const [subTotal, setSubTotal] = useState(0);
-  const [cartData, setCartData] = useState(null);
+  const [cartData, setCartData] = useState([]);
   const [onUpdateCart, setOnUpdateCart] = useState(false);
+  const [onCartLoaded, setOnCartLoaded] = useState(false);
 
   //Dispatch
   const dispatch = useDispatch();
@@ -38,32 +39,53 @@ export default function Cart(props) {
   } = cartSlice;
 
   useEffect(() => {
+    if (!onCartLoaded && userState) {
+      console.log('1')
+      setOnCartLoaded(true);
+      LoadCartData({ email: userState.email });
+      return;
+    }
     if (onUpdateCart && cartHasUpdated) {
+      console.log('4')
       setOnUpdateCart(false);
       props.navigation.navigate('Shipping', {
         cart: cartData
       });
     }
-    else if (cartData) {
+    else if (!cartIsEmpty()) {
+      console.log('3')
       calculateTotal();
     }
     else if (cartState) {
+      console.log('2')
+      console.log('cartState:' + JSON.stringify(cartState))
       setCartData(cartState);
     }
-    else if (userState) {
-      LoadCartData({ Email: userState.Email });
-    }
+
   }, [cartState, cartData, cartHasUpdated]);
 
+  function onUnmount() {
+    console.log('onUnmount')
+  }
+
+  function setCartStatus() {
+
+  }
+
   function calculateTotal() {
+    if (cartIsEmpty())
+      return;
     let subTotal = 0;
-    console.log(JSON.stringify(cartData))
     cartData.map((item) => {
       const curItemQuantitiy = Number(item.quantity);
       const curItemPrice = Number(item.price);
       subTotal += Number(curItemQuantitiy * curItemPrice);
     });
     setSubTotal(subTotal);
+  }
+
+  const cartIsEmpty = () => {
+    return cartData.length == 0;
   }
 
   const billItem = (name, price, withoutBottomBorder) => {
@@ -79,7 +101,7 @@ export default function Cart(props) {
   }
 
   function onFinalizeClicked() {
-    const data = { Email: userState.Email, updatedCart: cartData }
+    const data = { email: userState.email, updatedCart: cartData }
     setOnUpdateCart(true);
     UpdateCart(data);
   }
@@ -99,7 +121,7 @@ export default function Cart(props) {
 
   MyScrollableView = () => {
 
-    if (!cartState)
+    if (!cartState || cartIsEmpty())
       return (
         <View style={{ justifyContent: 'center', alignItems: 'center', height: '80%', width: '100%' }}>
           <AppIcon name={'cart-off'} color={GLOBAL.Color.grey} size={170} />

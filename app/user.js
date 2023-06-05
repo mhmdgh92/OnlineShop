@@ -2,10 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //////////////////////
 // USER OBJECT
-// FirstName
-// LastName
-// Phone
-// Email
+// firstName
+// lastName
+// phone
+// email
 //////////////////////
 
 export default class user {

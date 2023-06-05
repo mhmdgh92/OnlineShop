@@ -15,32 +15,36 @@ const initialState = {
 }
 
 export const loginAPI = createAsyncThunk('loginAPI', async (data) => {
-  let res = null;
-  const {
-    Email,
-    Password
-  } = data;
-  await auth()
-    .signInWithEmailAndPassword(Email, Password)
-    .then(() => {
-      res = Email;
-    }).catch(error => {
-      if (error.code === 'auth/Email-already-in-use')
-        res = Email;
-      Alert.alert(error.code);
-    });
-  return res;
+  try {
+    let res = null;
+    const {
+      email,
+      password
+    } = data;
+    await auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        res = email;
+      }).catch(error => {
+        if (error.code === 'auth/email-already-in-use')
+          res = email;
+        Alert.alert(error.code);
+      });
+    return res;
+  } catch (error) {
+    console.log('error:' + error)
+  }
 })
 
-export const getUserFireStoreAPI = createAsyncThunk('getUserFireStoreAPI', async (Email) => {
+export const getUserFireStoreAPI = createAsyncThunk('getUserFireStoreAPI', async (email) => {
   let res = null;
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .get()
     .then(documentSnapshot => {
       res = documentSnapshot.data();
-      res.Email = Email;
+      res.email = email;
     });
   return res;
 })
@@ -58,7 +62,7 @@ export const loginSlice = createSlice({
       state.loginIsLoading = false;
       if (payload.payload) {
         state.loginIsSuccess = true;
-        state.loginState = { "Email": payload.payload };
+        state.loginState = { "email": payload.payload };
       }
     },
     [loginAPI.rejected]: (state, { payload }) => {

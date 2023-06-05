@@ -15,11 +15,11 @@ const initialState = {
 export const registerAPI = createAsyncThunk('registerAPI', async (data) => {
   let res = null;
   const {
-    Email,
-    Password
+    email,
+    password
   } = data;
   await auth()
-    .createUserWithEmailAndPassword(Email, Password)
+    .createUserWithEmailAndPassword(email, password)
     .then(() => {
       res = data;
     }).catch(error => {
@@ -31,14 +31,14 @@ export const registerAPI = createAsyncThunk('registerAPI', async (data) => {
 export const setUserFireStoreAPI = createAsyncThunk('setUserFireStoreAPI', async (data) => {
   let res = null;
   const {
-    Email,
-    Phone
+    email,
+    phone
   } = data;
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .set({
-      Phone: Phone
+      phone: phone
     })
     .then(() => {
       Alert.alert('User account created successfully!');

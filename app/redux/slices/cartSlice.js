@@ -14,13 +14,13 @@ const initialState = {
 
 export const addToCart = createAsyncThunk('addToCart', async (data) => {
   const {
-    Email,
+    email,
     cartItemObj
   } = data;
   let res = false;
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .update({
       'currentOrder.cart': firestore.FieldValue.arrayUnion(cartItemObj)
     }).then(() => {
@@ -32,19 +32,21 @@ export const addToCart = createAsyncThunk('addToCart', async (data) => {
 
 export const loadCartData = createAsyncThunk('loadCartData', async (data) => {
   const {
-    Email
+    email
   } = data;
-  console.log(Email)
+  console.log(email)
   let res = [];
   await firestore()
     .collection('users')
-    .doc(Email)
+    .doc(email)
     .get()
     .then(documentSnapshot => {
-      documentSnapshot.data().currentOrder.cart.map((item, id) => {
-        item.id = id;
-        res.push(item);
-      })
+      if (documentSnapshot.data().currentOrder) {
+        documentSnapshot.data().currentOrder.cart.map((item, id) => {
+          item.id = id;
+          res.push(item);
+        })
+      }
     }).catch(error => {
       res = error;
     });
@@ -55,12 +57,12 @@ export const updateCart = createAsyncThunk('updateCart', async (data) => {
   let res = null;
   try {
     const {
-      Email,
+      email,
       updatedCart
     } = data;
     await firestore()
       .collection('users')
-      .doc(Email)
+      .doc(email)
       .update({
         'currentOrder.cart': updatedCart
       });

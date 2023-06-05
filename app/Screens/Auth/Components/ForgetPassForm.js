@@ -16,7 +16,7 @@ export default function ForgetPassForm(props) {
 
     return (
         <View>
-            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'email'} placeholder={'Email'} />
+            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.email} name={'email'} placeholder={'Email'} />
             <AppBTN onPress={handleSubmit(onSubmit)} text={'Send'} marginTop={45} loading={loading} />
         </View>
     );

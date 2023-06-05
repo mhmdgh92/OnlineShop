@@ -24,7 +24,7 @@ export default function Shipping(props) {
   } = shippingSlice;
 
   const {
-    Email
+    email
   } = userSlice.userState;
 
   useEffect(() => {
@@ -33,9 +33,10 @@ export default function Shipping(props) {
       moveToNextScreen();
       return;
     }
-  }, [onUpdateShippingInfo]);
+  }, [onUpdateShippingInfo, shippingState]);
 
   function moveToNextScreen() {
+    console.log('moveToNextScreen')
     props.navigation.navigate('PickLocation', {
       cart: props.route.params.cart,
       shipping: shippingInfo
@@ -52,7 +53,7 @@ export default function Shipping(props) {
 
   function onContinueClicked() {
     setOnUpdateShippingInfo(true);
-    SendShippingInfo({ Email, shippingInfo });
+    SendShippingInfo({ email, shippingInfo });
   }
 
   return (
@@ -60,13 +61,13 @@ export default function Shipping(props) {
       <View style={{ alignItems: 'center' }}>
         <AppTopBar title={'Shipping info'} />
         <AppTextInput marginTop={15} name={'account'} placeholder={'First name'}
-          onEndEditing={(text) => addShippingInfo('FirstName', text)} />
+          onEndEditing={(text) => addShippingInfo('firstName', text)} />
         <AppTextInput marginTop={5} name={'account'} placeholder={'Last name'}
-          onEndEditing={(text) => addShippingInfo('LastName', text)} />
-        <AppTextInput marginTop={5} name={'cellphone'} placeholder={'Phone number'}
-          onEndEditing={(text) => addShippingInfo('Phone', text)} />
+          onEndEditing={(text) => addShippingInfo('lastName', text)} />
+        <AppTextInput marginTop={5} name={'cellphone'} placeholder={'phone number'}
+          onEndEditing={(text) => addShippingInfo('phone', text)} />
         <AppTextInput marginTop={5} name={'email'} placeholder={'Email'}
-          onEndEditing={(text) => addShippingInfo('Email', text)} />
+          onEndEditing={(text) => addShippingInfo('email', text)} />
         <AppTextInput marginTop={5} name={'map-marker'} placeholder={'Country'}
           onEndEditing={(text) => addShippingInfo('Country', text)} />
         <AppTextInput marginTop={5} name={'city'} placeholder={'City'}

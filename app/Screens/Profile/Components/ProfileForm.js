@@ -8,17 +8,17 @@ export default function ProfileForm(props) {
 
     const { userObj, loading, onSubmitClicked } = props;
     const {
-        FirstName,
-        LastName,
-        Phone,
-        Email
+        firstName,
+        lastName,
+        phone,
+        email
     } = userObj;
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            FirstName: FirstName,
-            LastName: LastName,
-            Phone: Phone,
-            Email: Email
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone,
+            email: email
         }
     });
 
@@ -28,20 +28,20 @@ export default function ProfileForm(props) {
 
     return (
         <View>
-            <AppController defaultValue={FirstName} iconName={'account'}
-                rules={[nameRules(), { required: false }]} control={control} error={errors.FirstName}
-                name={'FirstName'} placeholder={'First Name'} />
+            <AppController defaultValue={firstName} iconName={'account'}
+                rules={[nameRules(), { required: false }]} control={control} error={errors.firstName}
+                name={'firstName'} placeholder={'First Name'} />
 
-            <AppController defaultValue={LastName} iconName={'account'}
-                rules={[nameRules(), { required: false }]} control={control} error={errors.LastName}
-                name={'LastName'} placeholder={'Last Name'} />
+            <AppController defaultValue={lastName} iconName={'account'}
+                rules={[nameRules(), { required: false }]} control={control} error={errors.lastName}
+                name={'lastName'} placeholder={'Last Name'} />
 
-            <AppController defaultValue={Phone} keyboardType={'numeric'}
+            <AppController defaultValue={phone} keyboardType={'numeric'}
                 iconName={'cellphone'} rules={[phoneRules(), { required: false }]} control={control}
-                error={errors.Phone} name={'Phone'} placeholder={'Phone'} />
+                error={errors.phone} name={'phone'} placeholder={'Phone'} />
 
-            <AppController editable={false} defaultValue={Email}
-                keyboardType={'email-address'} control={control} error={errors.Email}
+            <AppController editable={false} defaultValue={email}
+                keyboardType={'email-address'} control={control} error={errors.email}
                 name={'email'} placeholder={'Email'} />
 
             <AppBTN onPress={handleSubmit(onSubmit)} text={'Save'} marginTop={45} loading={loading} />

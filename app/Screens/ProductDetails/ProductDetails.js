@@ -46,7 +46,7 @@ export default function ProductDetails(props) {
   }
 
   function AddToCartClicked() {
-    let data = { Email: userState.Email, cartItemObj: getCartItemObj() }
+    let data = { email: userState.email, cartItemObj: getCartItemObj() }
     AddToCart(data);
   }
 

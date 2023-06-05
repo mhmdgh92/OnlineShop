@@ -40,7 +40,7 @@ onItemClick(name){
           <AppText text={'Live Chat'} textAlign={'left'} size={13}/>
           {listItem('none','chat-processing-outline','Customers service',40)}
           <AppText marginTop={3} marginBottom={3} text={'Other links'} textAlign={'left'} size={13}/>
-          {listItem('ContactUs','Email-outline','Contact Us')}
+          {listItem('ContactUs','email-outline','Contact Us')}
           {listItem('Terms','file-document','Terms and conditions')}
           {listItem('Privacy','file-document','Privacy Policy')}
           {listItem('Website','medal-outline','Rate Us')}

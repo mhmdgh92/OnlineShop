@@ -29,16 +29,16 @@ export default function ForgetPass(props) {
 
   const onSubmit = data => {
     const {
-      Email
+      email
     } = data;
-    SendForgetPassAPI(Email);
+    SendForgetPassAPI(email);
   };
 
   return (
     <View style={{ alignItems: 'center', height: ScreenHeight * 0.95, width: ScreenWidth }}>
       <LogoAndName />
       <AppText marginTop={20} text="Forget password" size={26} />
-      <AppText marginTop={2} text={"Enter your Email to get \n an activation message"} size={14}
+      <AppText marginTop={2} text={"Enter your email to get \n an activation message"} size={14}
         color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
       <ForgetPassForm loading={forgetPassIsLoading} onSubmitClicked={onSubmit} />
     </View>

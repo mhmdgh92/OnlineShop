@@ -1,6 +1,6 @@
 import { View, Dimensions, Platform, PixelRatio, Text } from 'react-native';
 const { width: ScreenWidth, height: ScreenHeight, } = Dimensions.get('window');
-// based on iPhone 11 Pro
+// based on iphone 11 Pro
 const heightBaseScale = ScreenHeight / 812;
 const widthBaseScale = ScreenWidth / 375;
 function normalizeVal(size, based = 'width') {

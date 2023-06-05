@@ -50,7 +50,7 @@ export default function Login(props) {
       return;
     }
     if (loginIsSuccess) {
-      GetUserFireStoreAPI(loginState.Email);
+      GetUserFireStoreAPI(loginState.email);
       return;
     }
     if (status == 0) {
@@ -76,7 +76,7 @@ export default function Login(props) {
     });
   }
 
-  function onForgotPasswordClick() {
+  function onForgotpasswordClick() {
     props.navigation.navigate('ForgetPass');
   }
 
@@ -94,10 +94,10 @@ export default function Login(props) {
 
   const onSubmit = data => {
     const {
-      Email,
-      Password
+      email,
+      password
     } = data;
-    LoginAPI({ Email: Email, Password: Password });
+    LoginAPI({ email: email, password: password });
   };
 
   return (
@@ -106,7 +106,7 @@ export default function Login(props) {
         <LogoAndName />
         <AppText marginTop={27} text="Welcome back" size={24} />
         <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-        <LoginForm loading={loginIsLoading} onForgotPasswordClick={onForgotPasswordClick} onSubmit={onSubmit} />
+        <LoginForm loading={loginIsLoading} onForgotpasswordClick={onForgotpasswordClick} onSubmit={onSubmit} />
         <AppBTN onPress={onSkipClick} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15} />
         <View style={{ marginTop: heightPixel(80), flexDirection: 'row' }}>
           <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />

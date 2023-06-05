@@ -9,6 +9,7 @@ import productsSlice from './slices/productsSlice';
 import cartSlice from './slices/cartSlice';
 import profileSlice from './slices/profileSlice';
 import shippingSlice from './slices/shippingSlice';
+import orderSlice from './slices/orderSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,8 +22,9 @@ export const store = configureStore({
     products: productsSlice,
     cart: cartSlice,
     profile: profileSlice,
-    shipping: shippingSlice
-  },
+    shipping: shippingSlice,
+    order: orderSlice
+  }
 })
 
 export default store;

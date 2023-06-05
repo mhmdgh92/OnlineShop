@@ -9,12 +9,12 @@ const initialState = {
   forgetPassErrorMessage: ''
 }
 
-export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (Email) => {
+export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (email) => {
   let res = null;
   await auth()
-    .sendPasswordResetEmail(Email)
+    .sendpasswordResetemail(email)
     .then(() => {
-      Alert.alert('Password reset Email has been sent!');
+      Alert.alert('password reset email has been sent!');
       res = true;
     })
     .catch(error => {

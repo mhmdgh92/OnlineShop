@@ -41,7 +41,7 @@ const AppTextInput = (props) => {
         value={value}
         defaultValue={defaultValue}
         textAlignVertical={textAlignVertical ? textAlignVertical : 'auto'}
-        placeholder={placeholder ? placeholder : 'Email'}
+        placeholder={placeholder ? placeholder : 'email'}
         onEndEditing={(text) => { onEndEditing ? onEndEditing(text.nativeEvent.text) : null }}
         {...props} style={{ margin: 0, marginTop: 0 }} textStyle={props.textStyle} /></View>
     </View>

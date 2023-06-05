@@ -15,7 +15,6 @@ const AppBottomBar = (props) => {
     } = pars;
 
     const onClick = () => {
-      console.log(props)
       RootNavigation.navigate(name);
     }
 

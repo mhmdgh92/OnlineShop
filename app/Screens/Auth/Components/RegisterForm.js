@@ -18,10 +18,10 @@ export default function RegisterForm(props) {
 
     return (
         <View>
-            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'email'} placeholder={'Email'} />
-            <AppController keyboardType={'numeric'} iconName={'cellphone'} rules={phoneRules()} control={control} error={errors.Phone} name={'Phone'} placeholder={'Phone'} />
-            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.Password} name={'Password'} placeholder={'Password'} />
-            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.ConfirmPassword} name={'ConfirmPassword'} placeholder={'Confirm Password'} />
+            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.email} name={'email'} placeholder={'Email'} />
+            <AppController keyboardType={'numeric'} iconName={'cellphone'} rules={phoneRules()} control={control} error={errors.phone} name={'phone'} placeholder={'Phone'} />
+            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.password} name={'password'} placeholder={'Password'} />
+            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.confirmPassword} name={'confirmPassword'} placeholder={'Confirm password'} />
             <View style={{ marginTop: heightPixel(15), flexDirection: 'row', justifyContent: 'center' }}>
                 <AppCheckBox />
                 <AppText text={"\t \t I agree to the "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'} />

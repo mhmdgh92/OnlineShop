@@ -22,7 +22,7 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
+	<key>LSRequiresIphoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>

@@ -10,7 +10,7 @@ export default function LoginForm(props) {
 
     const { control, handleSubmit, formState: { errors } } = useForm();
 
-    const { onForgotPasswordClick, loading } = props;
+    const { onForgotpasswordClick, loading } = props;
 
     const onSubmit = data => {
         props.onSubmit(data);
@@ -19,9 +19,10 @@ export default function LoginForm(props) {
 
     return (
         <View>
-            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.Email} name={'email'} placeholder={'Email'} />
-            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.Password} name={'Password'} placeholder={'Password'} />
-            <TouchableOpacity onPress={onForgotPasswordClick} style={{ marginTop: heightPixel(10) }}><AppText text={"Forget Password?"} color={GLOBAL.Color.darkGrey}
+            <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.email} name={'email'} placeholder={'Email'} />
+            <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.password} name={'password'}
+             placeholder={'Password'} />
+            <TouchableOpacity onPress={onForgotpasswordClick} style={{ marginTop: heightPixel(10) }}><AppText text={"Forget password?"} color={GLOBAL.Color.darkGrey}
                 size={14} fontFamily={'Montserrat-SemiBold'} />
             </TouchableOpacity>
             <AppBTN onPress={handleSubmit(onSubmit)} text={'Login'} marginTop={45} loading={loading} />

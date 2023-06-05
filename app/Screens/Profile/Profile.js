@@ -48,13 +48,13 @@ export default function Profile(props) {
     setOnUpdateProfile(false);
     const newUserState = JSON.parse(JSON.stringify(userState));
     const {
-      FirstName,
-      LastName,
-      Phone
+      firstName,
+      lastName,
+      phone
     } = newInfo;
-    newUserState.FirstName = FirstName;
-    newUserState.LastName = LastName;
-    newUserState.Phone = Phone;
+    newUserState.firstName = firstName;
+    newUserState.lastName = lastName;
+    newUserState.phone = phone;
     await SaveUser(newUserState);
     Alert.alert('Profile updated successfully!');
   }
