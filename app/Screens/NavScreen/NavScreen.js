@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Alert, TouchableOpacity } from 'react-native';
 import { AppIcon, AppImage, AppText, AppTopBar, AppListItem, AppBottomBar } from '../Common/';
-import { normalize, heightPixel, widthPixel } from '../Common/Utils/PixelNormalization';
+import { normalize, heightPixel } from '../Common/Utils/PixelNormalization';
 const GLOBAL = require('../Common');
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from "../../redux/slices/userSlice";
@@ -19,9 +19,8 @@ export default function NavScreen(props) {
   const {
     userRemoveSuccess
   } = userSlice;
-  
+
   useEffect(() => {
-    console.log('userRemoveSuccess:' + userRemoveSuccess)
     if (userRemoveSuccess)
       RNRestart
         .restart();

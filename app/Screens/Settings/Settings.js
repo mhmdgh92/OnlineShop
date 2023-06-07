@@ -1,92 +1,90 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { AppTopBar, AppLoader, AppToggleBTN, AppPicker, AppBTN } from '../Common/';
+import { AppTopBar, AppToggleBTN, AppPicker, AppBTN } from '../Common/';
 import { ListItem } from './Components/';
-import user from '../../user';
+import { useSelector, useDispatch } from 'react-redux';
+import { saveUser } from "../../redux/slices/userSlice";
 
-class Settings extends React.Component {
+export default function Settings(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      fullLoading: true,
-      loading: false,
-      notifications: false,
-      region: 'Europe',
-      currency: 'USD'
+  //States
+  const userSlice = useSelector(state => state.user);
+
+  const {
+    settings
+  } = userSlice.userState;
+  const [curSettings, setCurSettings] = useState({ _notifications: settings.notifications, _region: settings.region, _currency: settings.currency });
+  const [onMount, setOnMount] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [onDataSaved, setOnDataSaved] = useState(false);
+  //Dispatch
+  const dispatch = useDispatch();
+  //Reducers
+  const SaveUser = (data) => { dispatch(saveUser(data)); }
+
+
+  const {
+    _notifications,
+    _region,
+    _currency
+  } = curSettings;
+
+  useEffect(() => {
+    if (loading && onDataSaved) {
+      goBack();
+      return;
     }
-  }
-
-  async componentDidMount() {
-    await this.checkSavedSettings();
-  }
-
-  async checkSavedSettings() {
-    let userObj = user.userObj;
-    if (userObj.settings)
-      this.setData(userObj.settings);
-    else {
-      userObj.settings = {
-        notifications: false, region: 'Europe', currency: 'USD'
-      }
-      await user.saveData(userObj);
-      this.setState({ fullLoading: false })
+    if (onMount) {
+      setDataFromUserObj();
+      setOnMount(false);
+      return;
     }
-  }
+  }, [onDataSaved, onMount]);
 
-  setData(data) {
+  async function setDataFromUserObj() {
     const {
       notifications,
       region,
       currency
-    } = data;
-    this.setState({ fullLoading: false, notifications: notifications, region: region, currency: currency })
+    } = settings;
+    await setCurSettings({ _notifications: notifications, _region: region, _currency: currency })
   }
 
-  async saveData() {
-    const {
-      notifications,
-      region,
-      currency
-    } = this.state;
-    user.userObj.settings = {
-      notifications: notifications, region: region, currency: currency
-    }
-    await user.saveDataObj();
-    this.setState({ loading: false })
+  function toggleSwitch() {
+    setCurSettings({ ...curSettings, _notifications: !_notifications })
   }
 
-  async onSaveClicked() {
-    this.setState({ loading: true })
-    await this.saveDataObj();
+  function setRegionSelected(newRegion) {
+    setCurSettings({ ...curSettings, _region: newRegion })
   }
 
-  toggleSwitch() {
-    this.setState({ notifications: !this.state.notifications })
+  function setCurrencySelected(newCurrency) {
+    setCurSettings({ ...curSettings, _currency: newCurrency })
   }
 
-  setRegionSelected(newRegion) {
-    this.setState({ region: newRegion })
+  function onSaveClicked() {
+    setLoading(true);
+    saveData();
   }
 
-  setCurrencySelected(newCurrency) {
-    this.setState({ currency: newCurrency })
+  async function saveData() {
+    const tempUserState = JSON.parse(JSON.stringify(userSlice.userState));
+    tempUserState.settings = { notifications: _notifications, region: _region, currency: _currency };
+    await SaveUser(tempUserState);
+    setOnDataSaved(true);
   }
 
-  render() {
-    const { fullLoading, loading, notifications, region, currency } = this.state;
-    if (fullLoading)
-      return <AppLoader />
-    return (
-      <View style={{ width: '100%', height: '100%' }}>
-        <AppTopBar title={'Settings'} />
-        <ListItem icon={'bell-outline'} title={'Notifications'}><AppToggleBTN isEnabled={notifications} toggleSwitch={() => this.toggleSwitch()} /></ListItem>
-        <ListItem icon={'globe-model'} title={'Region'}><AppPicker setItemSelected={(value) => this.setRegionSelected(value)} picked={region} items={['Europe', 'N-America', 'S-America', 'Asia', 'Africa', 'Australia']} /></ListItem>
-        <ListItem icon={'cash'} title={'Currency'}><AppPicker setItemSelected={(value) => this.setCurrencySelected(value)} picked={currency} items={['USD', 'GBP', 'Eur', 'Rial']} /></ListItem>
-        <AppBTN loading={loading} text={'Save'} marginTop={425} onPress={() => this.onSaveClicked()} />
-      </View>
-    );
+  function goBack() {
+    props.navigation.goBack();
   }
+
+  return (
+    <View style={{ width: '100%', height: '100%' }}>
+      <AppTopBar title={'Settings'} />
+      <ListItem icon={'bell-outline'} title={'Notifications'}><AppToggleBTN isEnabled={_notifications} toggleSwitch={() => toggleSwitch()} /></ListItem>
+      <ListItem icon={'globe-model'} title={'Region'}><AppPicker setItemSelected={(value) => setRegionSelected(value)} picked={_region} items={['Europe', 'N-America', 'S-America', 'Asia', 'Africa', 'Australia']} /></ListItem>
+      <ListItem icon={'cash'} title={'Currency'}><AppPicker setItemSelected={(value) => setCurrencySelected(value)} picked={_currency} items={['USD', 'GBP', 'Eur', 'Rial']} /></ListItem>
+      <AppBTN loading={loading} text={'Save'} marginTop={425} onPress={() => onSaveClicked()} />
+    </View>
+  );
 }
-
-export default Settings;

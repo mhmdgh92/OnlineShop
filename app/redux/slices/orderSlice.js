@@ -3,6 +3,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import firestore from '@react-native-firebase/firestore';
 
 const initialState = {
+  loadOrdersState: null,
+  loadOrdersLoading: true,
+  loadOrdersErrorMessage: '',
+
   orderAddState: null,
   orderAddingLoading: false,
   orderAddErrorMessage: '',
@@ -11,6 +15,26 @@ const initialState = {
   removeCurrentCartOrderLoading: false,
   removeCurrentCartOrderErrorMessage: ''
 }
+
+export const loadOrders = createAsyncThunk('loadOrders', async (data) => {
+  const {
+    email
+  } = data;
+  let res = [];
+  await firestore()
+    .collection('users')
+    .doc(email)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.data().orders) {
+        documentSnapshot.data().orders.map((item, id) => {
+          item.id = id;
+          res.push(item);
+        })
+      }
+    });
+  return res;
+})
 
 export const addToOrders = createAsyncThunk('addToOrders', async (data) => {
   try {
@@ -59,6 +83,21 @@ export const orderSlice = createSlice({
   reducers: {
     reset: () => initialState
   }, extraReducers: {
+    //Orders Loading
+    [loadOrders.pending]: (state) => {
+      state.loadOrdersLoading = true;
+    },
+    [loadOrders.fulfilled]: (state, { payload }) => {
+      console.log('Here')
+      if (payload)
+        state.loadOrdersState = payload;
+      state.loadOrdersLoading = false;
+      state.loadOrdersErrorMessage = '';
+    }, [loadOrders.rejected]: (state, { payload }) => {
+      state.loadOrdersLoading = false;
+      state.loadOrdersErrorMessage = payload;
+    },
+
     //Order Adding
     [addToOrders.pending]: (state) => {
       state.orderAddLoading = true;

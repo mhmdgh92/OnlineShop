@@ -1,12 +1,12 @@
 //Stateful
-class Test extends React.Component{
+class Test extends React.Component {
   constructor() {
     super()
     this.state = {
       name: 'Chris',
-      info:{
-        id:1,
-        name:2
+      info: {
+        id: 1,
+        name: 2
       }
     }
   }
@@ -20,5 +20,5 @@ class Test extends React.Component{
 
 //Stateless
 const Test = () => (
-         <SomeComponent />
+  <SomeComponent />
 )

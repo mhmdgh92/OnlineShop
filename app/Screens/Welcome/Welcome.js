@@ -1,61 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { AppText, LogoAndName, AppImage, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import { heightPixel, widthPixel } from '../Common/Utils/PixelNormalization';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { styles } from "./style";
 
-class Welcome extends React.Component {
+export default function Welcome(props) {
 
-  state = {
-    loading: true
-  }
+  const [loading, setLoading] = useState(true);
 
-  async componentDidMount() {
-    // AsyncStorage.clear();//T,R
-    this.checkLunchedBefore();
-  }
+  useEffect(() => {
+    checkLunchedBefore();
+  }, []);
 
-  checkLunchedBefore = async (value) => {
+  async function checkLunchedBefore() {
     const lunchedBefore = await AsyncStorage.getItem('lunchedBefore');
     if (lunchedBefore) {
-      this.moveToNextScreen();
+      moveToNextScreen();
       return;
     }
-    this.setState({ loading: false });
-    this.setLunchedBeforeTrue();
+    setLoading(false);
+    setLunchedBeforeTrue();
   }
 
-  setLunchedBeforeTrue = async (value) => {
+  async function setLunchedBeforeTrue() {
     await AsyncStorage.setItem('lunchedBefore', JSON.stringify(true))
   }
 
-  moveToNextScreen() {
-    this.props.navigation.reset({
+  function moveToNextScreen() {
+    props.navigation.reset({
       index: 0,
       routes: [{ name: 'Login' }],//T,Login
     });
   }
 
-  render() {
-    const { loading } = this.state;
-    if (loading)
-      return <AppLoader />
-    return (
-      <View style={{ alignItems: 'center' }}>
-        <View style={{ marginTop: heightPixel(11), height: heightPixel(100) }}><LogoAndName width={300} /></View>
-        <View style={{ marginTop: heightPixel(37) }}><AppText text="Whatever you need.." size={24} /></View>
-        <View style={{ marginTop: heightPixel(50), height: heightPixel(255) }}><AppImage source={require('../../Assets/Welcome.png')} /></View>
-        <View style={{ marginTop: heightPixel(50) }}>
-          <AppText text={"is here"} fontFamily={'Montserrat-Bold'} color={GLOBAL.Color.c1} size={29} />
-          <AppText text={"\n High-quality products, on-time delivery, \n massive discounts!"} size={14} fontFamily={'Montserrat-SemiBold'} />
-        </View>
-        <View style={{ marginTop: heightPixel(65), height: heightPixel(55), width: widthPixel(320), justifyContent: 'flex-end', alignItems: 'center' }}>
-          <AppBTN text={'Next'} onPress={() => this.moveToNextScreen()} />
-        </View>
+  if (loading)
+    return <AppLoader />
+  return (
+    <View style={styles.container}>
+      <View style={styles.logoAndName}><LogoAndName width={300} /></View>
+      <View style={styles.heading}><AppText text="Whatever you need.." size={24} /></View>
+      <View style={styles.img}><AppImage source={require('../../Assets/Welcome.png')} /></View>
+      <View style={styles.middleView}>
+        <AppText text={"is here"} fontFamily={'Montserrat-Bold'} color={GLOBAL.Color.c1} size={29} />
+        <AppText text={"\n High-quality products, on-time delivery, \n massive discounts!"} size={14} fontFamily={'Montserrat-SemiBold'} />
       </View>
-    );
-  }
+      <View style={styles.btnView}>
+        <AppBTN text={'Next'} onPress={() => moveToNextScreen()} />
+      </View>
+    </View>
+  );
 }
-
-export default Welcome;

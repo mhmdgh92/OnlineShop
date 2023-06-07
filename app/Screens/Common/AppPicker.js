@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const GLOBAL = require('./Globals');
-import { heightPixel, widthPixel, normalize } from './Utils/PixelNormalization';
+import { heightPixel } from './Utils/PixelNormalization';
 import { Picker } from '@react-native-picker/picker';
 
 const AppPicker = (props) => {
-
-  const [selected, setSelected] = useState(props.picked ? props.picked : props.items[0]);
+  const [selected, setSelected] = useState(props.picked ? props.picked : 0);
 
   function Item(name, id) {
     return (
@@ -17,7 +13,7 @@ const AppPicker = (props) => {
 
   function setThisItemSelected(itemValue) {
     setSelected(itemValue);
-    if(props.setItemSelected)
+    if (props.setItemSelected)
       props.setItemSelected(itemValue);
   }
 

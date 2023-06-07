@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { Dimensions, View } from 'react-native';
-const ScreenHeight = Dimensions.get('window').height;
-const ScreenWidth = Dimensions.get('window').width;
+import { View } from 'react-native';
 import { AppText, LogoAndName } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { ForgetPassForm } from './Components/';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
+import { styles } from './forgetPassStlye';
 
 export default function ForgetPass(props) {
 
@@ -35,7 +34,7 @@ export default function ForgetPass(props) {
   };
 
   return (
-    <View style={{ alignItems: 'center', height: ScreenHeight * 0.95, width: ScreenWidth }}>
+    <View style={styles.container}>
       <LogoAndName />
       <AppText marginTop={20} text="Forget password" size={26} />
       <AppText marginTop={2} text={"Enter your email to get \n an activation message"} size={14}

@@ -40,37 +40,23 @@ export default function Cart(props) {
 
   useEffect(() => {
     if (!onCartLoaded && userState) {
-      console.log('1')
       setOnCartLoaded(true);
       LoadCartData({ email: userState.email });
       return;
     }
     if (onUpdateCart && cartHasUpdated) {
-      console.log('4')
       setOnUpdateCart(false);
       props.navigation.navigate('Shipping', {
         cart: cartData
       });
     }
     else if (!cartIsEmpty()) {
-      console.log('3')
       calculateTotal();
     }
     else if (cartState) {
-      console.log('2')
-      console.log('cartState:' + JSON.stringify(cartState))
       setCartData(cartState);
     }
-
   }, [cartState, cartData, cartHasUpdated]);
-
-  function onUnmount() {
-    console.log('onUnmount')
-  }
-
-  function setCartStatus() {
-
-  }
 
   function calculateTotal() {
     if (cartIsEmpty())
@@ -106,7 +92,7 @@ export default function Cart(props) {
     UpdateCart(data);
   }
 
-  onPlusOrMinusQuantity = (itemID, plusOrMinus) => {
+  function onPlusOrMinusQuantity(itemID, plusOrMinus) {
     const tempCartData = JSON.parse(JSON.stringify(cartData));
     if (plusOrMinus) {
       tempCartData[itemID].quantity++;
@@ -119,7 +105,7 @@ export default function Cart(props) {
     setCartData(tempCartData);
   }
 
-  MyScrollableView = () => {
+  const MyScrollableView = () => {
 
     if (!cartState || cartIsEmpty())
       return (

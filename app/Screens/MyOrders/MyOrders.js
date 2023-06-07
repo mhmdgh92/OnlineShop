@@ -1,41 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppLoader, AppIcon, AppText } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import OrderItem from './Components/OrderItem';
-import user from '../../user';
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadOrders } from "../../redux/slices/orderSlice";
 
-class MyOrders extends React.Component {
+export default function MyOrders() {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      subTotal: 0,
-      shipping: 10,
-      data: null,
-      loading: true,
-    }
-  }
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const userSlice = useSelector(state => state.user);
+  const orderSlice = useSelector(state => state.order);
+  //Reducers
+  const LoadOrders = (data) => { dispatch(loadOrders(data)); }
 
-  async componentDidMount() {
-    this.LoadData();
-  }
+  const {
+    userState
+  } = userSlice;
 
-  async LoadData() {
-    await firestore()
-      .collection('users')
-      .doc(user.userObj.email)
-      .get()
-      .then(documentSnapshot => {
-        this.setState({ data: documentSnapshot.data().orders, loading: false });
-      });
-  }
+  const {
+    loadOrdersState,
+    loadOrdersLoading
+  } = orderSlice;
 
-  render() {
-    const { loading, data } = this.state;
+  useEffect(() => {
+    LoadOrders({ email: userState.email });
+  }, []);
 
-    // if (!data)
+  if (loadOrdersLoading)
+    return <AppLoader />
+
+  if (loadOrdersState.length == 0)
     return (
       <View style={{ height: '100%', width: '100%' }}>
         <AppTopBar title={'My Orders'} />
@@ -46,15 +43,11 @@ class MyOrders extends React.Component {
       </View>
     )
 
-    if (loading)
-      return <AppLoader />
-    return (
-      <View style={{ alignItems: 'center' }}>
-        <AppTopBar title={'My Orders'} />
-        <AppFlatList numColumns={1} data={data} renderItem={({ item }) => <OrderItem item={item} />} />
-      </View>
-    );
-  }
-}
 
-export default MyOrders;
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <AppTopBar title={'My Orders'} />
+      <AppFlatList numColumns={1} data={loadOrdersState} renderItem={({ item }) => <OrderItem item={item} />} />
+    </View>
+  );
+}

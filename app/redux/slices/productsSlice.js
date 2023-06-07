@@ -5,7 +5,11 @@ import firestore from '@react-native-firebase/firestore';
 const initialState = {
   productsState: null,
   productsIsLoading: true,
-  productsErrorMessage: ''
+  productsErrorMessage: '',
+
+  searchProductsState: null,
+  searchProductsIsLoading: true,
+  searchProductsErrorMessage: ''
 }
 
 export const loadProductsData = createAsyncThunk('loadProductsData', async (data) => {
@@ -27,11 +31,32 @@ export const loadProductsData = createAsyncThunk('loadProductsData', async (data
   return res;
 })
 
+export const searchProduct = createAsyncThunk('searchProduct', async (data) => {
+  let res = [];
+  const {
+    searchInput
+  } = data;
+  await firestore()
+    .collection('products')
+    .orderBy('name')
+    .startAt(searchInput)
+    .endAt(searchInput + '~')
+    .get()
+    .then(documentSnapshot => {
+      console.log('documentSnapshot:' + JSON.stringify(documentSnapshot));
+      documentSnapshot.docs.map((item) => {
+        res.push(item.data());
+      })
+    });
+  return res;
+})
+
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
   }, extraReducers: {
+    //Load Products
     [loadProductsData.pending]: (state) => {
       state.productsIsLoading = true;
     },
@@ -43,7 +68,22 @@ export const productsSlice = createSlice({
     }, [loadProductsData.rejected]: (state, { payload }) => {
       state.productsIsLoading = false;
       state.productsErrorMessage = payload;
+    },
+
+    //Search Products
+    [searchProduct.pending]: (state) => {
+      state.searchProductsIsLoading = true;
+    },
+    [searchProduct.fulfilled]: (state, { payload }) => {
+      console.log('payload:' + JSON.stringify(payload))
+      state.searchProductsState = payload;
+      state.searchProductsIsLoading = false;
+      state.searchProductsErrorMessage = '';
+    }, [searchProduct.rejected]: (state, { payload }) => {
+      state.searchProductsIsLoading = false;
+      state.searchProductsErrorMessage = payload;
     }
+
   }
 })
 

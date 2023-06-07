@@ -2,6 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//////////////////////
+// USER OBJECT
+// firstName
+// lastName
+// phone
+// email
+//////////////////////
+
+
 const initialState = {
   userState: null,
   userLoadSuccess: false,
@@ -16,9 +25,14 @@ export const loadUser = createAsyncThunk('loadUser', async () => {
 })
 
 export const saveUser = createAsyncThunk('saveUser', async (data) => {
-  userState = data;
-  await AsyncStorage.setItem('user', JSON.stringify(data));
-  return data;
+  console.log('Save User:' + JSON.stringify(data))
+  try {
+    userState = data;
+    await AsyncStorage.setItem('user', JSON.stringify(data));
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 export const removeUser = createAsyncThunk('removeUser', async () => {

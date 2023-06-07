@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import { AppBottomBar, AppLoader, AppHorListOfItems, AppSearchBar } from '../Common/';
 import { BigPromo, TwoPromos, WideBanner } from './Components/';
-import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
+import { styles } from "./style";
 
 export default function Home(props) {
 
@@ -28,11 +28,11 @@ export default function Home(props) {
     return <AppLoader />
 
   return (
-    <View style={{ height: '100%', width: '100%' }}>
+    <View style={styles.container}>
       <AppSearchBar />
-      <View style={{ marginTop: '1%', height: '82%', width: '100%' }}>
+      <View style={styles.scrollableArea}>
         <ScrollView>
-          <View style={{ alignItems: 'center' }}>
+          <View style={styles.innerView}>
             <BigPromo data={homeState[0].data} />
             <TwoPromos data={homeState[4].data} />
             <WideBanner data={homeState[5].data[0].image} />
@@ -46,7 +46,7 @@ export default function Home(props) {
             <WideBanner data={homeState[5].data[4].image} />
             <WideBanner data={homeState[5].data[5].image} />
             <AppHorListOfItems data={homeState[1].data[2].products} />
-            <View style={{ height: heightPixel(10) }} />
+            <View style={styles.bottomView} />
           </View>
         </ScrollView>
       </View>

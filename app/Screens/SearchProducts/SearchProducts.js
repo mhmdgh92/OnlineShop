@@ -1,69 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppFlatList, AppLoader, AppProductItem, AppText, AppIcon } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import firestore from '@react-native-firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchProduct } from '../../redux/slices/productsSlice';
 
-class SearchProducts extends React.Component {
+export default function SearchProducts(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      data: []
+  const [dataLoaded, setDataLoaded] = useState(false);
+  //Dispatch
+  const dispatch = useDispatch();
+  //States
+  const productsSlice = useSelector(state => state.products);
+  //Reducers
+  const SearchProduct = (data) => { dispatch(searchProduct(data)); }
+
+  const {
+    searchInput
+  } = props.route.params;
+
+  const {
+    searchProductsState,
+    searchProductsIsLoading
+  } = productsSlice;
+
+  useEffect(() => {
+    if (dataLoaded && searchProductsState) {
+      setDataLoaded(false);
+      return;
     }
-  }
+    if (!dataLoaded) {
+      setDataLoaded(true);
+      SearchProduct({ searchInput });
+    }
+  }, [searchProductsState]);
 
-  componentDidMount() {
-    const searchInput = this.props.route.params.searchInput;
-    this.searchThisProduct(searchInput);
-  }
+  if (searchProductsIsLoading)
+    return <AppLoader />
 
-  async searchThisProduct(input) {
-    let results = [];
-    await firestore()
-      .collection('products')
-      .orderBy('name')
-      .startAt(input)
-      .endAt(input + '~')
-      .get()
-      .then(documentSnapshot => {
-        documentSnapshot.docs.map((item) => {
-          results.push(item.data());
-        })
-        this.setState({ data: results, loading: false })
-      });
-  }
-
-  render() {
-    const { loading, data } = this.state;
-
-    if (loading)
-      return <AppLoader />
-
-    if (data.length === 0)
-      return (
-        <View style={{ height: '100%', alignItems: 'center' }}>
-          <AppTopBar title={'Results'} />
-          <View style={{ height: '70%', justifyContent: 'center', alignItems: 'center' }}>
-            <AppIcon name={'magnify-remove-outline'} color={GLOBAL.Color.grey} size={170} />
-            <AppText marginTop={10} text="No Results Found!" color={GLOBAL.Color.black} size={20} />
-          </View>
-        </View>
-      )
-
+  if (!searchProductsState || searchProductsState.length === 0)
     return (
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ height: '100%', alignItems: 'center' }}>
         <AppTopBar title={'Results'} />
-        <View style={{ height: '100%', width: '95%' }}>
-          <AppFlatList style={{ width: '100%' }} numColumns={2} data={data}
-            renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
-          <View style={{ height: '16%' }} />
+        <View style={{ height: '70%', justifyContent: 'center', alignItems: 'center' }}>
+          <AppIcon name={'magnify-remove-outline'} color={GLOBAL.Color.grey} size={170} />
+          <AppText marginTop={10} text="No Results Found!" color={GLOBAL.Color.black} size={20} />
         </View>
       </View>
     );
-  }
-}
 
-export default SearchProducts;
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <AppTopBar title={'Results'} />
+      <View style={{ height: '100%', width: '95%' }}>
+        <AppFlatList style={{ width: '100%' }} numColumns={2} data={searchProductsState}
+          renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
+        <View style={{ height: '16%' }} />
+      </View>
+    </View>
+  );
+}

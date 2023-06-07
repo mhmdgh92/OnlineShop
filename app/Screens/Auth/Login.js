@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Dimensions, View, ScrollView } from 'react-native';
-const ScreenHeight = Dimensions.get('window').height;
-const ScreenWidth = Dimensions.get('window').width;
+import { TouchableOpacity, View, ScrollView } from 'react-native';
 import { AppText, LogoAndName, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { LoginForm } from './Components/';
 import auth from '@react-native-firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser, saveUser } from "../../redux/slices/userSlice";
 import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
+import { styles } from "./loginStyle";
 
 export default function Login(props) {
 
@@ -102,13 +100,13 @@ export default function Login(props) {
 
   return (
     <ScrollView>
-      <View style={{ alignItems: 'center', height: ScreenHeight * 0.9675, width: ScreenWidth }}>
+      <View style={styles.container}>
         <LogoAndName />
         <AppText marginTop={27} text="Welcome back" size={24} />
         <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
         <LoginForm loading={loginIsLoading} onForgotpasswordClick={onForgotpasswordClick} onSubmit={onSubmit} />
         <AppBTN onPress={onSkipClick} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15} />
-        <View style={{ marginTop: heightPixel(80), flexDirection: 'row' }}>
+        <View style={styles.middleView}>
           <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
           <TouchableOpacity onPress={onSignUpClick}><AppText text={" Sign up"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>
         </View>

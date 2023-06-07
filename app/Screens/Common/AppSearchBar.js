@@ -23,7 +23,7 @@ const AppSearchBar = (props) => {
       flexDirection: 'row', alignItems: 'center', backgroundColor: GLOBAL.Color.c1
     }}>
       <TouchableOpacity onPress={onMenuClick} style={{ margin: normalize(10) }}><AppIcon size={38} name={props.leftIcon ? props.leftIcon : 'menu'} /></TouchableOpacity>
-      <AppTextInput onEndEditing={(e) => onSearch(e)} placeholder={'Looking for..'} iconSize={30} name={'magnify'}
+      <AppTextInput onEndEditing={(text) => onSearch(text.nativeEvent.text)} placeholder={'Looking for..'} iconSize={30} name={'magnify'}
         iconColor={GLOBAL.Color.darkGrey} iconBackgroundColor='transparent' borderRadius={12} width={300} />
     </View>
   );

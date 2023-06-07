@@ -61,30 +61,30 @@ export default function Shipping(props) {
       <View style={{ alignItems: 'center' }}>
         <AppTopBar title={'Shipping info'} />
         <AppTextInput marginTop={15} name={'account'} placeholder={'First name'}
-          onEndEditing={(text) => addShippingInfo('firstName', text)} />
+          onEndEditing={(text) => addShippingInfo('firstName', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'account'} placeholder={'Last name'}
-          onEndEditing={(text) => addShippingInfo('lastName', text)} />
+          onEndEditing={(text) => addShippingInfo('lastName', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'cellphone'} placeholder={'phone number'}
-          onEndEditing={(text) => addShippingInfo('phone', text)} />
+          onEndEditing={(text) => addShippingInfo('phone', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'email'} placeholder={'Email'}
-          onEndEditing={(text) => addShippingInfo('email', text)} />
+          onEndEditing={(text) => addShippingInfo('email', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'map-marker'} placeholder={'Country'}
-          onEndEditing={(text) => addShippingInfo('Country', text)} />
+          onEndEditing={(text) => addShippingInfo('Country', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'city'} placeholder={'City'}
-          onEndEditing={(text) => addShippingInfo('City', text)} />
+          onEndEditing={(text) => addShippingInfo('City', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'map'} placeholder={'Province'}
-          onEndEditing={(text) => addShippingInfo('Province', text)} />
+          onEndEditing={(text) => addShippingInfo('Province', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'sign-direction'} placeholder={'Address - Street'}
-          onEndEditing={(text) => addShippingInfo('Street', text)} />
+          onEndEditing={(text) => addShippingInfo('Street', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'home-city'} placeholder={'Neighbour'}
-          onEndEditing={(text) => addShippingInfo('Neighbour', text)} />
+          onEndEditing={(text) => addShippingInfo('Neighbour', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'home'} placeholder={'Building number'}
-          onEndEditing={(text) => addShippingInfo('BuildingNumber', text)} />
+          onEndEditing={(text) => addShippingInfo('BuildingNumber', text.nativeEvent.text)} />
         <View style={{ marginTop: heightPixel(5), width: widthPixel(320), flexDirection: 'row', justifyContent: 'space-between' }}>
           <AppTextInput iconFlex={3} width={155} name={'format-list-numbered'} placeholder={'Floor number'}
-            onEndEditing={(text) => addShippingInfo('FloorNu', text)} />
+            onEndEditing={(text) => addShippingInfo('FloorNu', text.nativeEvent.text)} />
           <AppTextInput iconFlex={3} width={155} name={'home'} placeholder={'Apartment no.'}
-            onEndEditing={(text) => addShippingInfo('ApartmentNumber', text)} />
+            onEndEditing={(text) => addShippingInfo('ApartmentNumber', text.nativeEvent.text)} />
         </View>
         <AppBTN loading={shippingLoading} text={'Continue'} marginTop={32} onPress={() => onContinueClicked()} />
       </View>

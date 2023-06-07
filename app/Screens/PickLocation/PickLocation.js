@@ -41,7 +41,11 @@ export default function PickLocation(props) {
   } = orderSlice;
 
   useEffect(() => {
-
+    //T,R
+    onContinueClicked();
+    moveToNextScreen();
+    return;
+    //T,R
     if (removeCurrentCartOrderState) {
       Alert.alert("Your order is being processed!");
       ResetOrderSliceStatus();
@@ -163,7 +167,8 @@ export default function PickLocation(props) {
         }}
       />
       <AppIcon style={{ opacity: 0.85, position: 'absolute', top: '40%' }} name={'map-marker'} color={GLOBAL.Color.c1} size={60} />
-      <AppBTN loading={orderAddingLoading || removeCurrentCartOrderLoading} text={'Confirm Location'} style={{ position: 'absolute', bottom: '5%' }} onPress={() => onContinueClicked()} />
+      <AppBTN loading={orderAddingLoading || removeCurrentCartOrderLoading}
+        text={'Confirm Location'} style={{ position: 'absolute', bottom: '5%' }} onPress={() => onContinueClicked()} />
     </View>
   );
 
