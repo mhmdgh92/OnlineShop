@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 const GLOBAL = require('./Globals');
 import { heightPixel, widthPixel } from './Utils/PixelNormalization';
 const { AppImage, AppText, AppFlatList, AppProductItem } = require('./');
-import * as RootNavigation from '../../RootNav.js';
 
 const AppHorListOfItems = (props) => {
 

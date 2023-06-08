@@ -20,6 +20,13 @@ export default function Home(props) {
     homeIsLoading
   } = homeSlice;
 
+  const {
+    container,
+    scrollableArea,
+    innerView,
+    bottomView
+  } = styles;
+
   useEffect(() => {
     LoadHomeData();
   }, []);
@@ -28,11 +35,11 @@ export default function Home(props) {
     return <AppLoader />
 
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <AppSearchBar />
-      <View style={styles.scrollableArea}>
+      <View style={scrollableArea}>
         <ScrollView>
-          <View style={styles.innerView}>
+          <View style={innerView}>
             <BigPromo data={homeState[0].data} />
             <TwoPromos data={homeState[4].data} />
             <WideBanner data={homeState[5].data[0].image} />
@@ -46,7 +53,7 @@ export default function Home(props) {
             <WideBanner data={homeState[5].data[4].image} />
             <WideBanner data={homeState[5].data[5].image} />
             <AppHorListOfItems data={homeState[1].data[2].products} />
-            <View style={styles.bottomView} />
+            <View style={bottomView} />
           </View>
         </ScrollView>
       </View>

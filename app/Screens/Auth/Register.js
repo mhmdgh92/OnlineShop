@@ -4,12 +4,11 @@ const ScreenHeight = Dimensions.get('window').height;
 const ScreenWidth = Dimensions.get('window').width;
 import { AppText, LogoAndName, AppBTN, AppTextInput, AppCheckBox } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { useSelector, useDispatch } from 'react-redux';
 import { RegisterForm } from './Components/';
 import { saveUser } from "../../redux/slices/userSlice";
 import { registerAPI, setUserFireStoreAPI } from "../../redux/slices/registerSlice";
-import { styles } from "./registerStyle";
+import { registerStyle } from "./styles";
 
 export default function Register(props) {
 
@@ -79,12 +78,12 @@ export default function Register(props) {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View style={registerStyle.container}>
         <LogoAndName />
         <AppText marginTop={20} text="New account" size={26} />
         <AppText marginTop={2} text={"Register"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
         <RegisterForm onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} loading={registerIsLoading} onSubmit={onSubmit} />
-        <View style={styles.middleView}>
+        <View style={registerStyle.middleView}>
           <AppText text={"Have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
           <TouchableOpacity onPress={onSignInClick}><AppText text={" Sign in"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>
         </View>

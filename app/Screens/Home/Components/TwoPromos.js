@@ -1,9 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { widthPixel } from '../../Common/Utils/PixelNormalization';
 const { AppImage } = require('../../Common/');
+import { twoPromosStyle } from './styles';
 
 const TwoPromos = (props) => {
+
+  const {
+    container
+  } = twoPromosStyle;
 
   function ImgItem(props) {
     return (
@@ -26,7 +30,7 @@ const TwoPromos = (props) => {
   } = props;
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: widthPixel(350) }}>
+    <View style={container}>
       {imgs(data)}
     </View>
   );

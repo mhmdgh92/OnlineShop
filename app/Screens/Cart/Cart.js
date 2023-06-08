@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Dimensions } from 'react-native';
-const { width: ScreenWidth, height: ScreenHeight, } = Dimensions.get('window');
-import { heightPixel, normalize } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN, AppBottomBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import CartItem from './Components/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
+import { styles } from "./style";
 
 export default function Cart(props) {
 
@@ -37,6 +36,18 @@ export default function Cart(props) {
     updateCartLoading,
     cartHasUpdated
   } = cartSlice;
+
+  const {
+    mainContainer,
+    billItemStyle,
+    myScrollableViewContainer,
+    container,
+    innerContainer,
+    flatListStyle,
+    promoCodeStyle,
+    promoCodeTextStyle,
+    billsContainer
+  } = styles;
 
   useEffect(() => {
     if (!onCartLoaded && userState) {
@@ -76,10 +87,7 @@ export default function Cart(props) {
 
   const billItem = (name, price, withoutBottomBorder) => {
     return (
-      <View style={{
-        justifyContent: 'space-between', borderBottomWidth: withoutBottomBorder ? 0 : 1,
-        borderBottomColor: GLOBAL.Color.borderColor, height: '33%', width: '90%', flexDirection: 'row'
-      }}>
+      <View style={billItemStyle}>
         <AppText text={name} />
         <AppText text={price} />
       </View>
@@ -109,7 +117,7 @@ export default function Cart(props) {
 
     if (!cartState || cartIsEmpty())
       return (
-        <View style={{ justifyContent: 'center', alignItems: 'center', height: '80%', width: '100%' }}>
+        <View style={myScrollableViewContainer}>
           <AppIcon name={'cart-off'} color={GLOBAL.Color.grey} size={170} />
           <AppText marginTop={10} text="Your cart is empty!" color={GLOBAL.Color.black} size={20} />
         </View>
@@ -117,17 +125,17 @@ export default function Cart(props) {
 
 
     return (
-      <View style={{ width: '100%', height: '100%' }}>
-        <View style={{ width: ScreenWidth, height: ScreenHeight * .88, alignItems: 'center' }}>
-          <View style={{ width: '100%', height: heightPixel(330) }}>
+      <View style={container}>
+        <View style={innerContainer}>
+          <View style={flatListStyle}>
             <AppFlatList numColumns={1} data={cartData}
               renderItem={({ id, item }) => <CartItem key={id} item={item} onPlusOrMinusQuantity={onPlusOrMinusQuantity} />} />
           </View>
-          <View style={{ alignItems: 'center', flexDirection: 'row', marginTop: heightPixel(30), width: '85%', height: '7%', borderRadius: normalize(30), backgroundColor: 'white' }}>
-            <TextInput editable={false} placeholder={'\tPromo Code'} style={{ width: '65%' }} />
+          <View style={promoCodeStyle}>
+            <TextInput editable={false} placeholder={'\tPromo Code'} style={promoCodeTextStyle} />
             <AppBTN text={'Apply'} textSize={17} height={'100%'} width={'35%'} />
           </View>
-          <View style={{ alignItems: 'center', marginTop: heightPixel(25), width: '85%', height: '16%', borderRadius: normalize(15), backgroundColor: 'white' }}>
+          <View style={billsContainer}>
             {billItem('Sub Total', '$' + subTotal)}
             {billItem('Shipping', '$' + shipping)}
             {billItem('Total', '$' + Number(subTotal + shipping), true)}
@@ -143,7 +151,7 @@ export default function Cart(props) {
 
   return (
 
-    <View style={{ height: '100%', width: '100%' }}>
+    <View style={mainContainer}>
       <AppTopBar title={'My Cart'} />
       {MyScrollableView()}
       <AppBottomBar choosed={3} />

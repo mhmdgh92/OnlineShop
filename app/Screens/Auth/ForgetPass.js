@@ -5,7 +5,7 @@ const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { ForgetPassForm } from './Components/';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
-import { styles } from './forgetPassStlye';
+import { forgetPassStyle } from './styles';
 
 export default function ForgetPass(props) {
 
@@ -34,7 +34,7 @@ export default function ForgetPass(props) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={forgetPassStyle.container}>
       <LogoAndName />
       <AppText marginTop={20} text="Forget password" size={26} />
       <AppText marginTop={2} text={"Enter your email to get \n an activation message"} size={14}

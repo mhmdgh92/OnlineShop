@@ -4,7 +4,7 @@ import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
 import SectionItem from './Components/SectionItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSectionsData } from "../../redux/slices/sectionsSlice";
-
+import { styles } from "./style";
 
 export default function Sections() {
 
@@ -20,6 +20,10 @@ export default function Sections() {
     sectionsIsLoading
   } = sectionsSlice;
 
+  const {
+    container
+  } = styles;
+
   useEffect(() => {
     LoadSectionsData();
   }, []);
@@ -30,7 +34,7 @@ export default function Sections() {
     return <AppLoader />
 
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'Main Sections'} />
       <AppFlatList numColumns={2} data={sectionsState} renderItem={({ item, id }) => <SectionItem key={id} item={item} />} />
       <AppBottomBar choosed={1} />

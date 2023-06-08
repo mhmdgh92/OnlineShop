@@ -4,6 +4,7 @@ import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppFlatList, AppLoader, AppProductItem } from '../Common/';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadProductsData } from "../../redux/slices/productsSlice";
+import { styles } from "./style";
 
 export default function Products(props) {
 
@@ -24,6 +25,13 @@ export default function Products(props) {
     productsIsLoading
   } = productsSlice;
 
+  const {
+    container,
+    innerView,
+    productsFlatList,
+    bottomMarginView
+  } = styles;
+
   useEffect(() => {
     LoadProductsData({ secitionID: secitionID, secitionName: secitionName });
   }, []);
@@ -32,12 +40,12 @@ export default function Products(props) {
     return <AppLoader />
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={secitionName} />
-      <View style={{ height: '100%', width: '95%' }}>
-        <AppFlatList style={{ width: '100%' }} numColumns={2} data={productsState.data}
+      <View style={innerView}>
+        <AppFlatList style={productsFlatList} numColumns={2} data={productsState.data}
           renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
-        <View style={{ height: '16%' }} />
+        <View style={bottomMarginView} />
       </View>
     </View>
   );

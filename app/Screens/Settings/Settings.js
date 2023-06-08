@@ -13,7 +13,11 @@ export default function Settings(props) {
   const {
     settings
   } = userSlice.userState;
-  const [curSettings, setCurSettings] = useState({ _notifications: settings.notifications, _region: settings.region, _currency: settings.currency });
+  const [curSettings, setCurSettings] = useState({
+    _notifications: settings ? settings.notifications : false
+    , _region: settings ? settings.region : 0
+    , _currency: settings ? settings.currency : 0
+  });
   const [onMount, setOnMount] = useState(true);
   const [loading, setLoading] = useState(false);
   const [onDataSaved, setOnDataSaved] = useState(false);

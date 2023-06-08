@@ -8,6 +8,7 @@ import { AppIcon, AppBTN, AppLoader, AppTopBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { addToOrders, removeCurrentCartOrder, reset } from "../../redux/slices/orderSlice";
+import { styles } from "./style";
 
 export default function PickLocation(props) {
 
@@ -40,11 +41,12 @@ export default function PickLocation(props) {
     removeCurrentCartOrderLoading
   } = orderSlice;
 
+
   useEffect(() => {
     //T,R
-    onContinueClicked();
-    moveToNextScreen();
-    return;
+    // onContinueClicked();
+    // moveToNextScreen();
+    // return;
     //T,R
     if (removeCurrentCartOrderState) {
       Alert.alert("Your order is being processed!");
@@ -148,13 +150,20 @@ export default function PickLocation(props) {
     LocationServicesDialogBox.stopListener(); // Stop the "locationProviderStatusChange" listener
   }
 
+  const {
+    container,
+    mapStyle,
+    iconStyle,
+    confirmBTN
+  } = styles;
+
   if (latitude === null)
     return <AppLoader />
   return (
-    <View style={{ width: '100%', height: '100%', alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'Pick Delivery Location'} />
       <MapView
-        style={{ width: '100%', height: '90%' }}
+        style={mapStyle}
         showsUserLocation
         onMapReady={() => setMarginBottom(1)}
         showsMyLocationButton
@@ -166,9 +175,9 @@ export default function PickLocation(props) {
           longitudeDelta: 0.015,
         }}
       />
-      <AppIcon style={{ opacity: 0.85, position: 'absolute', top: '40%' }} name={'map-marker'} color={GLOBAL.Color.c1} size={60} />
+      <AppIcon style={iconStyle} name={'map-marker'} color={GLOBAL.Color.c1} size={60} />
       <AppBTN loading={orderAddingLoading || removeCurrentCartOrderLoading}
-        text={'Confirm Location'} style={{ position: 'absolute', bottom: '5%' }} onPress={() => onContinueClicked()} />
+        text={'Confirm Location'} style={confirmBTN} onPress={() => onContinueClicked()} />
     </View>
   );
 

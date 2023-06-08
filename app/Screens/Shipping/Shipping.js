@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Alert } from 'react-native';
-import { heightPixel, widthPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppTextInput, AppBTN } from '../Common/';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendShippingInfo } from "../../redux/slices/shippingSlice";
+import { styles } from './style';
 
 export default function Shipping(props) {
 
@@ -26,6 +26,11 @@ export default function Shipping(props) {
   const {
     email
   } = userSlice.userState;
+
+  const {
+    container,
+    bottomInputs
+  } = styles;
 
   useEffect(() => {
     if (onUpdateShippingInfo && shippingState) {
@@ -58,7 +63,7 @@ export default function Shipping(props) {
 
   return (
     <ScrollView>
-      <View style={{ alignItems: 'center' }}>
+      <View style={container}>
         <AppTopBar title={'Shipping info'} />
         <AppTextInput marginTop={15} name={'account'} placeholder={'First name'}
           onEndEditing={(text) => addShippingInfo('firstName', text.nativeEvent.text)} />
@@ -80,7 +85,7 @@ export default function Shipping(props) {
           onEndEditing={(text) => addShippingInfo('Neighbour', text.nativeEvent.text)} />
         <AppTextInput marginTop={5} name={'home'} placeholder={'Building number'}
           onEndEditing={(text) => addShippingInfo('BuildingNumber', text.nativeEvent.text)} />
-        <View style={{ marginTop: heightPixel(5), width: widthPixel(320), flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={bottomInputs}>
           <AppTextInput iconFlex={3} width={155} name={'format-list-numbered'} placeholder={'Floor number'}
             onEndEditing={(text) => addShippingInfo('FloorNu', text.nativeEvent.text)} />
           <AppTextInput iconFlex={3} width={155} name={'home'} placeholder={'Apartment no.'}

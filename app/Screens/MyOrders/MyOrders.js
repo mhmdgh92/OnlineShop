@@ -5,6 +5,7 @@ const GLOBAL = require('../Common/Globals');
 import OrderItem from './Components/OrderItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadOrders } from "../../redux/slices/orderSlice";
+import { styles } from "./style";
 
 export default function MyOrders() {
 
@@ -25,6 +26,12 @@ export default function MyOrders() {
     loadOrdersLoading
   } = orderSlice;
 
+  const {
+    container,
+    emptyContainer,
+    emptyView
+  } = styles;
+
   useEffect(() => {
     LoadOrders({ email: userState.email });
   }, []);
@@ -34,9 +41,9 @@ export default function MyOrders() {
 
   if (loadOrdersState.length == 0)
     return (
-      <View style={{ height: '100%', width: '100%' }}>
+      <View style={emptyContainer}>
         <AppTopBar title={'My Orders'} />
-        <View style={{ height: '75%', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={emptyView}>
           <AppIcon name={'package-variant'} color={GLOBAL.Color.grey} size={170} />
           <AppText marginTop={10} text="You don't have any orders!" color={GLOBAL.Color.black} size={20} />
         </View>
@@ -45,7 +52,7 @@ export default function MyOrders() {
 
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'My Orders'} />
       <AppFlatList numColumns={1} data={loadOrdersState} renderItem={({ item }) => <OrderItem item={item} />} />
     </View>

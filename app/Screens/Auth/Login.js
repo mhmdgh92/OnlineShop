@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser, saveUser } from "../../redux/slices/userSlice";
 import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
-import { styles } from "./loginStyle";
+import { loginStyle } from "./styles";
 
 export default function Login(props) {
 
@@ -100,13 +100,13 @@ export default function Login(props) {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View style={loginStyle.container}>
         <LogoAndName />
         <AppText marginTop={27} text="Welcome back" size={24} />
         <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
         <LoginForm loading={loginIsLoading} onForgotpasswordClick={onForgotpasswordClick} onSubmit={onSubmit} />
         <AppBTN onPress={onSkipClick} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15} />
-        <View style={styles.middleView}>
+        <View style={loginStyle.middleView}>
           <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
           <TouchableOpacity onPress={onSignUpClick}><AppText text={" Sign up"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>
         </View>

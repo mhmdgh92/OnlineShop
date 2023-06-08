@@ -3,8 +3,8 @@ import { View, TouchableOpacity } from 'react-native';
 import { AppBTN, AppController, AppText, AppCheckBox } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules, passwordRules, phoneRules } from '../../Common/Utils/inputRules/';
-import { heightPixel } from '../../Common/Utils/PixelNormalization';
 const GLOBAL = require('../../Common/Globals');
+import { registerFromStyle } from "./styles";
 
 export default function RegisterForm(props) {
 
@@ -22,7 +22,7 @@ export default function RegisterForm(props) {
             <AppController keyboardType={'numeric'} iconName={'cellphone'} rules={phoneRules()} control={control} error={errors.phone} name={'phone'} placeholder={'Phone'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.password} name={'password'} placeholder={'Password'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.confirmPassword} name={'confirmPassword'} placeholder={'Confirm password'} />
-            <View style={{ marginTop: heightPixel(15), flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={registerFromStyle.innerView}>
                 <AppCheckBox />
                 <AppText text={"\t \t I agree to the "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'} />
                 <TouchableOpacity onPress={onPrivacyClick}><AppText text={"privacy policy"} textStyle={{ textDecorationLine: 'underline' }} color={'blue'} size={12} fontFamily={'Montserrat-SemiBold'} /></TouchableOpacity>

@@ -4,6 +4,7 @@ const GLOBAL = require('../../Common/Globals');
 import { heightPixel, widthPixel, normalize } from '../../Common/Utils/PixelNormalization';
 const { AppText, AppImageBackground } = require('../../Common/');
 import * as RootNavigation from '../../../RootNav.js';
+import { subSectionItemStyle } from './styles';
 
 const SubSectionItem = (props) => {
   const {
@@ -12,15 +13,23 @@ const SubSectionItem = (props) => {
     image
   } = props.item;
 
+  const {
+    container,
+    backImgView,
+    backImgStyle,
+    innerView
+  } = subSectionItemStyle;
+
   const onItemClicked = () => {
     RootNavigation.navigationRef.navigate('Products', { secitionName: name, sectionID: props.sectionID, subSectionsID: id - 1 });
   }
 
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={onItemClicked} style={{ margin: heightPixel(7), height: heightPixel(145), width: '43%' }}>
-      <AppImageBackground source={{ uri: image }} imageStyle={{ borderRadius: normalize(30) }} resizeMode={'cover'}
-        style={{ width: '100%', height: '100%' }} >
-        <View style={{ alignItems: 'center', justifyContent: 'center', borderRadius: normalize(30), backgroundColor: 'rgba(0,0,0,0.30)', flex: 1 }}>
+    <TouchableOpacity activeOpacity={0.9} onPress={onItemClicked}
+      style={container}>
+      <AppImageBackground source={{ uri: image }} imageStyle={backImgStyle} resizeMode={'cover'}
+        style={backImgView} >
+        <View style={innerView}>
           <AppText color={'white'} text={name} size={16} />
         </View>
       </AppImageBackground>

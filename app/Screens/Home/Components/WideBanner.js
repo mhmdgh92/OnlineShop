@@ -1,10 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 const GLOBAL = require('../../Common/Globals');
-import { widthPixel, heightPixel } from '../../Common/Utils/PixelNormalization';
 const { AppImage } = require('../../Common/');
+import { wideBannerStyle } from './styles';
 
 const WideBanner = (props) => {
+
+  const {
+    container
+  } = wideBannerStyle;
 
   function ImgItem(props) {
     return (
@@ -18,7 +22,7 @@ const WideBanner = (props) => {
 
 
   return (
-    <View style={{ marginTop: heightPixel(15) }}>
+    <View style={container}>
       {ImgItem(data)}
     </View>
   );
