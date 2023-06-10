@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity, Dimensions, View, Alert, ScrollView } from 'react-native';
-const ScreenHeight = Dimensions.get('window').height;
-const ScreenWidth = Dimensions.get('window').width;
-import { AppText, LogoAndName, AppBTN, AppTextInput, AppCheckBox } from '../Common/';
+import { TouchableOpacity, View, ScrollView } from 'react-native';
+import { AppText, LogoAndName } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { RegisterForm } from './Components/';

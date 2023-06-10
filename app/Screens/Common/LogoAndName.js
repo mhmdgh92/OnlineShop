@@ -1,13 +1,13 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import { heightPixel, widthPixel } from './Utils/PixelNormalization';
+import { logoAndNameStyle } from "./styles";
 
 const LogoAndName = (props) => {
+
+  const { container } = logoAndNameStyle(props);
+
   return (
-    <FastImage style={{
-      marginTop: heightPixel(props.marginTop ? props.marginTop : 38), height: heightPixel(props.height ? props.height : 100),
-      width: widthPixel(props.width ? props.width : 255)
-    }}
+    <FastImage style={container}
       resizeMode={'contain'} source={require('../../Assets/LogoAndName.png')} />
   );
 }

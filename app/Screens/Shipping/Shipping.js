@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Alert } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { AppTopBar, AppTextInput, AppBTN } from '../Common/';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendShippingInfo } from "../../redux/slices/shippingSlice";

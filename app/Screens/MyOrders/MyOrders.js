@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppLoader, AppIcon, AppText } from '../Common/';
 const GLOBAL = require('../Common/Globals');

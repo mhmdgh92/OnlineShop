@@ -3,6 +3,7 @@ import { View, TextInput } from 'react-native';
 const GLOBAL = require('./Globals');
 import { normalize, heightPixel, widthPixel } from './Utils/PixelNormalization';
 import { AppCircleIcon } from './';
+import { appTextInputStyle } from "./styles";
 
 const AppTextInput = (props) => {
 
@@ -23,6 +24,8 @@ const AppTextInput = (props) => {
     value
   } = props;
 
+  const { container,hiddenIconView,showIconView,innerView,inputStyle } = appTextInputStyle(props);
+
   return (
     <View style={{
       marginTop: heightPixel(marginTop ? marginTop : 0),
@@ -34,8 +37,8 @@ const AppTextInput = (props) => {
       alignSelf: 'center', justifyContent: 'center',
       alignItems: alignItems ? alignItems : 'center', backgroundColor: GLOBAL.Color.white
     }}>
-      {hideIcon ? <View style={{ flex: 1 }} /> : <View style={{ flex: iconFlex ? iconFlex : 1 }}><AppCircleIcon {...props} /></View>}
-      <View style={{ flex: hideIcon ? 12 : 6 }}><TextInput
+      {hideIcon ? <View style={hiddenIconView} /> : <View style={showIconView}><AppCircleIcon {...props} /></View>}
+      <View style={innerView}><TextInput
         onBlur={onBlur}
         onChangeText={onChangeText}
         value={value}
@@ -43,7 +46,7 @@ const AppTextInput = (props) => {
         textAlignVertical={textAlignVertical ? textAlignVertical : 'auto'}
         placeholder={placeholder ? placeholder : 'email'}
         onEndEditing={(text) => { onEndEditing ? onEndEditing(text.nativeEvent.text) : null }}
-        {...props} style={{ margin: 0, marginTop: 0 }} textStyle={props.textStyle} /></View>
+        {...props} style={inputStyle} textStyle={props.textStyle} /></View>
     </View>
   );
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-const GLOBAL = require('./Globals');
-import { heightPixel, widthPixel } from './Utils/PixelNormalization';
+import { appListStyle } from "./styles";
 
 const AppFlatList = (props) => {
+
+  const { oneColContainer, twoColContainer } = appListStyle(props);
+
   return (
     props.horizontal ?
       (<FlatList
@@ -20,7 +22,7 @@ const AppFlatList = (props) => {
           nestedScrollEnabled
           {...props}
           contentContainerStyle={{ alignItems: 'center' }}
-          style={[{ height: heightPixel(700), width: '100%' }, { ...props.style }]}
+          style={oneColContainer}
           numColumns={1}
           data={props.data}
           keyExtractor={(item) => item.id}
@@ -31,7 +33,7 @@ const AppFlatList = (props) => {
         :
         <FlatList
           nestedScrollEnabled
-          style={[{ height: heightPixel(700), width: widthPixel(320) }, { ...props.style }]}
+          style={twoColContainer}
           {...props}
           keyExtractor={(item) => item.id}
           numColumns={props.numColumns}

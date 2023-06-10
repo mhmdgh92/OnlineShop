@@ -1,9 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { AppText, AppTopBar, AppLoader } from '../Common/';
-import { normalize, heightPixel } from '../Common/Utils/PixelNormalization';
-import { useSelector, useDispatch } from 'react-redux';
-
+import { AppText, AppTopBar } from '../Common/';
+import { useSelector } from 'react-redux';
+import { styles } from "./styles";
 const GLOBAL = require('../Common');
 
 export default function Wallet(props) {
@@ -16,18 +15,23 @@ export default function Wallet(props) {
     firstName
   } = userSlice.userState;
 
+  const {
+    container,
+    topCardView,
+    innerView,
+    cardStyle,
+    nameStyle
+  } = styles;
+
   return (
-    <View style={{ alignItems: 'center', width: '100%', height: '100%' }}>
-      <View style={{ top: 0, position: 'absolute', backgroundColor: GLOBAL.Color.c1, height: '25%', width: '100%' }} />
+    <View style={container}>
+      <View style={topCardView} />
       <AppTopBar title={'My Wallet'} />
-      <View style={{
-        borderColor: GLOBAL.Color.grey, borderWidth: 0.5, marginTop: heightPixel(20), borderRadius: normalize(20),
-        backgroundColor: '#FA9A3B', width: '91%', justifyContent: 'center', height: heightPixel(195)
-      }}>
-        <View style={{ justifyContent: 'space-between', alignSelf: 'center', width: '90%', height: '77%' }}>
+      <View style={innerView}>
+        <View style={cardStyle}>
           <AppText textAlign={'left'} text={'Balance'} color={'white'} size={17} />
           <AppText textAlign={'left'} text={'$' + (balance ? balance : 0)} color={'white'} size={42} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={nameStyle}>
             <AppText textAlign={'left'} text={firstName} color={'white'} size={16} />
           </View>
         </View>

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { AppText, LogoAndName, AppImage, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles } from "./style";
+import { styles } from "./styles";
 
 export default function Welcome(props) {
 

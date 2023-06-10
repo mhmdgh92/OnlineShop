@@ -1,12 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
 import { AppTopBar, LogoAndName, AppText } from '../Common/';
+import { styles } from "./styles";
 const GLOBAL = require('../Common/Globals');
+
 
 export default function About() {
 
+  const {
+    container
+  } = styles;
+
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'About'} />
       <LogoAndName height={85} marginTop={8} />
       <AppText marginTop={0} text="About" size={24} />

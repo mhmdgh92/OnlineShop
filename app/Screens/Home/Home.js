@@ -4,7 +4,7 @@ import { AppBottomBar, AppLoader, AppHorListOfItems, AppSearchBar } from '../Com
 import { BigPromo, TwoPromos, WideBanner } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
-import { styles } from "./style";
+import { styles } from "./styles";
 
 export default function Home(props) {
 

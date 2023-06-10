@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Switch } from 'react-native';
 
 const AppToggleBTN = (props) => {
+
   const [isEnabled, setisEnabled] = useState(props.isEnabled ? props.isEnabled : false);
 
   function toggleSwitch() {
@@ -17,7 +18,7 @@ const AppToggleBTN = (props) => {
       thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
       ios_backgroundColor="#3e3e3e"
       onValueChange={toggleSwitch}
-    value={isEnabled}
+      value={isEnabled}
     />
   );
 }

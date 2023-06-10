@@ -1,15 +1,13 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import { heightPixel, widthPixel } from './Utils/PixelNormalization';
+import { appImageStyle } from "./styles";
 
 const AppImage = (props) => {
+
+  const { container } = appImageStyle(props);
+
   return (
-    <FastImage style={[{
-      alignSelf: 'center',
-      marginTop: heightPixel(props.marginTop ? props.marginTop : 0),
-      width: widthPixel(props.width ? props.width : 320),
-      height: heightPixel(props.height ? props.height : 275)
-    }, { ...props.style }]}
+    <FastImage style={container}
       resizeMode={props.resizeMode ? props.resizeMode : 'contain'}
       source={props.source ? props.source : require('../../Assets/sampleImg.jpg')} />
   );

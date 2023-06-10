@@ -4,6 +4,7 @@ import { AppTopBar, AppToggleBTN, AppPicker, AppBTN } from '../Common/';
 import { ListItem } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
+import { styles } from "./styles";
 
 export default function Settings(props) {
 
@@ -32,6 +33,10 @@ export default function Settings(props) {
     _region,
     _currency
   } = curSettings;
+
+  const {
+    container
+  } = styles;
 
   useEffect(() => {
     if (loading && onDataSaved) {
@@ -83,7 +88,7 @@ export default function Settings(props) {
   }
 
   return (
-    <View style={{ width: '100%', height: '100%' }}>
+    <View style={container}>
       <AppTopBar title={'Settings'} />
       <ListItem icon={'bell-outline'} title={'Notifications'}><AppToggleBTN isEnabled={_notifications} toggleSwitch={() => toggleSwitch()} /></ListItem>
       <ListItem icon={'globe-model'} title={'Region'}><AppPicker setItemSelected={(value) => setRegionSelected(value)} picked={_region} items={['Europe', 'N-America', 'S-America', 'Asia', 'Africa', 'Australia']} /></ListItem>

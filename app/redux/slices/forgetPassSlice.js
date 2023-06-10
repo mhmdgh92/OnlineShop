@@ -10,17 +10,23 @@ const initialState = {
 }
 
 export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (email) => {
-  let res = null;
-  await auth()
-    .sendpasswordResetemail(email)
-    .then(() => {
-      Alert.alert('password reset email has been sent!');
-      res = true;
-    })
-    .catch(error => {
-      Alert.alert(error.toString())
-    });
-  return res;
+  console.log('sendForgetPassAPI')
+  try {
+    let res = null;
+    await auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Alert.alert('password reset email has been sent!');
+        res = true;
+      })
+      .catch(error => {
+        Alert.alert(error.toString())
+      });
+    return res;
+
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 export const forgetPassSlice = createSlice({
@@ -30,6 +36,7 @@ export const forgetPassSlice = createSlice({
   }, extraReducers: {
     [sendForgetPassAPI.pending]: (state) => {
       state.forgetPassIsLoading = true;
+      state.forgetPassState = null;
     },
     [sendForgetPassAPI.fulfilled]: (state, { payload }) => {
       if (payload)

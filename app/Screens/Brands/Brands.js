@@ -4,6 +4,7 @@ import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
 import BrandItem from './Components/BrandItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from "../../redux/slices/brandsSlice";
+import { styles } from "./styles";
 
 export default function Brands(props) {
 
@@ -19,6 +20,11 @@ export default function Brands(props) {
     brandsIsLoading
   } = brandsSlice;
 
+  const {
+    container,
+    innerView
+  } = styles;
+
   useEffect(() => {
     LoadData();
   }, []);
@@ -26,9 +32,9 @@ export default function Brands(props) {
   if (brandsIsLoading)
     return <AppLoader />
   return (
-    <View style={{ height: '100%', width: '100%', alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'Brands'} />
-      <View style={{ height: '83%' }}>
+      <View style={innerView}>
         <AppFlatList numColumns={2} data={brandsState} renderItem={({ item }) => <BrandItem key={item.id} item={item.data} />} />
       </View>
       <AppBottomBar choosed={2} />

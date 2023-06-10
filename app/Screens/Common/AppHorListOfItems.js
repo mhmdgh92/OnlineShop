@@ -1,14 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
-const GLOBAL = require('./Globals');
-import { heightPixel, widthPixel } from './Utils/PixelNormalization';
-const { AppImage, AppText, AppFlatList, AppProductItem } = require('./');
+const { AppText, AppFlatList, AppProductItem } = require('./');
+import { appHorListOfItemsStyle } from "./styles";
 
 const AppHorListOfItems = (props) => {
 
+  const { container, textStyle } = appHorListOfItemsStyle(props);
+
   return (
-    <View style={[{ alignSelf: 'center', marginTop: heightPixel(15), height: heightPixel(350), width: widthPixel(350) }, { ...props.style }]}>
-      <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', width: '98%', height: '10%' }}>
+    <View style={container}>
+      <View style={textStyle}>
         <AppText size={16} color={props.titleColor} text={props.title ? props.title : 'Most ordered'} />
       </View>
       <AppFlatList horizontal data={props.data} renderItem={({ item }) => <AppProductItem item={item} />} />

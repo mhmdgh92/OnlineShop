@@ -1,10 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
+import { appLoaderStyle } from "./styles";
 
-const AppLoader = (props) => {
-  return <View  style={{backgroundColor:'red',alignSelf:'center',width:50,height:50}}/>//T,R
+const AppLoader = () => {
+
+  const { container } = appLoaderStyle;
+
   return (
-    <ActivityIndicator style={{ flex: 1, alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }} />
+    <ActivityIndicator style={container} />
   );
 }
 

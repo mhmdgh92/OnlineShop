@@ -1,22 +1,26 @@
 import React from 'react';
-import {View} from 'react-native';
-const GLOBAL = require('../../Common/Globals');
-import {AppListItem} from '../../Common/';
+import { View } from 'react-native';
+import { AppListItem } from '../../Common/';
+import { listItemStyle } from "./styles";
 
-  const ListItem = (props) => {
+const ListItem = (props) => {
 
-    const{
-      icon,
-      title
-    } = props;
+  const {
+    icon,
+    title
+  } = props;
 
-    return (
-      <AppListItem icon={icon} title={title}>
-        <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-          {props.children}
-        </View>
-      </AppListItem>
-    );
+  const {
+    container
+  } = listItemStyle;
+
+  return (
+    <AppListItem icon={icon} title={title}>
+      <View style={container}>
+        {props.children}
+      </View>
+    </AppListItem>
+  );
 }
 
 export default ListItem;

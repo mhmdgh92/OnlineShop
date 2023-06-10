@@ -5,6 +5,7 @@ import { AppTopBar, AppFlatList, AppLoader, AppProductItem, AppText, AppIcon } f
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { searchProduct } from '../../redux/slices/productsSlice';
+import { styles } from "./styles";
 
 export default function SearchProducts(props) {
 
@@ -25,6 +26,14 @@ export default function SearchProducts(props) {
     searchProductsIsLoading
   } = productsSlice;
 
+  const {
+    emptyContainer,
+    emptyView,
+    container,
+    innerView,
+    flatList
+  } = styles;
+
   useEffect(() => {
     if (dataLoaded && searchProductsState) {
       setDataLoaded(false);
@@ -41,9 +50,9 @@ export default function SearchProducts(props) {
 
   if (!searchProductsState || searchProductsState.length === 0)
     return (
-      <View style={{ height: '100%', alignItems: 'center' }}>
+      <View style={emptyContainer}>
         <AppTopBar title={'Results'} />
-        <View style={{ height: '70%', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={emptyView}>
           <AppIcon name={'magnify-remove-outline'} color={GLOBAL.Color.grey} size={170} />
           <AppText marginTop={10} text="No Results Found!" color={GLOBAL.Color.black} size={20} />
         </View>
@@ -51,12 +60,12 @@ export default function SearchProducts(props) {
     );
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={container}>
       <AppTopBar title={'Results'} />
-      <View style={{ height: '100%', width: '95%' }}>
-        <AppFlatList style={{ width: '100%' }} numColumns={2} data={searchProductsState}
+      <View style={innerView}>
+        <AppFlatList style={flatList} numColumns={2} data={searchProductsState}
           renderItem={({ item }) => <AppProductItem height={heightPixel(300)} item={item} />} />
-        <View style={{ height: '16%' }} />
+        <View style={marginBottom} />
       </View>
     </View>
   );

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { heightPixel } from './Utils/PixelNormalization';
 import { Picker } from '@react-native-picker/picker';
+import { appPickerStyle } from "./styles";
 
 const AppPicker = (props) => {
+
+  const { container } = appPickerStyle(props);
+
   const [selected, setSelected] = useState(props.picked ? props.picked : 0);
 
   function Item(name, id) {
@@ -28,7 +31,7 @@ const AppPicker = (props) => {
 
   return (
     <Picker
-      style={[{ marginTop: heightPixel(0), width: '100%' }, { ...props.style }]}
+      style={container}
       selectedValue={(selected)}
       onValueChange={(itemValue, itemIndex) =>
         setThisItemSelected(itemValue)

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, View, ScrollView, Alert } from 'react-native';
-const ScreenWidth = Dimensions.get('window').width;
+import { View, ScrollView, Alert } from 'react-native';
 import { AppRoundedImage, AppTopBar, AppBottomBar } from '../Common/';
-import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
 import { saveProfile } from "../../redux/slices/profileSlice";
 import { ProfileForm } from './Components/';
+import { styles } from "./styles";
 
 export default function Profile(props) {
 
@@ -31,6 +30,10 @@ export default function Profile(props) {
     updateProfileLoading,
     profileState
   } = profileSlice;
+
+  const {
+    container
+  } = styles;
 
   useEffect(() => {
     if (onUpdateProfile && profileState) {
@@ -62,11 +65,7 @@ export default function Profile(props) {
   return (
     <View>
       <ScrollView>
-        <View style={{
-          alignItems: 'center',
-          flexDirection: 'column',
-          height: heightPixel(787), width: ScreenWidth
-        }}>
+        <View style={container}>
           <AppTopBar />
           <AppRoundedImage marginTop={30} width={110} height={115} />
           <ProfileForm loading={updateProfileLoading} onSubmitClicked={onSubmit} userObj={userState} />

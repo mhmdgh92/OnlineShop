@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { AppText, LogoAndName } from '../Common/';
 const GLOBAL = require('../Common/Globals');
@@ -16,21 +16,28 @@ export default function ForgetPass(props) {
   //ForgetPass Reducers
   const SendForgetPassAPI = (data) => { dispatch(sendForgetPassAPI(data)); }
 
+  const [send, setSend] = useState(false);
+
   const {
     forgetPassState,
     forgetPassIsLoading
   } = forgetPassSlice;
 
   useEffect(() => {
-    if (forgetPassState)
+    console.log(send + "," + forgetPassState)
+    if (send && forgetPassState) {
+      setSend(false);
       props.navigation.goBack();
-  }, [forgetPassState]);
+    }
+  }, [forgetPassState, send]);
 
   const onSubmit = data => {
+    console.log('onSubmit')
     const {
       email
     } = data;
     SendForgetPassAPI(email);
+    setSend(true);
   };
 
   return (

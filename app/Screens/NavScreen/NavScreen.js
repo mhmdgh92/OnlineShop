@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, Alert, TouchableOpacity } from 'react-native';
 import { AppIcon, AppImage, AppText, AppTopBar, AppListItem, AppBottomBar } from '../Common/';
-import { normalize, heightPixel } from '../Common/Utils/PixelNormalization';
 const GLOBAL = require('../Common');
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from "../../redux/slices/userSlice";
 import RNRestart from 'react-native-restart';
+import { styles } from "./styles";
 
 export default function NavScreen(props) {
 
@@ -19,6 +19,15 @@ export default function NavScreen(props) {
   const {
     userRemoveSuccess
   } = userSlice;
+
+  const {
+    container,
+    innerView,
+    topView,
+    listItemStyle,
+    listItemIconStyle,
+    nameAndLogoView
+  } = styles;
 
   useEffect(() => {
     if (userRemoveSuccess)
@@ -38,9 +47,9 @@ export default function NavScreen(props) {
   const listItem = (iconName, title, screenName) => {
     return (
       <TouchableOpacity onPress={() => navToThisScreen(screenName)}>
-        <AppListItem borderColor={'transparent'} style={{ height: heightPixel(50) }} marginTop={6}
+        <AppListItem borderColor={'transparent'} style={listItemStyle} marginTop={6}
           icon={iconName} alignItems={'flex-end'} iconSize={24} title={title}>
-          <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+          <View style={listItemIconStyle}>
             <AppIcon name={'chevron-right'} color={'#707070'} size={25} />
           </View>
         </AppListItem>
@@ -49,12 +58,12 @@ export default function NavScreen(props) {
   }
 
   return (
-    <View style={{ alignItems: 'center', width: '100%', height: '100%' }}>
+    <View style={container}>
       <AppTopBar title={'My Profile'} hideLeft />
-      <View style={{ width: '90%', height: '90%' }}>
-        <View style={{ backgroundColor: 'white', flexDirection: 'row', marginTop: normalize(15), height: '12%', width: '100%' }}>
+      <View style={innerView}>
+        <View style={topView}>
           <AppImage source={require('../../Assets/Logo.png')} width={40} />
-          <View style={{ margin: normalize(8), justifyContent: 'center' }}>
+          <View style={nameAndLogoView}>
             <AppText text={'\tWelcome, Mohammed'} textAlign={'left'} color={GLOBAL.Color.c1} size={15} />
             <AppText text={'\tmohammedghabyen@gmail.com'} color={GLOBAL.Color.grey} size={13} textAlign={'left'} />
           </View>

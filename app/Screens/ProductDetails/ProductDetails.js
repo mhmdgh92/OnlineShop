@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Alert } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
-import { AppTopBar, AppText, AppPicker, AppBTN, AppQuantity, AppHorListOfItems } from '../Common/';
+import { AppTopBar, AppText, AppPicker, AppBTN, AppQuantity } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { Photos, SaleBadge, LoveAndShare, Details } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';

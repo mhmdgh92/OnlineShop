@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Dimensions } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN, AppBottomBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import CartItem from './Components/CartItem';

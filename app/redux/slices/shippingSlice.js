@@ -32,6 +32,7 @@ export const shippingSlice = createSlice({
   }, extraReducers: {
     [sendShippingInfo.pending]: (state) => {
       state.shippingLoading = true;
+      state.shippingState = null;
     },
     [sendShippingInfo.fulfilled]: (state, { payload }) => {
       if (payload)

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 const GLOBAL = require('./Globals');
 import { AppIcon, AppText } from './';
+import { appQuantityStyle } from "./styles";
 
 const AppQuantity = (props) => {
 
@@ -26,16 +27,13 @@ const AppQuantity = (props) => {
       props.plusOrMinusQuantity(plusOrMinus);
   }
 
-  const {
-    width,
-    height
-  } = props;
+  const { container, touchStyle, textStyle } = appQuantityStyle(props);
 
   return (
-    <View style={{ backgroundColor: '#F7F7F7', borderColor: GLOBAL.Color.borderColor, borderWidth: 1, flexDirection: 'row', width: width ? width : '35%', height: height ? height : '90%' }}>
-      <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', width: '25%' }} onPress={decAmount}><AppIcon size={24} color={GLOBAL.Color.c1} name={'minus'} /></TouchableOpacity>
-      <AppText size={17} text={quantity} style={{ justifyContent: 'center', width: '50%' }} />
-      <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', width: '25%' }} onPress={incAmount}><AppIcon size={27} color={GLOBAL.Color.c1} name={'plus'} /></TouchableOpacity>
+    <View style={container}>
+      <TouchableOpacity style={touchStyle} onPress={decAmount}><AppIcon size={24} color={GLOBAL.Color.c1} name={'minus'} /></TouchableOpacity>
+      <AppText size={17} text={quantity} style={textStyle} />
+      <TouchableOpacity style={touchStyle} onPress={incAmount}><AppIcon size={27} color={GLOBAL.Color.c1} name={'plus'} /></TouchableOpacity>
     </View>
   );
 }

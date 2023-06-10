@@ -1,9 +1,14 @@
 import { View, Alert } from 'react-native';
 import { AppTopBar, AppBTN, AppText, AppIcon, AppTextInput } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import { normalize } from '../Common/Utils/PixelNormalization';
+import { styles } from "./styles";
 
 export default function ContactUs(props) {
+
+  const {
+    container,
+    topView
+  } = styles;
 
   function onSignInClick() {
     console.log('Under development!')
@@ -12,9 +17,9 @@ export default function ContactUs(props) {
   }
 
   return (
-    <View style={{ alignItems: 'center', width: '100%', height: '100%' }}>
+    <View style={container}>
       <AppTopBar title={'ContactUs'} />
-      <View style={{ marginTop: normalize(25), height: '18%', width: '100%' }}>
+      <View style={topView}>
         <AppIcon name={'headset'} color={GLOBAL.Color.c1} size={60} />
         <AppText text={'We are here\n to help you'} size={15} />
       </View>
