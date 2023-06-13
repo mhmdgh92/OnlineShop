@@ -44,7 +44,7 @@ export default function PickLocation(props) {
 
   useEffect(() => {
     //T,R
-    // onContinueClicked();
+
     // moveToNextScreen();
     // return;
     //T,R
@@ -59,8 +59,8 @@ export default function PickLocation(props) {
       RemoveCurrentCartOrder({ email });
       return;
     }
-
-    onDidMount();
+    onContinueClicked();//T,D
+    // onDidMount();//T,A
     return () => {
       onUnmount();
     }
