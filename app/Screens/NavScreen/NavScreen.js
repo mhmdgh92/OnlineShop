@@ -3,7 +3,7 @@ import { View, Alert, TouchableOpacity } from 'react-native';
 import { AppIcon, AppImage, AppText, AppTopBar, AppListItem, AppBottomBar } from '../Common/';
 const GLOBAL = require('../Common');
 import { useSelector, useDispatch } from 'react-redux';
-import { removeUser } from "../../redux/slices/userSlice";
+import { removeUser, reset } from "../../redux/slices/userSlice";
 import RNRestart from 'react-native-restart';
 import { styles } from "./styles";
 
@@ -15,8 +15,10 @@ export default function NavScreen(props) {
   const userSlice = useSelector(state => state.user);
   //User Reducers
   const RemoveUser = () => { dispatch(removeUser()); }
+  const ResetUser = () => { dispatch(reset()); }
 
   const {
+    userState,
     userRemoveSuccess
   } = userSlice;
 
@@ -30,18 +32,34 @@ export default function NavScreen(props) {
   } = styles;
 
   useEffect(() => {
-    if (userRemoveSuccess)
-      RNRestart
-        .restart();
+    if (userRemoveSuccess) {
+      console.log('userRemoveSuccess');
+      ResetUser();
+      props.navigation.reset({
+        index: 0,
+        routes: [{ name: 'AuthStack' }],
+      });
+      RNRestart.restart();
+    }
   }, [userRemoveSuccess]);
 
   async function navToThisScreen(screenName) {
+
+    if (!userState && (isUserScreen(screenName))) {
+      Alert.alert('You have to login first!');
+      return;
+    }
     if (screenName == 'Under Development')
       Alert.alert('Under Development');
     else if (screenName == 'LogOut')
       await RemoveUser();
     else
       props.navigation.navigate(screenName);
+  }
+
+  const isUserScreen = (screenName) => {
+    return screenName == 'ProfileStack' || screenName == 'MyOrders' ||
+      screenName == 'Wallet' || screenName == 'Settings' || screenName == 'LogOut';
   }
 
   const listItem = (iconName, title, screenName) => {
@@ -68,7 +86,7 @@ export default function NavScreen(props) {
             <AppText text={'\tmohammedghabyen@gmail.com'} color={GLOBAL.Color.grey} size={13} textAlign={'left'} />
           </View>
         </View>
-        {listItem('information-outline', 'My Info', 'Profile')}
+        {listItem('information-outline', 'My Info', 'ProfileStack')}
         {listItem('heart-outline', 'Favourites', 'MyFav')}
         {listItem('package-variant-closed', 'My Orders', 'MyOrders')}
         {listItem('map-marker', 'My Addresses', 'Under Development')}
@@ -79,7 +97,6 @@ export default function NavScreen(props) {
         {listItem('logout', 'LogOut', 'LogOut')}
         <AppText marginTop={13} text={'App Version:0.0.1'} color={GLOBAL.Color.grey} size={13} />
       </View>
-      <AppBottomBar choosed={4} />
     </View>
   );
 }

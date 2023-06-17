@@ -21,7 +21,6 @@ export default function SubsubSection(props) {
       <AppTopBar title={sectionName} />
       <AppFlatList numColumns={2} data={data}
         renderItem={({ item }) => <SubSectionItem sectionID={sectionID} item={item} />} />
-      <AppBottomBar choosed={1} />
     </View>
   );
 }

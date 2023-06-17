@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View } from 'react-native';
-import { AppText, LogoAndName } from '../Common/';
+import { AppBTN, AppText, LogoAndName } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { ForgetPassForm } from './Components/';
@@ -8,6 +8,9 @@ import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
 import { forgetPassStyle } from './styles';
 
 export default function ForgetPass(props) {
+
+  //Refs
+  const forgetFormRef = useRef(null);
 
   //Dispatch
   const dispatch = useDispatch();
@@ -31,12 +34,13 @@ export default function ForgetPass(props) {
     }
   }, [forgetPassState, send]);
 
+  function onSendClicked() {
+    forgetFormRef.current.onSendClicked();
+  }
+
   const onSubmit = data => {
     console.log('onSubmit')
-    const {
-      email
-    } = data;
-    SendForgetPassAPI(email);
+    SendForgetPassAPI(data);
     setSend(true);
   };
 
@@ -46,7 +50,8 @@ export default function ForgetPass(props) {
       <AppText marginTop={20} text="Forget password" size={26} />
       <AppText marginTop={2} text={"Enter your email to get \n an activation message"} size={14}
         color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-      <ForgetPassForm loading={forgetPassIsLoading} onSubmitClicked={onSubmit} />
+      <ForgetPassForm ref={forgetFormRef} onSubmit={onSubmit} />
+      <AppBTN onPress={onSendClicked} text={'Send'} marginTop={45} loading={forgetPassIsLoading} />
     </View>
   );
 }

@@ -37,7 +37,6 @@ export default function Brands(props) {
       <View style={innerView}>
         <AppFlatList numColumns={2} data={brandsState} renderItem={({ item }) => <BrandItem key={item.id} item={item.data} />} />
       </View>
-      <AppBottomBar choosed={2} />
     </View>
   );
 }

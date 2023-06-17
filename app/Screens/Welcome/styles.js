@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { heightPixel,widthPixel } from '../Common/Utils/PixelNormalization';
+import { heightPixel, widthPixel } from '../Common/Utils/PixelNormalization';
 
 export const styles = StyleSheet.create({
     container: { alignItems: 'center' },

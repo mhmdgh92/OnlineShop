@@ -1,3 +1,5 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "target": "esnext",
+  "module": "commonjs"
 }

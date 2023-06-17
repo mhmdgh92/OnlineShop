@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { AppBottomBar, AppLoader, AppHorListOfItems, AppSearchBar } from '../Common/';
+import { AppLoader, AppHorListOfItems, AppSearchBar } from '../Common/';
 import { BigPromo, TwoPromos, WideBanner } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
@@ -23,8 +23,7 @@ export default function Home(props) {
   const {
     container,
     scrollableArea,
-    innerView,
-    bottomView
+    innerView
   } = styles;
 
   useEffect(() => {
@@ -53,11 +52,9 @@ export default function Home(props) {
             <WideBanner data={homeState[5].data[4].image} />
             <WideBanner data={homeState[5].data[5].image} />
             <AppHorListOfItems data={homeState[1].data[2].products} />
-            <View style={bottomView} />
           </View>
         </ScrollView>
       </View>
-      <AppBottomBar choosed={0} />
     </View>
   );
 }

@@ -83,8 +83,6 @@ export default function Shipping(props) {
           onEndEditing={(text) => addShippingInfo('Street', text)} />
         <AppTextInput marginTop={5} name={'home-city'} placeholder={'Neighbour'}
           onEndEditing={(text) => addShippingInfo('Neighbour', text)} />
-        <AppTextInput marginTop={5} name={'home'} placeholder={'Building number'}
-          onEndEditing={(text) => addShippingInfo('BuildingNumber', text)} />
         <View style={bottomInputs}>
           <AppTextInput iconFlex={3} width={155} name={'format-list-numbered'} placeholder={'Floor number'}
             onEndEditing={(text) => addShippingInfo('FloorNu', text)} />

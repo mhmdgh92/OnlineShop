@@ -30,9 +30,10 @@ export default function Welcome(props) {
   function moveToNextScreen() {
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Login' }],//T,Login
+      routes: [{ name: 'Login' }],
     });
   }
+
 
   if (loading)
     return <AppLoader />

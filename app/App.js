@@ -5,7 +5,7 @@ const GLOBAL = require('./Screens/Common/Globals');
 import SplashScreen from 'react-native-splash-screen';
 LogBox.ignoreAllLogs();
 
-export default class App extends Component {
+export default class App extends React.Component {
 
   componentDidMount() {
     SplashScreen.hide();
@@ -16,7 +16,7 @@ export default class App extends Component {
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="white" hidden={false} backgroundColor={GLOBAL.Color.c1} />
         <RootNav />
-      </View>
+      </View >
     );
   }
 }

@@ -93,7 +93,7 @@ export default function Settings(props) {
       <ListItem icon={'bell-outline'} title={'Notifications'}><AppToggleBTN isEnabled={_notifications} toggleSwitch={() => toggleSwitch()} /></ListItem>
       <ListItem icon={'globe-model'} title={'Region'}><AppPicker setItemSelected={(value) => setRegionSelected(value)} picked={_region} items={['Europe', 'N-America', 'S-America', 'Asia', 'Africa', 'Australia']} /></ListItem>
       <ListItem icon={'cash'} title={'Currency'}><AppPicker setItemSelected={(value) => setCurrencySelected(value)} picked={_currency} items={['USD', 'GBP', 'Eur', 'Rial']} /></ListItem>
-      <AppBTN loading={loading} text={'Save'} marginTop={425} onPress={() => onSaveClicked()} />
+      <AppBTN loading={loading} text={'Save'} marginTop={400} onPress={() => onSaveClicked()} />
     </View>
   );
 }

@@ -9,8 +9,11 @@ const initialState = {
   forgetPassErrorMessage: ''
 }
 
-export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (email) => {
+export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (data) => {
   console.log('sendForgetPassAPI')
+  const {
+    email
+  } = data;
   try {
     let res = null;
     await auth()

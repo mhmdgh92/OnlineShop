@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadSectionsData } from "../../redux/slices/sectionsSlice";
 import { styles } from "./style";
 
-export default function Sections() {
+export default function Sections(props) {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ export default function Sections() {
   } = styles;
 
   useEffect(() => {
+    console.log('props:'+JSON.stringify(props))
     LoadSectionsData();
   }, []);
 
@@ -37,7 +38,6 @@ export default function Sections() {
     <View style={container}>
       <AppTopBar title={'Main Sections'} />
       <AppFlatList numColumns={2} data={sectionsState} renderItem={({ item, id }) => <SectionItem key={id} item={item} />} />
-      <AppBottomBar choosed={1} />
     </View>
   );
 }

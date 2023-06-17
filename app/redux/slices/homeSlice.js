@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import firestore from '@react-native-firebase/firestore';
 
+
 const initialState = {
   homeState: null,
   homeIsLoading: true,

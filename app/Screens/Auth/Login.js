@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TouchableOpacity, View, ScrollView } from 'react-native';
 import { AppText, LogoAndName, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
@@ -10,6 +10,9 @@ import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
 import { loginStyle } from "./styles";
 
 export default function Login(props) {
+
+  //Refs
+  const loginFormRef = useRef(null);
 
   const [initializing, setInitializing] = useState(true);
   const [status, setStatus] = useState(0);
@@ -70,7 +73,7 @@ export default function Login(props) {
   function moveToNextScreen() {
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' }],//T,Home
+      routes: [{ name: 'HomeStack' }],//T,Home
     });
   }
 
@@ -89,13 +92,13 @@ export default function Login(props) {
   if (initializing || userIsLoading)
     return <AppLoader />
 
+  function onLoginClicked() {
+    loginFormRef.current.onLoginClicked();
+  }
 
   const onSubmit = data => {
-    const {
-      email,
-      password
-    } = data;
-    LoginAPI({ email: email, password: password });
+    console.log('onSubmit');
+    LoginAPI(data);
   };
 
   return (
@@ -104,7 +107,8 @@ export default function Login(props) {
         <LogoAndName />
         <AppText marginTop={27} text="Welcome back" size={24} />
         <AppText marginTop={3} text={"Login"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-        <LoginForm loading={loginIsLoading} onForgotpasswordClick={onForgotpasswordClick} onSubmit={onSubmit} />
+        <LoginForm ref={loginFormRef} onForgotpasswordClick={onForgotpasswordClick} onSubmit={onSubmit} />
+        <AppBTN testID="loginBTN" onPress={onLoginClicked} text={'Login'} marginTop={45} loading={loginIsLoading} />
         <AppBTN onPress={onSkipClick} text={'Skip'} color={GLOBAL.Color.c3} marginTop={15} />
         <View style={loginStyle.middleView}>
           <AppText text={"Don’t have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />

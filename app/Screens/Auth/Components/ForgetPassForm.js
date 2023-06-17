@@ -1,24 +1,29 @@
-import React from 'react'
+import React, { useImperativeHandle, forwardRef } from 'react'
 import { View } from 'react-native';
 import { AppBTN, AppController } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules } from '../../Common/Utils/inputRules/';
 
-export default function ForgetPassForm(props) {
+ForgetPassForm = (props, ref) => {
 
-    const { control, handleSubmit, formState: { errors } } = useForm();
+    const { control, getValues, handleSubmit, formState: { errors } } = useForm();
 
-    const { onSubmitClicked, loading } = props;
+    useImperativeHandle(ref, () => ({
+        onSendClicked: () => {
+            handleSubmit(onSubmit)()
+        },
+    }))
 
-    const onSubmit = data => {
-        onSubmitClicked(data);
+    const onSubmit = () => {
+        props.onSubmit(getValues());
     };
 
     return (
         <View>
             <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.email} name={'email'} placeholder={'Email'} />
-            <AppBTN onPress={handleSubmit(onSubmit)} text={'Send'} marginTop={45} loading={loading} />
         </View>
     );
 
 }
+
+export default forwardRef(ForgetPassForm);

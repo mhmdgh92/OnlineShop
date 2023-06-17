@@ -43,12 +43,8 @@ export default function PickLocation(props) {
 
 
   useEffect(() => {
-    //T,R
-
-    // moveToNextScreen();
-    // return;
-    //T,R
     if (removeCurrentCartOrderState) {
+      console.log('Here1')
       Alert.alert("Your order is being processed!");
       ResetOrderSliceStatus();
       moveToNextScreen();
@@ -59,8 +55,7 @@ export default function PickLocation(props) {
       RemoveCurrentCartOrder({ email });
       return;
     }
-    onContinueClicked();//T,D
-    // onDidMount();//T,A
+    onDidMount();
     return () => {
       onUnmount();
     }
@@ -104,6 +99,7 @@ export default function PickLocation(props) {
   }
 
   async function onContinueClicked() {
+    console.log('onContinueClicked')
     const currentOrderObj = getOrderObj();
     AddToOrders({ email, currentOrderObj });
   }

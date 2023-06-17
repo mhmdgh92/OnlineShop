@@ -34,14 +34,13 @@ export const loadCartData = createAsyncThunk('loadCartData', async (data) => {
   const {
     email
   } = data;
-  console.log(email)
   let res = [];
   await firestore()
     .collection('users')
     .doc(email)
     .get()
     .then(documentSnapshot => {
-      if (documentSnapshot.data().currentOrder) {
+      if (documentSnapshot.data().currentOrder && documentSnapshot.data().currentOrder.cart) {
         documentSnapshot.data().currentOrder.cart.map((item, id) => {
           item.id = id;
           res.push(item);

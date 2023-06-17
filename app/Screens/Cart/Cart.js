@@ -6,6 +6,7 @@ import CartItem from './Components/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 import { styles } from "./style";
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Cart(props) {
 
@@ -49,7 +50,20 @@ export default function Cart(props) {
     billsContainer
   } = styles;
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!userState) {
+        props.navigation.goBack();
+        return;
+      }
+      setOnCartLoaded(false);
+      LoadCartData({ email: userState.email });
+    }, [])
+  );
+
   useEffect(() => {
+    if (!userState)
+      return;
     if (!onCartLoaded && userState) {
       setOnCartLoaded(true);
       LoadCartData({ email: userState.email });
@@ -60,32 +74,36 @@ export default function Cart(props) {
       props.navigation.navigate('Shipping', {
         cart: cartData
       });
+      return;
     }
-    else if (!cartIsEmpty()) {
+    if (!cartIsEmpty()) {
       calculateTotal();
     }
-    else if (cartState) {
+    if (cartState) {
       setCartData(cartState);
     }
   }, [cartState, cartData, cartHasUpdated]);
 
   function calculateTotal() {
-    if (cartIsEmpty())
-      return;
-    let subTotal = 0;
-    cartData.map((item) => {
-      const curItemQuantitiy = Number(item.quantity);
-      const curItemPrice = Number(item.price);
-      subTotal += Number(curItemQuantitiy * curItemPrice);
-    });
-    setSubTotal(subTotal);
+    try {
+      if (cartIsEmpty())
+        return;
+      let subTotal = 0;
+      cartData.map((item) => {
+        const curItemQuantitiy = Number(item.quantity);
+        const curItemPrice = Number(item.price);
+        subTotal += Number(curItemQuantitiy * curItemPrice);
+      });
+      setSubTotal(subTotal);
+    } catch (error) {
+    }
   }
 
   const cartIsEmpty = () => {
-    return cartData.length == 0;
+    return !cartData || cartData.length == 0;
   }
 
-  const billItem = (name, price, withoutBottomBorder) => {
+  const billItem = (name, price) => {
     return (
       <View style={billItemStyle}>
         <AppText text={name} />
@@ -123,6 +141,9 @@ export default function Cart(props) {
         </View>
       )
 
+    if (!userState)
+      return (<View />)
+
 
     return (
       <View style={container}>
@@ -138,7 +159,7 @@ export default function Cart(props) {
           <View style={billsContainer}>
             {billItem('Sub Total', '$' + subTotal)}
             {billItem('Shipping', '$' + shipping)}
-            {billItem('Total', '$' + Number(subTotal + shipping), true)}
+            {billItem('Total', '$' + Number(subTotal + shipping))}
           </View>
           <AppBTN loading={updateCartLoading} marginTop={22} text={'Finalize Order'} onPress={() => onFinalizeClicked()} />
         </View>
@@ -146,15 +167,18 @@ export default function Cart(props) {
     );
   }
 
+
   if (cartIsLoading)
     return <AppLoader />
 
+
   return (
+
+
 
     <View style={mainContainer}>
       <AppTopBar title={'My Cart'} />
       {MyScrollableView()}
-      <AppBottomBar choosed={3} />
     </View>
   );
 }

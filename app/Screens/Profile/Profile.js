@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Alert } from 'react-native';
-import { AppRoundedImage, AppTopBar, AppBottomBar } from '../Common/';
+import { AppRoundedImage, AppTopBar } from '../Common/';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
 import { saveProfile } from "../../redux/slices/profileSlice";
 import { ProfileForm } from './Components/';
 import { styles } from "./styles";
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Profile(props) {
-
 
   const [onUpdateProfile, setOnUpdateProfile] = useState(false);
 
@@ -34,6 +34,13 @@ export default function Profile(props) {
   const {
     container
   } = styles;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!userState)
+        props.navigation.goBack();
+    }, [])
+  );
 
   useEffect(() => {
     if (onUpdateProfile && profileState) {
@@ -62,6 +69,9 @@ export default function Profile(props) {
     Alert.alert('Profile updated successfully!');
   }
 
+  if (!userState)
+    return (<View />)
+
   return (
     <View>
       <ScrollView>
@@ -71,7 +81,6 @@ export default function Profile(props) {
           <ProfileForm loading={updateProfileLoading} onSubmitClicked={onSubmit} userObj={userState} />
         </View>
       </ScrollView>
-      <AppBottomBar choosed={4} />
     </View>
   );
 

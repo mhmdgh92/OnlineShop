@@ -12,7 +12,8 @@ const AppTopBar = (props) => {
   } = props;
 
   const onBackClicked = () => {
-    RootNavigation.navigationRef.goBack();
+    console.log(JSON.stringify(RootNavigation.navigationRef));
+    // RootNavigation.navigationRef.goBack();
   }
 
   const { container, leftView, textStyle, rightView } = appTopBarStyle;

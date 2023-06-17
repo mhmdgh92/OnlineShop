@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useImperativeHandle, forwardRef } from 'react'
 import { View, TouchableOpacity } from 'react-native';
 import { AppBTN, AppController, AppText, AppCheckBox } from '../../Common';
 import { useForm } from "react-hook-form";
@@ -6,14 +6,18 @@ import { emailRules, passwordRules, phoneRules } from '../../Common/Utils/inputR
 const GLOBAL = require('../../Common/Globals');
 import { registerFromStyle } from "./styles";
 
-export default function RegisterForm(props) {
+const RegisterForm = (props, ref) => {
 
-    const { control, handleSubmit, formState: { errors } } = useForm();
+    const { control, getValues, handleSubmit, formState: { errors } } = useForm();
 
-    const { onPrivacyClick, onTermsClick, loading } = props;
+    const { onPrivacyClick, onTermsClick } = props;
 
-    const onSubmit = data => {
-        props.onSubmit(data);
+    useImperativeHandle(ref, () => ({
+        onRegisterClicked: () => { handleSubmit(onSubmit)() },
+    }))
+
+    const onSubmit = () => {
+        props.onSubmit(getValues());
     };
 
     return (
@@ -29,8 +33,8 @@ export default function RegisterForm(props) {
                 <AppText text={" and "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'} />
                 <TouchableOpacity onPress={onTermsClick}><AppText text={"terms of use"} color={'blue'} textStyle={{ textDecorationLine: 'underline' }} size={12} fontFamily={'Montserrat-SemiBold'} /></TouchableOpacity>
             </View>
-            <AppBTN onPress={handleSubmit(onSubmit)} text={'Register'} marginTop={45} loading={loading} />
         </View>
     );
 
 }
+export default forwardRef(RegisterForm);

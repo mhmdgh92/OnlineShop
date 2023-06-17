@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TouchableOpacity, View, ScrollView } from 'react-native';
-import { AppText, LogoAndName } from '../Common/';
+import { AppBTN, AppText, LogoAndName } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { RegisterForm } from './Components/';
@@ -9,6 +9,9 @@ import { registerAPI, setUserFireStoreAPI } from "../../redux/slices/registerSli
 import { registerStyle } from "./styles";
 
 export default function Register(props) {
+
+  //Refs
+  const registerFormRef = useRef(null);
 
   //Dispatch
   const dispatch = useDispatch();
@@ -54,7 +57,7 @@ export default function Register(props) {
     //Status 4
     props.navigation.reset({
       index: 0,
-      routes: [{ name: 'Home' }],
+      routes: [{ name: 'HomeStack' }],
     });
   }
 
@@ -70,7 +73,12 @@ export default function Register(props) {
     props.navigation.navigate('Login');
   }
 
+  function onRegisterClicked() {
+    registerFormRef.current.onRegisterClicked();
+  }
+
   const onSubmit = data => {
+    console.log('onRegister');
     RegisterAPI(data);
   };
 
@@ -80,7 +88,8 @@ export default function Register(props) {
         <LogoAndName />
         <AppText marginTop={20} text="New account" size={26} />
         <AppText marginTop={2} text={"Register"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-        <RegisterForm onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} loading={registerIsLoading} onSubmit={onSubmit} />
+        <RegisterForm ref={registerFormRef} onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} loading={registerIsLoading} onSubmit={onSubmit} />
+        <AppBTN onPress={onRegisterClicked} text={'Register'} marginTop={45} />
         <View style={registerStyle.middleView}>
           <AppText text={"Have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
           <TouchableOpacity onPress={onSignInClick}><AppText text={" Sign in"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>

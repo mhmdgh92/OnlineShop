@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppText, AppPicker, AppBTN, AppQuantity } from '../Common/';
 const GLOBAL = require('../Common/Globals');
@@ -46,12 +46,16 @@ export default function ProductDetails(props) {
   }
 
   function AddToCartClicked() {
+    if (!userState) {
+      Alert.alert('You have to login first!')
+      return;
+    }
     let data = { email: userState.email, cartItemObj: getCartItemObj() }
     AddToCart(data);
   }
 
   function onCheckOutClicked() {
-    props.navigation.navigate('Cart');
+    props.navigation.navigate('CartStack');
   }
 
   function onUpdateQuantity(num) {
