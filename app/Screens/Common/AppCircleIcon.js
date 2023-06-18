@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
 const GLOBAL = require('./Globals');
 import { normalize } from './Utils/PixelNormalization';
 import { AppIcon } from './';
 import { appCircleIconStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppCircleIcon = (props) => {
 
@@ -19,5 +19,14 @@ const AppCircleIcon = (props) => {
     </View>
   );
 }
+
+AppCircleIcon.propTypes = {
+  props: PropTypes.shape({
+    iconSize: PropTypes.number,
+    iconColor: PropTypes.string,
+    name: PropTypes.string,
+    iconBackgroundColor: PropTypes.string,
+  })
+};
 
 export default AppCircleIcon;

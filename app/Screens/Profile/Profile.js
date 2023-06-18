@@ -8,7 +8,7 @@ import { ProfileForm } from './Components/';
 import { styles } from "./styles";
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function Profile(props) {
+export default function Profile({navigation}) {
 
   const [onUpdateProfile, setOnUpdateProfile] = useState(false);
 
@@ -38,7 +38,7 @@ export default function Profile(props) {
   useFocusEffect(
     React.useCallback(() => {
       if (!userState)
-        props.navigation.goBack();
+        navigation.goBack();
     }, [])
   );
 

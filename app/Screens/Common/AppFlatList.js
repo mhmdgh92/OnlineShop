@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { appListStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppFlatList = (props) => {
 
@@ -44,6 +45,15 @@ const AppFlatList = (props) => {
           showsVerticalScrollIndicator={false}
         />)
   );
+};
+
+AppFlatList.propTypes = {
+  props: PropTypes.shape({
+    renderItem: PropTypes.object,
+    data: PropTypes.object,
+    numColumns: PropTypes.number,
+    horizontal: PropTypes.bool
+  })
 };
 
 export default AppFlatList;

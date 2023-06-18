@@ -1,0 +1,1 @@
+export TestChildComp  from './TestChildComp';

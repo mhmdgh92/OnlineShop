@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadProductsData } from "../../redux/slices/productsSlice";
 import { styles } from "./style";
 
-export default function Products(props) {
+export default function Products({ route: { params } }) {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -16,9 +16,9 @@ export default function Products(props) {
   const LoadProductsData = (data) => { dispatch(loadProductsData(data)); }
 
   const {
-    secitionID,
-    secitionName
-  } = props.route.params;
+    secitionID = 0,
+    secitionName = ''
+  } = params;
 
   const {
     productsState,

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { appPickerStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppPicker = (props) => {
 
@@ -40,5 +41,12 @@ const AppPicker = (props) => {
     </Picker>
   );
 }
+
+AppPicker.propTypes = {
+  props: PropTypes.shape({
+    items: PropTypes.array,
+    picked: PropTypes.number
+  })
+};
 
 export default AppPicker;

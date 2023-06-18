@@ -6,8 +6,9 @@ const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { searchProduct } from '../../redux/slices/productsSlice';
 import { styles } from "./styles";
+import PropTypes from 'prop-types';
 
-export default function SearchProducts(props) {
+export default function SearchProducts({ route: { params: { searchInput = '' } } }) {
 
   const [dataLoaded, setDataLoaded] = useState(false);
   //Dispatch
@@ -16,10 +17,6 @@ export default function SearchProducts(props) {
   const productsSlice = useSelector(state => state.products);
   //Reducers
   const SearchProduct = (data) => { dispatch(searchProduct(data)); }
-
-  const {
-    searchInput
-  } = props.route.params;
 
   const {
     searchProductsState,
@@ -70,3 +67,7 @@ export default function SearchProducts(props) {
     </View>
   );
 }
+
+SearchProducts.propTypes = {
+  searchInput: PropTypes.string.isRequired
+};

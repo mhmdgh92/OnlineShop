@@ -4,17 +4,17 @@ import { AppTopBar, AppFlatList, AppBottomBar } from '../Common/';
 import SubSectionItem from './Components/SubSectionItem';
 import { styles } from "./style";
 
-export default function SubsubSection(props) {
+export default function SubsubSection({ route: { params } }) {
 
   const {
     sectionID,
     sectionName,
     data
-  } = props.route.params;
+  } = params;
 
-  const{
+  const {
     container
-  }=styles;
+  } = styles;
 
   return (
     <View style={container}>

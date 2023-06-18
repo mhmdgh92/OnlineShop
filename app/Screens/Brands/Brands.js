@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from "../../redux/slices/brandsSlice";
 import { styles } from "./styles";
 
-export default function Brands(props) {
+export default function Brands() {
 
   //Dispatch
   const dispatch = useDispatch();

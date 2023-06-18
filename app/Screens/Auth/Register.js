@@ -8,7 +8,7 @@ import { saveUser } from "../../redux/slices/userSlice";
 import { registerAPI, setUserFireStoreAPI } from "../../redux/slices/registerSlice";
 import { registerStyle } from "./styles";
 
-export default function Register(props) {
+export default function Register({navigation}) {
 
   //Refs
   const registerFormRef = useRef(null);
@@ -55,22 +55,22 @@ export default function Register(props) {
 
   function moveToNextScreen() {
     //Status 4
-    props.navigation.reset({
+    navigation.reset({
       index: 0,
       routes: [{ name: 'HomeStack' }],
     });
   }
 
   function onPrivacyClick() {
-    props.navigation.navigate('Privacy');
+    navigation.navigate('Privacy');
   }
 
   function onTermsClick() {
-    props.navigation.navigate('Terms');
+    navigation.navigate('Terms');
   }
 
   function onSignInClick() {
-    props.navigation.navigate('Login');
+    navigation.navigate('Login');
   }
 
   function onRegisterClicked() {

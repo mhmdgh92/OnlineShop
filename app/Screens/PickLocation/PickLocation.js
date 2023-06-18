@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToOrders, removeCurrentCartOrder, reset } from "../../redux/slices/orderSlice";
 import { styles } from "./style";
 
-export default function PickLocation(props) {
+export default function PickLocation({ navigation, route: { params: { shipping, cart } } }) {
 
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [marginBottom, setMarginBottom] = useState(0);
@@ -44,7 +44,6 @@ export default function PickLocation(props) {
 
   useEffect(() => {
     if (removeCurrentCartOrderState) {
-      console.log('Here1')
       Alert.alert("Your order is being processed!");
       ResetOrderSliceStatus();
       moveToNextScreen();
@@ -75,7 +74,7 @@ export default function PickLocation(props) {
     }).then(() => {
       _requestPermission();
     }).catch(() => {
-      props.navigation.goBack();
+      navigation.goBack();
     });
     DeviceEventEmitter.addListener('locationProviderStatusChange', (status) => { // only trigger when "providerListener" is enabled
     });
@@ -99,18 +98,17 @@ export default function PickLocation(props) {
   }
 
   async function onContinueClicked() {
-    console.log('onContinueClicked')
     const currentOrderObj = getOrderObj();
     AddToOrders({ email, currentOrderObj });
   }
 
   function moveToNextScreen() {
-    props.navigation.navigate('Home');
+    navigation.navigate('Home');
   }
 
   const getOrderObj = () => {
-    const cartObj = props.route.params.cart;
-    const shippingObj = props.route.params.shipping;
+    const cartObj = cart;
+    const shippingObj = shipping;
     return {
       shipping: shippingObj,
       id: randomNumberInRange(),

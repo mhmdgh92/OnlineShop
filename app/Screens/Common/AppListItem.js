@@ -3,6 +3,7 @@ import { View } from 'react-native';
 const GLOBAL = require('./Globals');
 import { AppIcon, AppText } from './';
 import { appListItemStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppListItem = (props) => {
 
@@ -25,5 +26,18 @@ const AppListItem = (props) => {
     </View>
   );
 }
+
+AppListItem.propTypes = {
+  props: PropTypes.shape({
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    iconSize: PropTypes.number,
+    iconColor: PropTypes.string,
+    textColor: PropTypes.string,
+    textSize: PropTypes.number,
+    children: PropTypes.object
+  })
+};
+
 
 export default AppListItem;

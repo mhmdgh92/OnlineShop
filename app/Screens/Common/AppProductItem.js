@@ -36,7 +36,7 @@ const AppProductItem = (props) => {
         </AppImageBackground>
         <AppText margin={5} marginTop={5} size={10} textAlign={'left'} text={'\t  ' + (model ? model : '')} color={'#8A888C'} />
         <AppText margin={10} textAlign={'left'} size={10.5} color={GLOBAL.Color.darkGrey} text={name} />
-        <StarRating onChange={(value)=>{}} emptyColor={GLOBAL.Color.grey} starSize={normalize(20)} starStyle={{ width: '5%' }} style={startRatingStyle} rating={rating} />
+        <StarRating onChange={(value) => { }} emptyColor={GLOBAL.Color.grey} starSize={normalize(20)} starStyle={{ width: '5%' }} style={startRatingStyle} rating={rating} />
         <View style={priceStyle}>
           <View>
             <AppText crossed text={'$' + oldPrice} size={11} color={GLOBAL.Color.grey} textAlign='left' />

@@ -3,7 +3,7 @@ import { AppTopBar, AppBTN, AppText, AppIcon, AppTextInput } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { styles } from "./styles";
 
-export default function ContactUs(props) {
+export default function ContactUs({navigation}) {
 
   const {
     container,
@@ -13,7 +13,7 @@ export default function ContactUs(props) {
   function onSignInClick() {
     console.log('Under development!')
     Alert.alert('Your message sent!');
-    props.navigation.goBack();
+    navigation.goBack();
   }
 
   return (

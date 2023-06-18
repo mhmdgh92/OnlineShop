@@ -4,15 +4,16 @@ import { AppText, AppTopBar } from '../Common/';
 import { useSelector } from 'react-redux';
 import { styles } from "./styles";
 const GLOBAL = require('../Common');
+import PropTypes from "prop-types";
 
-export default function Wallet(props) {
+export default function Wallet() {
 
   //States
   const userSlice = useSelector(state => state.user);
 
   const {
-    balance,
-    firstName
+    balance = 0,
+    firstName = '',
   } = userSlice.userState;
 
   const {

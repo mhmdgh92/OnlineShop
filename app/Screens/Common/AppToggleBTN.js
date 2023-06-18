@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Switch } from 'react-native';
+import PropTypes from 'prop-types';
 
 const AppToggleBTN = (props) => {
 
@@ -22,4 +23,12 @@ const AppToggleBTN = (props) => {
     />
   );
 }
+
+AppToggleBTN.propTypes = {
+  props: PropTypes.shape({
+    isEnabled: PropTypes.bool,
+    toggleSwitch: PropTypes.func
+  })
+};
+
 export default AppToggleBTN;

@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { fontPixel, heightPixel, widthPixel, normalize } from './Utils/PixelNormalization';
-const GLOBAL = require('./Globals');
 import { appTextStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppText = (props) => {
 
@@ -20,5 +19,11 @@ const AppText = (props) => {
     </View >
   );
 }
+
+AppText.propTypes = {
+  props: PropTypes.shape({
+    text: PropTypes.string
+  })
+};
 
 export default AppText;

@@ -1,24 +1,14 @@
-//Stateful
-class Test extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      name: 'Chris',
-      info: {
-        id: 1,
-        name: 2
-      }
-    }
-  }
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { TestChildComp } from './Components/';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-  render() {
-    return (
-      <SomeComponent />
-    );
-  }
+export default function Test() {
+
+  return (
+    <View style={{ flex:1 }}>
+      <TouchableOpacity style={{ backgroundColor: 'red', height:'10%',width:'10%' }}>
+      </TouchableOpacity>
+    </View>
+  );
 }
-
-//Stateless
-const Test = () => (
-  <SomeComponent />
-)

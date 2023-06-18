@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 const { AppText, AppFlatList, AppProductItem } = require('./');
 import { appHorListOfItemsStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppHorListOfItems = (props) => {
 
@@ -16,5 +17,12 @@ const AppHorListOfItems = (props) => {
     </View>
   );
 }
+
+AppHorListOfItems.propTypes = {
+  props: PropTypes.shape({
+    title: PropTypes.string,
+    data: PropTypes.object
+  })
+};
 
 export default AppHorListOfItems;

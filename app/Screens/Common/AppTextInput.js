@@ -4,6 +4,7 @@ const GLOBAL = require('./Globals');
 import { normalize, heightPixel, widthPixel } from './Utils/PixelNormalization';
 import { AppCircleIcon } from './';
 import { appTextInputStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppTextInput = (props) => {
 
@@ -16,7 +17,6 @@ const AppTextInput = (props) => {
     width,
     borderRadius,
     marginTop,
-    iconFlex,
     onEndEditing,
     onBlur,
     onChangeText,
@@ -24,7 +24,7 @@ const AppTextInput = (props) => {
     value
   } = props;
 
-  const { container,hiddenIconView,showIconView,innerView,inputStyle } = appTextInputStyle(props);
+  const { hiddenIconView, showIconView, innerView, inputStyle } = appTextInputStyle(props);
 
   return (
     <View style={{
@@ -50,5 +50,11 @@ const AppTextInput = (props) => {
     </View>
   );
 }
+
+AppTextInput.propTypes = {
+  props: PropTypes.shape({
+    textStyle: PropTypes.object
+  })
+};
 
 export default AppTextInput;

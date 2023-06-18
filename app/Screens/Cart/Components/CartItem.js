@@ -1,17 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-const GLOBAL = require('../../Common/Globals');
-import { normalize, heightPixel, widthPixel } from '../../Common/Utils/PixelNormalization';
 const { AppImage, AppText, AppIcon, AppQuantity } = require('../../Common/');
 import { cartItemStyle } from "./style";
+import PropTypes from 'prop-types';
 
-const CartItem = (props) => {
-
-  const {
-    key,
-    item,
-    onPlusOrMinusQuantity
-  } = props;
+const CartItem = ({ item, onPlusOrMinusQuantity }) => {
 
   const {
     id,
@@ -44,5 +37,16 @@ const CartItem = (props) => {
     </View>
   );
 }
+
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+  }).isRequired,
+  onPlusOrMinusQuantity: PropTypes.func.isRequired
+};
 
 export default CartItem;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
-import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN, AppBottomBar } from '../Common/';
+import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import CartItem from './Components/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 import { styles } from "./style";
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function Cart(props) {
+export default function Cart({ navigation }) {
 
   // quantity: 1,
   // addToCartLoading: false,
@@ -50,16 +50,16 @@ export default function Cart(props) {
     billsContainer
   } = styles;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!userState) {
-        props.navigation.goBack();
-        return;
-      }
-      setOnCartLoaded(false);
-      LoadCartData({ email: userState.email });
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (!userState) {
+  //       navigation.goBack();
+  //       return;
+  //     }
+  //     setOnCartLoaded(false);
+  //     LoadCartData({ email: userState.email });
+  //   }, [])
+  // );
 
   useEffect(() => {
     if (!userState)
@@ -71,7 +71,7 @@ export default function Cart(props) {
     }
     if (onUpdateCart && cartHasUpdated) {
       setOnUpdateCart(false);
-      props.navigation.navigate('Shipping', {
+      navigation.navigate('Shipping', {
         cart: cartData
       });
       return;
@@ -167,15 +167,10 @@ export default function Cart(props) {
     );
   }
 
-
   if (cartIsLoading)
     return <AppLoader />
 
-
   return (
-
-
-
     <View style={mainContainer}>
       <AppTopBar title={'My Cart'} />
       {MyScrollableView()}

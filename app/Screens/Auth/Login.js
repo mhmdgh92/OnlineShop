@@ -9,7 +9,7 @@ import { loadUser, saveUser } from "../../redux/slices/userSlice";
 import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
 import { loginStyle } from "./styles";
 
-export default function Login(props) {
+export default function Login({ navigation }) {
 
   //Refs
   const loginFormRef = useRef(null);
@@ -71,14 +71,14 @@ export default function Login(props) {
   }
 
   function moveToNextScreen() {
-    props.navigation.reset({
+    navigation.reset({
       index: 0,
-      routes: [{ name: 'HomeStack' }],//T,Home
+      routes: [{ name: 'HomeStack' }],
     });
   }
 
   function onForgotpasswordClick() {
-    props.navigation.navigate('ForgetPass');
+    navigation.navigate('ForgetPass');
   }
 
   function onSkipClick() {
@@ -86,7 +86,7 @@ export default function Login(props) {
   }
 
   function onSignUpClick() {
-    props.navigation.navigate('Register');
+    navigation.navigate('Register');
   }
 
   if (initializing || userIsLoading)

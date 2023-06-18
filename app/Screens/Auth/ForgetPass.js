@@ -7,7 +7,7 @@ import { ForgetPassForm } from './Components/';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
 import { forgetPassStyle } from './styles';
 
-export default function ForgetPass(props) {
+export default function ForgetPass({ navigation }) {
 
   //Refs
   const forgetFormRef = useRef(null);
@@ -30,7 +30,7 @@ export default function ForgetPass(props) {
     console.log(send + "," + forgetPassState)
     if (send && forgetPassState) {
       setSend(false);
-      props.navigation.goBack();
+      navigation.goBack();
     }
   }, [forgetPassState, send]);
 

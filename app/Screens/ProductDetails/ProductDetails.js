@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import { View, ScrollView, Alert } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppText, AppPicker, AppBTN, AppQuantity } from '../Common/';
@@ -6,8 +6,9 @@ const GLOBAL = require('../Common/Globals');
 import { Photos, SaleBadge, LoveAndShare, Details } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from "../../redux/slices/cartSlice";
+import PropTypes from "prop-types";
 
-export default function ProductDetails(props) {
+export default function ProductDetails({ navigation, route: { params: { data } } }) {
 
   // quantity: 1,
   // addToCartLoading: false,
@@ -26,15 +27,11 @@ export default function ProductDetails(props) {
   } = userSlice;
 
   const {
-    data
-  } = props.route.params;
-
-  const {
-    id,
-    name,
-    link,
-    price,
-    oldPrice
+    id = 0,
+    name = '',
+    link = '',
+    price = 0,
+    oldPrice = 0
   } = data;
 
   const {
@@ -55,7 +52,7 @@ export default function ProductDetails(props) {
   }
 
   function onCheckOutClicked() {
-    props.navigation.navigate('CartStack');
+    navigation.navigate('CartStack');
   }
 
   function onUpdateQuantity(num) {
@@ -94,3 +91,13 @@ export default function ProductDetails(props) {
     </View>
   );
 }
+
+ProductDetails.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    link: PropTypes.link,
+    price: PropTypes.number,
+    oldPrice: PropTypes.number
+  })
+};

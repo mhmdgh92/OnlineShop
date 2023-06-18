@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { View, Alert, TouchableOpacity } from 'react-native';
-import { AppIcon, AppImage, AppText, AppTopBar, AppListItem, AppBottomBar } from '../Common/';
+import { AppIcon, AppImage, AppText, AppTopBar, AppListItem } from '../Common/';
 const GLOBAL = require('../Common');
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser, reset } from "../../redux/slices/userSlice";
 import RNRestart from 'react-native-restart';
 import { styles } from "./styles";
 
-export default function NavScreen(props) {
+export default function NavScreen({ navigation }) {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export default function NavScreen(props) {
     if (userRemoveSuccess) {
       console.log('userRemoveSuccess');
       ResetUser();
-      props.navigation.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: 'AuthStack' }],
       });
@@ -44,7 +44,6 @@ export default function NavScreen(props) {
   }, [userRemoveSuccess]);
 
   async function navToThisScreen(screenName) {
-
     if (!userState && (isUserScreen(screenName))) {
       Alert.alert('You have to login first!');
       return;
@@ -54,12 +53,12 @@ export default function NavScreen(props) {
     else if (screenName == 'LogOut')
       await RemoveUser();
     else
-      props.navigation.navigate(screenName);
+      navigation.navigate(screenName);
   }
 
   const isUserScreen = (screenName) => {
     return screenName == 'ProfileStack' || screenName == 'MyOrders' ||
-      screenName == 'Wallet' || screenName == 'Settings' || screenName == 'LogOut';
+      screenName == 'Wallet' || screenName == 'Settings';
   }
 
   const listItem = (iconName, title, screenName) => {
@@ -77,7 +76,7 @@ export default function NavScreen(props) {
 
   return (
     <View style={container}>
-      <AppTopBar title={'My Profile'} hideLeft />
+      <AppTopBar title={'Menu'} />
       <View style={innerView}>
         <View style={topView}>
           <AppImage source={require('../../Assets/Logo.png')} width={40} />

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 const GLOBAL = require('./Globals');
-import { normalize, heightPixel } from './Utils/PixelNormalization';
 import { AppIcon, AppTextInput } from './';
 import * as RootNavigation from '../../RootNav.js';
 import { appSearchBarStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppSearchBar = (props) => {
 
@@ -27,6 +27,12 @@ const AppSearchBar = (props) => {
         iconColor={GLOBAL.Color.darkGrey} iconBackgroundColor='transparent' borderRadius={12} width={300} />
     </View>
   );
+};
+
+AppSearchBar.propTypes = {
+  props: PropTypes.shape({
+    leftIcon: PropTypes.string
+  })
 };
 
 export default AppSearchBar;

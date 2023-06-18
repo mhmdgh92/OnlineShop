@@ -4,7 +4,7 @@ import { AppIcon, AppText, AppTopBar, AppListItem } from '../Common/';
 const GLOBAL = require('../Common');
 import { styles } from "./styles";
 
-export default function HelpCenter(props) {
+export default function HelpCenter({ navigation }) {
 
   const {
     container,
@@ -21,7 +21,7 @@ export default function HelpCenter(props) {
     else if (name == 'Website')
       Linking.openURL(GLOBAL.GOOGLE_PLAY_LINK);
     else
-      props.navigation.navigate(name);
+      navigation.navigate(name);
   }
 
   const listItem = (navScreen, iconName, title, height) => {

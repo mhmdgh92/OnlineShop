@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 const GLOBAL = require('./Globals');
 import { AppIcon, AppText } from './';
 import { appQuantityStyle } from "./styles";
+import PropTypes from 'prop-types';
 
 const AppQuantity = (props) => {
 
@@ -37,4 +38,13 @@ const AppQuantity = (props) => {
     </View>
   );
 }
+
+AppQuantity.propTypes = {
+  props: PropTypes.shape({
+    quantity: PropTypes.number,
+    updateQuantity: PropTypes.func,
+    plusOrMinusQuantity: PropTypes.func
+  })
+};
+
 export default AppQuantity;

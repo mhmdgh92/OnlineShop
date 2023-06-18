@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
 import { styles } from "./styles";
 
-export default function Settings(props) {
+export default function Settings({ navigation }) {
 
   //States
   const userSlice = useSelector(state => state.user);
@@ -29,9 +29,9 @@ export default function Settings(props) {
 
 
   const {
-    _notifications,
-    _region,
-    _currency
+    _notifications = false,
+    _region = 0,
+    _currency = 0
   } = curSettings;
 
   const {
@@ -52,9 +52,9 @@ export default function Settings(props) {
 
   async function setDataFromUserObj() {
     const {
-      notifications,
-      region,
-      currency
+      notifications = false,
+      region = 0,
+      currency = 0
     } = settings;
     await setCurSettings({ _notifications: notifications, _region: region, _currency: currency })
   }
@@ -84,7 +84,7 @@ export default function Settings(props) {
   }
 
   function goBack() {
-    props.navigation.goBack();
+    navigation.goBack();
   }
 
   return (

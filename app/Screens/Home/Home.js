@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
 import { styles } from "./styles";
 
-export default function Home(props) {
+export default function Home() {
 
   //Dispatch
   const dispatch = useDispatch();

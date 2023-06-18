@@ -12,8 +12,7 @@ const AppTopBar = (props) => {
   } = props;
 
   const onBackClicked = () => {
-    console.log(JSON.stringify(RootNavigation.navigationRef));
-    // RootNavigation.navigationRef.goBack();
+    RootNavigation.navigationRef.goBack();
   }
 
   const { container, leftView, textStyle, rightView } = appTopBarStyle;
@@ -21,10 +20,13 @@ const AppTopBar = (props) => {
   return (
     <View style={container}>
       <View style={leftView}>
-        {hideLeft ? <View /> : <TouchableOpacity onPress={onBackClicked}><AppIcon size={38} name={props.leftIcon ? props.leftIcon : 'arrow-left'} /></TouchableOpacity>}
+        <TouchableOpacity onPress={onBackClicked}>
+          <AppIcon size={38} name={props.leftIcon ? props.leftIcon : 'arrow-left'} />
+        </TouchableOpacity>
       </View>
       <View style={textStyle}>
-        <AppText numberOfLines={1} text={props.title ? props.title : "My Info"} size={18} color={GLOBAL.Color.white} fontFamily={'Montserrat-SemiBold'} />
+        <AppText numberOfLines={1} text={props.title ? props.title : "My Info"} size={18}
+          color={GLOBAL.Color.white} fontFamily={'Montserrat-SemiBold'} />
       </View>
       <View style={rightView}>
       </View>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Home from './Screens/Home/Home';
+import Test from './Screens/Test/Test';
 import Welcome from './Screens/Welcome/Welcome';
 import Login from './Screens/Auth/Login';
 import Register from './Screens/Auth/Register';
@@ -50,7 +51,6 @@ function AuthStack() {
 }
 
 function HomeStack() {
-
   return (
     <Stack.Navigator screenOptions={screenOpotions}>
       <Stack.Screen name="Home" component={Home} />
@@ -74,7 +74,6 @@ function ProductsStack() {
   return (
     <Stack.Navigator screenOptions={screenOpotions}>
       <Stack.Screen name="Sections" component={Sections} />
-      <Stack.Screen name="SubSections" component={SubSections} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="ProductDetails" component={ProductDetails}
 

@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 const GLOBAL = require('../../Common/Globals');
 const { AppText, AppIcon } = require('../../Common/');
 import { orderItemStyle } from "./styles";
+import PropTypes from 'prop-types';
 
-const OrderItem = (props) => {
+const OrderItem = ({ item }) => {
+
+  useEffect(() => {
+  }, []);
 
   const {
-    id,
-    totalPrice,
-    noOfItems,
-    status,
-    date
-  } = props.item;
+    id = 0,
+    totalPrice = 0,
+    noOfItems = 1,
+    status = 0,
+    date = "18 Jul 2023"
+  } = item;
 
   const {
     statusStyle,
@@ -23,8 +27,8 @@ const OrderItem = (props) => {
     showBTNStyle
   } = orderItemStyle;
 
-  function Status(props) {
-    const status = props.status;
+  function Status() {
+    const status = item.status;
     var statusText;
     var iconName;
     var color;
@@ -77,5 +81,15 @@ const OrderItem = (props) => {
     </View>
   );
 }
+
+OrderItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    totalPrice: PropTypes.number.isRequired,
+    noOfItems: PropTypes.number.isRequired,
+    status: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default OrderItem;

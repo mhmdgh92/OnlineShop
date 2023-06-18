@@ -52,7 +52,7 @@ export const appHorListOfItemsStyle = (props) => StyleSheet.create({
 });
 
 export const appIconStyle = (props) => StyleSheet.create({
-    container: [{ alignItems: 'center', justifyContent: 'center' }, { ...props.style }],
+    container: [{ alignItems: 'center', justifyContent: 'center' }],
     innerIcon: {}
 });
 
@@ -61,7 +61,7 @@ export const appImageStyle = (props) => StyleSheet.create({
         alignSelf: 'center',
         marginTop: heightPixel(props.marginTop ? props.marginTop : 0),
         width: widthPixel(props.width ? props.width : 320),
-        height: heightPixel(props.height ? props.height : 275)
+        height: heightPixel(props.height ? props.height : 75)
     }, { ...props.style }]
 });
 
@@ -153,15 +153,16 @@ export const appTextInputStyle = (props) => StyleSheet.create({
     showIconView: { flex: props.iconFlex ? props.iconFlex : 1 },
     innerView: { flex: props.hideIcon ? 12 : 6 },
     inputStyle: { margin: 0, marginTop: 0 },
-
-
 });
 
 export const appTopBarStyle = StyleSheet.create({
-    container: { width: '100%', height: heightPixel(66), flexDirection: 'row', backgroundColor: GLOBAL.Color.c1 },
-    leftView: { justifyContent: 'center', alignItems: 'center', flex: 2 },
-    textStyle: { justifyContent: 'center', alignItems: 'center', flex: 8 },
-    rightView: { justifyContent: 'center', alignItems: 'center', flex: 2 }
+    container: {
+        width: '100%', height: heightPixel(66),
+        flexDirection: 'row', backgroundColor: GLOBAL.Color.c1
+    },
+    leftView: { justifyContent: 'center', alignItems: 'center', flex: 1 },
+    textStyle: { justifyContent: 'center', alignItems: 'center', flex: 5 },
+    rightView: { justifyContent: 'center', alignItems: 'center', flex: 1 },
 });
 
 export const logoAndNameStyle = (props) => StyleSheet.create({

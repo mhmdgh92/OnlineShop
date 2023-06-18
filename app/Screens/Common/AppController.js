@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { AppTextInput, AppText } from './';
 import { Controller } from "react-hook-form";
-
+import PropTypes from 'prop-types';
 
 const AppController = (props) => {
 
@@ -53,5 +53,20 @@ const AppController = (props) => {
     </View>
   );
 }
+
+AppController.propTypes = {
+  props: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    control: PropTypes.object.isRequired,
+    error: PropTypes.object.isRequired,
+    placeholder: PropTypes.string,
+    rules: PropTypes.object,
+    placeholder: PropTypes.bool,
+    iconName: PropTypes.string,
+    keyboardType: PropTypes.string,
+    defaultValue: PropTypes.string,
+    editable: PropTypes.bool
+  })
+};
 
 export default AppController;

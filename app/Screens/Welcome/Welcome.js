@@ -5,7 +5,7 @@ const GLOBAL = require('../Common/Globals');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from "./styles";
 
-export default function Welcome(props) {
+export default function Welcome({ navigation }) {
 
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +28,7 @@ export default function Welcome(props) {
   }
 
   function moveToNextScreen() {
-    props.navigation.reset({
+    navigation.reset({
       index: 0,
       routes: [{ name: 'Login' }],
     });

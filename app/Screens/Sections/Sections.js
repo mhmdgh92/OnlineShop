@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
+import { AppTopBar, AppFlatList, AppLoader } from '../Common/';
 import SectionItem from './Components/SectionItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSectionsData } from "../../redux/slices/sectionsSlice";
 import { styles } from "./style";
 
-export default function Sections(props) {
+export default function Sections() {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -25,11 +25,8 @@ export default function Sections(props) {
   } = styles;
 
   useEffect(() => {
-    console.log('props:'+JSON.stringify(props))
     LoadSectionsData();
   }, []);
-
-  console.log('sectionsIsLoading:' + sectionsIsLoading)
 
   if (sectionsIsLoading)
     return <AppLoader />
@@ -37,7 +34,7 @@ export default function Sections(props) {
   return (
     <View style={container}>
       <AppTopBar title={'Main Sections'} />
-      <AppFlatList numColumns={2} data={sectionsState} renderItem={({ item, id }) => <SectionItem key={id} item={item} />} />
+      <AppFlatList numColumns={2} data={sectionsState} renderItem={({ item = {}, id = 0 }) => <SectionItem key={id} item={item} />} />
     </View>
   );
 }

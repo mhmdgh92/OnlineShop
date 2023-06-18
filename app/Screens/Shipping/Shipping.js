@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendShippingInfo } from "../../redux/slices/shippingSlice";
 import { styles } from './style';
 
-export default function Shipping(props) {
+export default function Shipping({ navigation, route: { params: { cart } } }) {
 
   const [shippingInfo, setShippingInfo] = useState({});
   const [onUpdateShippingInfo, setOnUpdateShippingInfo] = useState(false);
@@ -41,9 +41,8 @@ export default function Shipping(props) {
   }, [onUpdateShippingInfo, shippingState]);
 
   function moveToNextScreen() {
-    console.log('moveToNextScreen')
-    props.navigation.navigate('PickLocation', {
-      cart: props.route.params.cart,
+    navigation.navigate('PickLocation', {
+      cart: cart,
       shipping: shippingInfo
     });
   }
