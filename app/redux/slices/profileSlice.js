@@ -21,7 +21,7 @@ export const saveProfile = createAsyncThunk('saveProfile', async (data) => {
   await firestore()
     .collection('users')
     .doc(email)
-    .set({
+    .update({
       firstName: '' + firstName,
       lastName: '' + lastName,
       phone: '' + phone

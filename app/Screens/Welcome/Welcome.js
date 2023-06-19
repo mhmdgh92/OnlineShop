@@ -41,7 +41,7 @@ export default function Welcome({ navigation }) {
     <View style={styles.container}>
       <View style={styles.logoAndName}><LogoAndName width={300} /></View>
       <View style={styles.heading}><AppText text="Whatever you need.." size={24} /></View>
-      <View style={styles.img}><AppImage source={require('../../Assets/Welcome.png')} /></View>
+      <View style={styles.img}><AppImage height={280} source={require('../../Assets/Welcome.png')} /></View>
       <View style={styles.middleView}>
         <AppText text={"is here"} fontFamily={'Montserrat-Bold'} color={GLOBAL.Color.c1} size={29} />
         <AppText text={"\n High-quality products, on-time delivery, \n massive discounts!"} size={14} fontFamily={'Montserrat-SemiBold'} />

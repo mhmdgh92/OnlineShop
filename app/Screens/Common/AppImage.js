@@ -2,7 +2,6 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 import { appImageStyle } from "./styles";
 import PropTypes from 'prop-types';
-import { heightPixel } from './Utils/PixelNormalization';
 
 const AppImage = (props) => {
 

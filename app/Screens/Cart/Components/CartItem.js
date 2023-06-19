@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-const { AppImage, AppText, AppIcon, AppQuantity } = require('../../Common/');
+const { AppImage, AppText, AppQuantity } = require('../../Common/');
 import { cartItemStyle } from "./style";
 import PropTypes from 'prop-types';
 

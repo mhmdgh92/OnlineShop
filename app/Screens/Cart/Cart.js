@@ -13,8 +13,8 @@ export default function Cart({ navigation }) {
   // quantity: 1,
   // addToCartLoading: false,
   const [shipping, setShipping] = useState(10);
+  const [cartData, setCartData] = useState(null);
   const [subTotal, setSubTotal] = useState(0);
-  const [cartData, setCartData] = useState([]);
   const [onUpdateCart, setOnUpdateCart] = useState(false);
   const [onCartLoaded, setOnCartLoaded] = useState(false);
 
@@ -50,16 +50,18 @@ export default function Cart({ navigation }) {
     billsContainer
   } = styles;
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     if (!userState) {
-  //       navigation.goBack();
-  //       return;
-  //     }
-  //     setOnCartLoaded(false);
-  //     LoadCartData({ email: userState.email });
-  //   }, [])
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!userState) {
+        navigation.goBack();
+        return;
+      }
+      setOnCartLoaded(false);
+      setCartData(null);
+      console.log('email:' + userState.email);
+      LoadCartData({ email: userState.email });
+    }, [])
+  );
 
   useEffect(() => {
     if (!userState)
@@ -76,31 +78,31 @@ export default function Cart({ navigation }) {
       });
       return;
     }
-    if (!cartIsEmpty()) {
-      calculateTotal();
-    }
-    if (cartState) {
+    if (cartState && !cartData) {
+      updateSubTotal(cartState);
       setCartData(cartState);
     }
   }, [cartState, cartData, cartHasUpdated]);
 
-  function calculateTotal() {
+  function updateSubTotal(updatedCartData) {
     try {
-      if (cartIsEmpty())
+      if (cartIsEmpty(updatedCartData))
         return;
       let subTotal = 0;
-      cartData.map((item) => {
+      updatedCartData.map((item) => {
         const curItemQuantitiy = Number(item.quantity);
         const curItemPrice = Number(item.price);
         subTotal += Number(curItemQuantitiy * curItemPrice);
       });
+      console.log(subTotal)
       setSubTotal(subTotal);
     } catch (error) {
+      return 0;
     }
   }
 
-  const cartIsEmpty = () => {
-    return !cartData || cartData.length == 0;
+  const cartIsEmpty = (thisCartData = cartData) => {
+    return !thisCartData || thisCartData.length == 0;
   }
 
   const billItem = (name, price) => {
@@ -120,14 +122,12 @@ export default function Cart({ navigation }) {
 
   function onPlusOrMinusQuantity(itemID, plusOrMinus) {
     const tempCartData = JSON.parse(JSON.stringify(cartData));
-    if (plusOrMinus) {
+    if (plusOrMinus)
       tempCartData[itemID].quantity++;
-      setSubTotal(subTotal + (cartData[itemID].price));
-    }
-    else {
+    else
       tempCartData[itemID].quantity--;
-      setSubTotal(subTotal - (cartData[itemID].price));
-    }
+    console.log('onPlusOrMinusQuantity')
+    updateSubTotal(tempCartData);
     setCartData(tempCartData);
   }
 
@@ -143,8 +143,6 @@ export default function Cart({ navigation }) {
 
     if (!userState)
       return (<View />)
-
-
     return (
       <View style={container}>
         <View style={innerContainer}>
