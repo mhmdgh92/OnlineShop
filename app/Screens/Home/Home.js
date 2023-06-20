@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { AppLoader, AppHorListOfItems, AppSearchBar } from '../Common/';
+import { AppLoader, AppHorListOfItems, AppSearchBar, AppErrorScreen } from '../Common/';
 import { BigPromo, TwoPromos, WideBanner } from './Components/';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
 import { styles } from "./styles";
 
-export default function Home() {
+export function Home() {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -32,6 +32,9 @@ export default function Home() {
 
   if (homeIsLoading)
     return <AppLoader />
+
+  if (!homeState || homeState.length == 0)
+    return <AppErrorScreen />
 
   return (
     <View style={container}>

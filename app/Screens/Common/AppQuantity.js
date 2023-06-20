@@ -5,7 +5,7 @@ import { AppIcon, AppText } from './';
 import { appQuantityStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppQuantity = (props) => {
+export const AppQuantity = (props) => {
 
   const [quantity, setQuantity] = useState(props.quantity ? props.quantity : 1);
 
@@ -46,5 +46,3 @@ AppQuantity.propTypes = {
     plusOrMinusQuantity: PropTypes.func
   })
 };
-
-export default AppQuantity;

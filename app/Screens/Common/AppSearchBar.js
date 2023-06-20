@@ -6,7 +6,7 @@ import * as RootNavigation from '../../RootNav.js';
 import { appSearchBarStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppSearchBar = (props) => {
+export const AppSearchBar = (props) => {
 
   const { container, touchStyle } = appSearchBarStyle;
 
@@ -20,9 +20,13 @@ const AppSearchBar = (props) => {
     });
   }
 
+  const { leftIcon } = props;
+
+  var _leftIcon = leftIcon ? leftIcon : 'menu';
+
   return (
     <View style={container}>
-      <TouchableOpacity onPress={onMenuClick} style={touchStyle}><AppIcon size={38} name={props.leftIcon ? props.leftIcon : 'menu'} /></TouchableOpacity>
+      <TouchableOpacity onPress={onMenuClick} style={touchStyle}><AppIcon size={38} name={_leftIcon} /></TouchableOpacity>
       <AppTextInput onEndEditing={(text) => onSearch(text.nativeEvent.text)} placeholder={'Looking for..'} iconSize={30} name={'magnify'}
         iconColor={GLOBAL.Color.darkGrey} iconBackgroundColor='transparent' borderRadius={12} width={300} />
     </View>
@@ -34,5 +38,3 @@ AppSearchBar.propTypes = {
     leftIcon: PropTypes.string
   })
 };
-
-export default AppSearchBar;

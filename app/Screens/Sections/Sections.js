@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppLoader } from '../Common/';
-import SectionItem from './Components/SectionItem';
+import { SectionItem } from './Components/SectionItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadSectionsData } from "../../redux/slices/sectionsSlice";
 import { styles } from "./style";
 
-export default function Sections() {
+export function Sections() {
 
   //Dispatch
   const dispatch = useDispatch();

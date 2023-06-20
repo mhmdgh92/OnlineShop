@@ -6,15 +6,20 @@ import { AppIcon } from './';
 import { appCircleIconStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppCircleIcon = (props) => {
+export const AppCircleIcon = (props) => {
 
   const { container, innerView } = appCircleIconStyle(props);
+
+  const { iconSize, iconColor, name } = props;
+  var _iconSize = iconSize ? iconSize : 22;
+  var _iconColor = iconColor ? iconColor : GLOBAL.Color.white;
+  var _name = name ? name : "email";
 
   return (
     <View style={container}>
       <View style={innerView}>
-        <AppIcon borderRadius={normalize(30)} size={normalize(props.iconSize ? props.iconSize : 22)}
-          color={props.iconColor ? props.iconColor : GLOBAL.Color.white} name={props.name ? props.name : "email"} />
+        <AppIcon borderRadius={normalize(30)} size={normalize(_iconSize)}
+          color={_iconColor} name={_name} />
       </View>
     </View>
   );
@@ -29,4 +34,3 @@ AppCircleIcon.propTypes = {
   })
 };
 
-export default AppCircleIcon;

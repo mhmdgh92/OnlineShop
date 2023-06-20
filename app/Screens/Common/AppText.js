@@ -3,18 +3,21 @@ import { View, Text } from 'react-native';
 import { appTextStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppText = (props) => {
+export const AppText = (props) => {
 
   const {
-    numberOfLines
+    numberOfLines,
+    text
   } = props;
 
   const { container, textStyle } = appTextStyle(props);
 
+  var _text = text ? text : 'insert Text';
+
   return (
     <View style={container}>
       <Text numberOfLines={numberOfLines ? numberOfLines : 0} style={textStyle}>
-        {props.text ? props.text : 'insert Text'}
+        {_text}
       </Text>
     </View >
   );
@@ -25,5 +28,3 @@ AppText.propTypes = {
     text: PropTypes.string
   })
 };
-
-export default AppText;

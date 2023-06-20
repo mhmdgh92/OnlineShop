@@ -4,7 +4,7 @@ const GLOBAL = require('../../Common/Globals');
 import { normalize, heightPixel, widthPixel } from '../../Common/Utils/PixelNormalization';
 const { AppImage, AppText, AppIcon } = require('../../Common/');
 
-const FavItem = (props) => {
+export const FavItem = (props) => {
 
   const {
     link,
@@ -25,11 +25,9 @@ const FavItem = (props) => {
         <AppText crossed text={'$' + oldPrice} size={11} color={GLOBAL.Color.grey} textAlign='left' />
         <AppText text={'$' + price} size={12} color={GLOBAL.Color.darkGrey} textAlign='left' />
       </View>
-      <View style={{ alignItems:'flex-end',justifyContent:'flex-end',padding: widthPixel(10), height: '90%', flex: 2 }}>
+      <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', padding: widthPixel(10), height: '90%', flex: 2 }}>
         <AppText text={'28-2-2023'} size={10} color={GLOBAL.Color.darkGrey} textAlign='left' />
       </View>
     </View>
   );
 }
-
-export default FavItem;

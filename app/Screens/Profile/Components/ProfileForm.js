@@ -4,7 +4,7 @@ import { AppBTN, AppController } from '../../Common';
 import { useForm } from "react-hook-form";
 import { nameRules, phoneRules } from '../../Common/Utils/inputRules/';
 
-export default function ProfileForm(props) {
+export function ProfileForm(props) {
 
     const { userObj, loading, onSubmitClicked } = props;
     const {

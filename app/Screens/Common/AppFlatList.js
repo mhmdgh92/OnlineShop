@@ -3,31 +3,39 @@ import { FlatList } from 'react-native';
 import { appListStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppFlatList = (props) => {
+export const AppFlatList = (props) => {
 
   const { oneColContainer, twoColContainer } = appListStyle(props);
 
+  const {
+    numColumns,
+    data,
+    renderItem,
+    horizontal
+  } = props;
+
+
   return (
-    props.horizontal ?
+    horizontal ?
       (<FlatList
         nestedScrollEnabled
         {...props}
         horizontal={true}
-        data={props.data}
-        renderItem={props.renderItem}
+        data={data}
+        renderItem={renderItem}
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
       />) :
-      (props.numColumns == 1 ?
+      (numColumns == 1 ?
         <FlatList
           nestedScrollEnabled
           {...props}
           contentContainerStyle={{ alignItems: 'center' }}
           style={oneColContainer}
           numColumns={1}
-          data={props.data}
+          data={data}
           keyExtractor={(item) => item.id}
-          renderItem={props.renderItem}
+          renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         />
@@ -37,10 +45,10 @@ const AppFlatList = (props) => {
           style={twoColContainer}
           {...props}
           keyExtractor={(item) => item.id}
-          numColumns={props.numColumns}
+          numColumns={numColumns}
           columnWrapperStyle={{ justifyContent: 'space-between' }}
-          data={props.data}
-          renderItem={props.renderItem}
+          data={data}
+          renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         />)
@@ -55,5 +63,3 @@ AppFlatList.propTypes = {
     horizontal: PropTypes.bool
   })
 };
-
-export default AppFlatList;

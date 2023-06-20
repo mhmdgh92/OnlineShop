@@ -13,19 +13,25 @@ const initialState = {
 }
 
 export const registerAPI = createAsyncThunk('registerAPI', async (data) => {
-  let res = null;
   const {
     email,
     password
   } = data;
-  await auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      res = data;
-    }).catch(error => {
-      Alert.alert(error.code);
-    });
-  return res;
+  let res = null;
+  try {
+    await auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        res = data;
+      }).catch(error => {
+        console.error(error);
+        Alert.alert(error.code);
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
 
 export const setUserFireStoreAPI = createAsyncThunk('setUserFireStoreAPI', async (data) => {
@@ -34,17 +40,24 @@ export const setUserFireStoreAPI = createAsyncThunk('setUserFireStoreAPI', async
     email,
     phone
   } = data;
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .set({
-      phone: phone
-    })
-    .then(() => {
-      Alert.alert('User account created successfully!');
-      res = data;
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .set({
+        phone: phone
+      })
+      .then(() => {
+        Alert.alert('User account created successfully!');
+        res = data;
+      }).catch(error => {
+        console.error(error);
+      });
+    return res;
+  } catch (error) {
+    console.error(error)
+    return res;
+  }
 })
 
 export const registerSlice = createSlice({
@@ -84,5 +97,4 @@ export const registerSlice = createSlice({
   }
 })
 
-export const { } = registerSlice.actions;
 export default registerSlice.reducer;

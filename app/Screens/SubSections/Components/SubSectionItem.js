@@ -6,7 +6,7 @@ const { AppText, AppImageBackground } = require('../../Common/');
 import * as RootNavigation from '../../../RootNav.js';
 import { subSectionItemStyle } from './styles';
 
-const SubSectionItem = (props) => {
+export const SubSectionItem = (props) => {
   const {
     id,
     name,
@@ -36,5 +36,3 @@ const SubSectionItem = (props) => {
     </TouchableOpacity>
   );
 }
-
-export default SubSectionItem;

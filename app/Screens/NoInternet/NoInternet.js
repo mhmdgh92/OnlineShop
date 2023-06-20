@@ -4,7 +4,7 @@ const ScreenWidth = Dimensions.get('window').width;
 import { AppText, LogoAndName, AppImage, AppBTN } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 
-export default function NoInternet() {
+export function NoInternet() {
 
   return (
     <View style={{ alignItems: 'center', height: ScreenHeight * 0.967, width: ScreenWidth }}>

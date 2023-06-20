@@ -3,14 +3,21 @@ import FastImage from 'react-native-fast-image';
 import { appImageStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppImage = (props) => {
+export const AppImage = (props) => {
 
   const { container } = appImageStyle(props);
+  const {
+    source,
+    resizeMode
+  } = props;
 
+  var _source = source ? source : require('../../Assets/sampleImg.jpg');
+  var _resizeMode = resizeMode ? resizeMode : 'contain';
   return (
     <FastImage style={container}
-      resizeMode={props.resizeMode ? props.resizeMode : 'contain'}
-      source={props.source ? props.source : require('../../Assets/sampleImg.jpg')} />
+      source={_source}
+      resizeMode={_resizeMode}
+    />
   );
 }
 
@@ -20,5 +27,3 @@ AppImage.propTypes = {
     source: PropTypes.object
   })
 };
-
-export default AppImage;

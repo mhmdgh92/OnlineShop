@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { sendShippingInfo } from "../../redux/slices/shippingSlice";
 import { styles } from './style';
 
-export default function Shipping({ navigation, route: { params: { cart } } }) {
+export function Shipping({ navigation, route: { params: { cart } } }) {
 
   const [shippingInfo, setShippingInfo] = useState({});
   const [onUpdateShippingInfo, setOnUpdateShippingInfo] = useState(false);

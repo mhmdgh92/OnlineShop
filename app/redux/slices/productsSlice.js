@@ -18,17 +18,24 @@ export const loadProductsData = createAsyncThunk('loadProductsData', async (data
     secitionID,
     secitionName
   } = data;
-  await firestore()
-    .collection('products')
-    .doc(secitionID.toString())
-    .get()
-    .then(documentSnapshot => {
-      res.secitionName = secitionName;
-      documentSnapshot.data().data.map((item) => {
-        res.data.push(item);
-      })
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('products')
+      .doc(secitionID.toString())
+      .get()
+      .then(documentSnapshot => {
+        res.secitionName = secitionName;
+        documentSnapshot.data().data.map((item) => {
+          res.data.push(item);
+        })
+      }).catch(error => {
+        console.error(error);
+      });
+    return res;
+  } catch (error) {
+    console.error(error)
+    return res;
+  }
 })
 
 export const searchProduct = createAsyncThunk('searchProduct', async (data) => {
@@ -36,19 +43,25 @@ export const searchProduct = createAsyncThunk('searchProduct', async (data) => {
   const {
     searchInput
   } = data;
-  await firestore()
-    .collection('products')
-    .orderBy('name')
-    .startAt(searchInput)
-    .endAt(searchInput + '~')
-    .get()
-    .then(documentSnapshot => {
-      console.log('documentSnapshot:' + JSON.stringify(documentSnapshot));
-      documentSnapshot.docs.map((item) => {
-        res.push(item.data());
-      })
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('products')
+      .orderBy('name')
+      .startAt(searchInput)
+      .endAt(searchInput + '~')
+      .get()
+      .then(documentSnapshot => {
+        documentSnapshot.docs.map((item) => {
+          res.push(item.data());
+        })
+      }).catch(error => {
+        console.error(error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error)
+    return res;
+  }
 })
 
 export const productsSlice = createSlice({
@@ -75,7 +88,6 @@ export const productsSlice = createSlice({
       state.searchProductsIsLoading = true;
     },
     [searchProduct.fulfilled]: (state, { payload }) => {
-      console.log('payload:' + JSON.stringify(payload))
       state.searchProductsState = payload;
       state.searchProductsIsLoading = false;
       state.searchProductsErrorMessage = '';
@@ -87,5 +99,4 @@ export const productsSlice = createSlice({
   }
 })
 
-export const { } = productsSlice.actions;
 export default productsSlice.reducer;

@@ -4,7 +4,7 @@ import { AppBTN, AppController } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules } from '../../Common/Utils/inputRules/';
 
-ForgetPassForm = (props, ref) => {
+export const ForgetPassForm = (props, ref) => {
 
     const { control, getValues, handleSubmit, formState: { errors } } = useForm();
 

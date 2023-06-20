@@ -5,7 +5,7 @@ import { AppIcon, AppText } from './';
 import { appListItemStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppListItem = (props) => {
+export const AppListItem = (props) => {
 
   const {
     icon,
@@ -17,12 +17,18 @@ const AppListItem = (props) => {
   } = props;
 
   const { container, iconView, textView, childrenView } = appListItemStyle(props);
+  const { children } = props;
+
+  var _iconColor = iconColor ? iconColor : GLOBAL.Color.darkGrey;
+  var _iconSize = iconSize ? iconSize : 30;
+  var _textSize = textSize ? textSize : 14.5;
+  var _textColor = textColor ? textColor : GLOBAL.Color.c3;
 
   return (
     <View style={container}>
-      <View style={iconView}><AppIcon name={icon} color={iconColor ? iconColor : GLOBAL.Color.darkGrey} size={iconSize ? iconSize : 30} /></View>
-      <View style={textView}><AppText size={textSize ? textSize : 14.5} text={title} color={textColor ? textColor : GLOBAL.Color.c3} textAlign={'left'} /></View>
-      <View style={childrenView}>{props.children}</View>
+      <View style={iconView}><AppIcon name={icon} color={_iconColor} size={_iconSize} /></View>
+      <View style={textView}><AppText size={_textSize} text={title} color={_textColor} textAlign={'left'} /></View>
+      <View style={childrenView}>{children}</View>
     </View>
   );
 }
@@ -38,6 +44,3 @@ AppListItem.propTypes = {
     children: PropTypes.object
   })
 };
-
-
-export default AppListItem;

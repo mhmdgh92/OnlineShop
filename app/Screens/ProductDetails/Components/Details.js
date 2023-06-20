@@ -5,15 +5,11 @@ import { normalize, heightPixel } from '../../Common/Utils/PixelNormalization';
 const { AppText } = require('../../Common/');
 import StarRating from 'react-native-star-rating-widget';
 
-const Details = (props) => {
+export const Details = (props) => {
 
   const { model, name, oldPrice, price, rating } = props.data;
 
   function getDiscount() {
-    const {
-      oldPrice,
-      price
-    } = props.data;
     return ((oldPrice / price) * 10).toFixed(0) + '%';
   }
 
@@ -42,6 +38,3 @@ const Details = (props) => {
     </View>
   );
 }
-
-
-export default Details;

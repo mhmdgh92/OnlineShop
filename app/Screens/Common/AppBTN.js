@@ -3,17 +3,18 @@ import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { appBTNStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppBTN = (props) => {
+export const AppBTN = (props) => {
 
-  const { loading } = props;
+  const { loading, text } = props;
   const { container, textStyle } = appBTNStyle(props);
 
+  var _text = text ? text : 'Press Here';
 
   return (
     <TouchableOpacity activeOpacity={0.9} style={container} onPress={loading ? null : props.onPress}>
       {loading ?
         <ActivityIndicator color={'white'} /> :
-        <Text style={textStyle}> {props.text ? props.text : 'Press Here'} </Text>}
+        <Text style={textStyle}> {_text} </Text>}
     </TouchableOpacity>
   );
 }
@@ -39,6 +40,3 @@ AppBTN.propTypes = {
     })
   })
 };
-
-
-export default AppBTN;

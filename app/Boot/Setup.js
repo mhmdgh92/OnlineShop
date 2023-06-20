@@ -1,15 +1,14 @@
 import React from 'react';
-import App from '../App';
-import { Provider } from 'react-redux';
-import toolKitStore from '../redux/toolKitStore';
+import { App } from '../App';
+import { Provider } from 'react-redux'
+import { store } from '../redux/store';
 
-function Setup() {
+export function Setup() {
 
   return (
-    <Provider store={toolKitStore}>
+    <Provider store={store}>
       <App />
     </Provider>
   );
 
 }
-export default Setup;

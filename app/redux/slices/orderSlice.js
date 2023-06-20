@@ -53,7 +53,7 @@ export const addToOrders = createAsyncThunk('addToOrders', async (data) => {
       });
     return res;
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 })
 
@@ -73,7 +73,7 @@ export const removeCurrentCartOrder = createAsyncThunk('removeCurrentCartOrder',
       });
     return res;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 })
 
@@ -88,7 +88,6 @@ export const orderSlice = createSlice({
       state.loadOrdersLoading = true;
     },
     [loadOrders.fulfilled]: (state, { payload }) => {
-      console.log('Here')
       if (payload)
         state.loadOrdersState = payload;
       state.loadOrdersLoading = false;

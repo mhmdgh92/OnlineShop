@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
-import BrandItem from './Components/BrandItem';
+import {BrandItem} from './Components/BrandItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from "../../redux/slices/brandsSlice";
 import { styles } from "./styles";
 
-export default function Brands() {
+export function Brands() {
 
   //Dispatch
   const dispatch = useDispatch();

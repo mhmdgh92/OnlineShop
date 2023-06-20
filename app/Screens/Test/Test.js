@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { TestChildComp } from './Components/';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AppImage} from '../Common/AppImage';
 
-export default function Test() {
+export function Test() {
 
   return (
-    <View style={{ flex:1 }}>
-      <TouchableOpacity style={{ backgroundColor: 'red', height:'10%',width:'10%' }}>
-      </TouchableOpacity>
+    <View style={{ flex: 1 }}>
     </View>
   );
 }

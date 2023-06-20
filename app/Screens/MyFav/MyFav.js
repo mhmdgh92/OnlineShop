@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, Alert } from 'react-native';
 import { AppTopBar, AppFlatList } from '../Common/';
-import FavItem from './Components/FavItem';
+import {FavItem} from './Components/FavItem';
 
-export default function MyFav() {
+export function MyFav() {
 
   useEffect(() => {
     onMount();

@@ -9,7 +9,7 @@ import { loadUser, saveUser } from "../../redux/slices/userSlice";
 import { loginAPI, getUserFireStoreAPI } from "../../redux/slices/loginSlice";
 import { loginStyle } from "./styles";
 
-export default function Login({ navigation }) {
+export function Login({ navigation }) {
 
   //Refs
   const loginFormRef = useRef(null);
@@ -97,7 +97,6 @@ export default function Login({ navigation }) {
   }
 
   const onSubmit = data => {
-    console.log('onSubmit');
     LoginAPI(data);
   };
 

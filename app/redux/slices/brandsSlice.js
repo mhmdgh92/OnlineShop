@@ -10,16 +10,23 @@ const initialState = {
 
 export const loadData = createAsyncThunk('loadData', async (data) => {
   let res = [];
-  await firestore()
-    .collection('brands')
-    .get()
-    .then(documentSnapshot => {
-      documentSnapshot.docs.map((item, id) => {
-        let newItem = { id: id, data: item.data() }
-        res.push(newItem);
-      })
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('brands')
+      .get()
+      .then(documentSnapshot => {
+        documentSnapshot.docs.map((item, id) => {
+          let newItem = { id: id, data: item.data() }
+          res.push(newItem);
+        })
+      }).catch((error) => {
+        console.error('rejected', error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
 
 export const brandsSlice = createSlice({
@@ -42,5 +49,4 @@ export const brandsSlice = createSlice({
   }
 })
 
-export const { } = brandsSlice.actions;
 export default brandsSlice.reducer;

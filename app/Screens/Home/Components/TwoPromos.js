@@ -3,15 +3,19 @@ import { View } from 'react-native';
 const { AppImage } = require('../../Common/');
 import { twoPromosStyle } from './styles';
 
-const TwoPromos = (props) => {
+export const TwoPromos = (props) => {
 
   const {
     container
   } = twoPromosStyle;
 
+  const {
+    source
+  } = props;
+
   function ImgItem(props) {
     return (
-      <AppImage source={{ uri: props.source }} width={167.5} height={120} />
+      <AppImage source={{ uri: source }} width={167.5} height={120} />
     );
   }
 
@@ -35,5 +39,3 @@ const TwoPromos = (props) => {
     </View>
   );
 }
-
-export default TwoPromos;

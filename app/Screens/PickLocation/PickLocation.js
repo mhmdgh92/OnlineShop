@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToOrders, removeCurrentCartOrder, reset } from "../../redux/slices/orderSlice";
 import { styles } from "./style";
 
-export default function PickLocation({ navigation, route: { params: { shipping, cart } } }) {
+export function PickLocation({ navigation, route: { params: { shipping, cart } } }) {
 
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [marginBottom, setMarginBottom] = useState(0);
@@ -151,8 +151,8 @@ export default function PickLocation({ navigation, route: { params: { shipping, 
     confirmBTN
   } = styles;
 
-  if (latitude === null)
-    return <AppLoader />
+  // if (latitude === null)//T,A
+  //   return <AppLoader />
   return (
     <View style={container}>
       <AppTopBar title={'Pick Delivery Location'} />

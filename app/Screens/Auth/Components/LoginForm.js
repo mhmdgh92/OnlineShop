@@ -6,7 +6,7 @@ import { emailRules, passwordRules } from '../../Common/Utils/inputRules/';
 import { loginFromStyle } from "./styles";
 const GLOBAL = require('../../Common/Globals');
 
-LoginForm = (props, ref) => {
+const LoginForm = (props, ref) => {
 
     const { control, getValues, handleSubmit, formState: { errors } } = useForm();
 

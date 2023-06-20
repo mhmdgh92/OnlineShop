@@ -8,7 +8,7 @@ import { saveUser } from "../../redux/slices/userSlice";
 import { registerAPI, setUserFireStoreAPI } from "../../redux/slices/registerSlice";
 import { registerStyle } from "./styles";
 
-export default function Register({navigation}) {
+export function Register({ navigation }) {
 
   //Refs
   const registerFormRef = useRef(null);
@@ -78,7 +78,6 @@ export default function Register({navigation}) {
   }
 
   const onSubmit = data => {
-    console.log('onRegister');
     RegisterAPI(data);
   };
 
@@ -88,8 +87,8 @@ export default function Register({navigation}) {
         <LogoAndName />
         <AppText marginTop={20} text="New account" size={26} />
         <AppText marginTop={2} text={"Register"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-        <RegisterForm ref={registerFormRef} onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} loading={registerIsLoading} onSubmit={onSubmit} />
-        <AppBTN onPress={onRegisterClicked} text={'Register'} marginTop={45} />
+        <RegisterForm ref={registerFormRef} onPrivacyClick={onPrivacyClick} onTermsClick={onTermsClick} onSubmit={onSubmit} />
+        <AppBTN loading={registerIsLoading} onPress={onRegisterClicked} text={'Register'} marginTop={45} />
         <View style={registerStyle.middleView}>
           <AppText text={"Have account?"} color={GLOBAL.Color.darkGrey} size={16} fontFamily={'Montserrat-Bold'} />
           <TouchableOpacity onPress={onSignInClick}><AppText text={" Sign in"} color={GLOBAL.Color.c1} size={16} fontFamily={'Montserrat-Bold'} /></TouchableOpacity>

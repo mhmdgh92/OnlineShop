@@ -3,13 +3,16 @@ import FastImage from 'react-native-fast-image';
 import { appRoundedImageStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppRoundedImage = (props) => {
+export const AppRoundedImage = (props) => {
 
   const { container } = appRoundedImageStyle(props);
 
+  const { source } = props;
+
+  var _source = source ? source : require('../../Assets/profile.png');
+
   return (
-    <FastImage style={container} resizeMode={'cover'}
-      source={props.source ? props.source : require('../../Assets/profile.png')} />
+    <FastImage style={container} resizeMode={'cover'} source={_source} />
   );
 }
 
@@ -18,5 +21,3 @@ AppRoundedImage.propTypes = {
     source: PropTypes.object,
   })
 };
-
-export default AppRoundedImage;

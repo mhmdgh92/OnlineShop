@@ -5,7 +5,7 @@ const { AppText, AppIcon } = require('../../Common/');
 import { orderItemStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const OrderItem = ({ item }) => {
+export const OrderItem = ({ item }) => {
 
   useEffect(() => {
   }, []);
@@ -91,5 +91,3 @@ OrderItem.propTypes = {
     date: PropTypes.string.isRequired
   }).isRequired
 };
-
-export default OrderItem;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppBottomBar } from '../Common/';
-import SubSectionItem from './Components/SubSectionItem';
+import { SubSectionItem } from './Components/SubSectionItem';
 import { styles } from "./style";
 
-export default function SubsubSection({ route: { params } }) {
+export function SubsubSection({ route: { params } }) {
 
   const {
     sectionID,

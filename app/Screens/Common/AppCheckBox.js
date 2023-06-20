@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { appCheckBoxStyle } from "./styles";
 
-const AppCheckBox = () => {
+export const AppCheckBox = () => {
 
   const { container, innerView } = appCheckBoxStyle;
 
@@ -12,5 +12,3 @@ const AppCheckBox = () => {
     </View>
   );
 };
-
-export default AppCheckBox;

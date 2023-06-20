@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from "../../redux/slices/cartSlice";
 import PropTypes from "prop-types";
 
-export default function ProductDetails({ navigation, route: { params: { data } } }) {
+export function ProductDetails({ navigation, route: { params: { data } } }) {
 
   // quantity: 1,
   // addToCartLoading: false,

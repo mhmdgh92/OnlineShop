@@ -37,4 +37,5 @@ const RegisterForm = (props, ref) => {
     );
 
 }
+
 export default forwardRef(RegisterForm);

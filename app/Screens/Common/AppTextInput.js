@@ -6,7 +6,7 @@ import { AppCircleIcon } from './';
 import { appTextInputStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppTextInput = (props) => {
+export const AppTextInput = (props) => {
 
   const {
     placeholder,
@@ -21,7 +21,8 @@ const AppTextInput = (props) => {
     onBlur,
     onChangeText,
     defaultValue,
-    value
+    value,
+    textStyle
   } = props;
 
   const { hiddenIconView, showIconView, innerView, inputStyle } = appTextInputStyle(props);
@@ -46,7 +47,7 @@ const AppTextInput = (props) => {
         textAlignVertical={textAlignVertical ? textAlignVertical : 'auto'}
         placeholder={placeholder ? placeholder : 'email'}
         onEndEditing={(text) => { onEndEditing ? onEndEditing(text.nativeEvent.text) : null }}
-        {...props} style={inputStyle} textStyle={props.textStyle} /></View>
+        {...props} style={inputStyle} textStyle={textStyle} /></View>
     </View>
   );
 }
@@ -56,5 +57,3 @@ AppTextInput.propTypes = {
     textStyle: PropTypes.object
   })
 };
-
-export default AppTextInput;

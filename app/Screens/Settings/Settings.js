@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
 import { styles } from "./styles";
 
-export default function Settings({ navigation }) {
+export function Settings({ navigation }) {
 
   //States
   const userSlice = useSelector(state => state.user);

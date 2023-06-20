@@ -14,15 +14,21 @@ export const sendShippingInfo = createAsyncThunk('sendShippingInfo', async (data
     shippingInfo
   } = data;
   let res = false;
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .update({
-      'currentOrder.shippingAddress': shippingInfo
-    }).then(() => {
-      res = true;
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .update({
+        'currentOrder.shippingAddress': shippingInfo
+      }).then(() => {
+        res = true;
+      }).catch(error => {
+        console.error(error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
 })
 
 export const shippingSlice = createSlice({
@@ -46,5 +52,4 @@ export const shippingSlice = createSlice({
   }
 })
 
-export const { } = shippingSlice.actions;
 export default shippingSlice.reducer;

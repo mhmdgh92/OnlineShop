@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import CartItem from './Components/CartItem';
+import {CartItem} from './Components/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 import { styles } from "./style";
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function Cart({ navigation }) {
+export function Cart({ navigation }) {
 
   // quantity: 1,
   // addToCartLoading: false,
@@ -58,7 +58,6 @@ export default function Cart({ navigation }) {
       }
       setOnCartLoaded(false);
       setCartData(null);
-      console.log('email:' + userState.email);
       LoadCartData({ email: userState.email });
     }, [])
   );
@@ -94,7 +93,6 @@ export default function Cart({ navigation }) {
         const curItemPrice = Number(item.price);
         subTotal += Number(curItemQuantitiy * curItemPrice);
       });
-      console.log(subTotal)
       setSubTotal(subTotal);
     } catch (error) {
       return 0;
@@ -126,7 +124,6 @@ export default function Cart({ navigation }) {
       tempCartData[itemID].quantity++;
     else
       tempCartData[itemID].quantity--;
-    console.log('onPlusOrMinusQuantity')
     updateSubTotal(tempCartData);
     setCartData(tempCartData);
   }

@@ -4,7 +4,7 @@ import { AppIcon, AppText, AppTopBar, AppListItem } from '../Common/';
 const GLOBAL = require('../Common');
 import { styles } from "./styles";
 
-export default function HelpCenter({ navigation }) {
+export function HelpCenter({ navigation }) {
 
   const {
     container,

@@ -10,7 +10,6 @@ const initialState = {
 }
 
 export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (data) => {
-  console.log('sendForgetPassAPI')
   const {
     email
   } = data;
@@ -25,11 +24,11 @@ export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (da
       .catch(error => {
         Alert.alert(error.toString())
       });
-    return res;
 
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
+  return res;
 })
 
 export const forgetPassSlice = createSlice({
@@ -54,5 +53,4 @@ export const forgetPassSlice = createSlice({
   }
 })
 
-export const { } = forgetPassSlice.actions;
 export default forgetPassSlice.reducer;

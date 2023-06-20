@@ -18,16 +18,24 @@ export const addToCart = createAsyncThunk('addToCart', async (data) => {
     cartItemObj
   } = data;
   let res = false;
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .update({
-      'currentOrder.cart': firestore.FieldValue.arrayUnion(cartItemObj)
-    }).then(() => {
-      Alert.alert('Product added successfully!');
-      res = true;
-    });
-  return res;
+
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .update({
+        'currentOrder.cart': firestore.FieldValue.arrayUnion(cartItemObj)
+      }).then(() => {
+        Alert.alert('Product added successfully!');
+        res = true;
+      }).catch((error) => {
+        console.error('rejected', error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
 
 export const loadCartData = createAsyncThunk('loadCartData', async (data) => {
@@ -35,22 +43,29 @@ export const loadCartData = createAsyncThunk('loadCartData', async (data) => {
     email
   } = data;
   let res = [];
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .get()
-    .then(documentSnapshot => {
-      if (documentSnapshot.data().currentOrder && documentSnapshot.data().currentOrder.cart) {
-        documentSnapshot.data().currentOrder.cart.map((item, id) => {
-          item.id = id;
-          res.push(item);
-        })
-      }
-    }).catch(error => {
-      res = error;
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.data().currentOrder && documentSnapshot.data().currentOrder.cart) {
+          documentSnapshot.data().currentOrder.cart.map((item, id) => {
+            item.id = id;
+            res.push(item);
+          })
+        }
+      }).catch((error) => {
+        console.error('rejected', error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
+
+
 
 export const updateCart = createAsyncThunk('updateCart', async (data) => {
   let res = null;
@@ -64,12 +79,16 @@ export const updateCart = createAsyncThunk('updateCart', async (data) => {
       .doc(email)
       .update({
         'currentOrder.cart': updatedCart
+      }).then(() => {
+        res = 1;
+      }).catch(error => {
+        console.error(error)
       });
-    res = 1;
+    return res;
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return res;
   }
-  return res;
 })
 
 export const cartSlice = createSlice({
@@ -122,5 +141,4 @@ export const cartSlice = createSlice({
   }
 })
 
-export const { } = cartSlice.actions;
 export default cartSlice.reducer;

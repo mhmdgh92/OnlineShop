@@ -211,3 +211,11 @@ buck-out/
 android/app/build.gradle
 *.gradle
 *.properties
+android/app/google-services.json
+.env
+android/app/proguard-rules.pro
+android/app/src/main/AndroidManifest.xml
+metro.config.js
+package-lock.json
+transformer.js
+yarn.lock

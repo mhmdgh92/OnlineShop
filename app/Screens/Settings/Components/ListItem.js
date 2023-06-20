@@ -3,11 +3,12 @@ import { View } from 'react-native';
 import { AppListItem } from '../../Common/';
 import { listItemStyle } from "./styles";
 
-const ListItem = (props) => {
+export const ListItem = (props) => {
 
   const {
     icon,
-    title
+    title,
+    children
   } = props;
 
   const {
@@ -17,10 +18,8 @@ const ListItem = (props) => {
   return (
     <AppListItem icon={icon} title={title}>
       <View style={container}>
-        {props.children}
+        {children}
       </View>
     </AppListItem>
   );
 }
-
-export default ListItem;

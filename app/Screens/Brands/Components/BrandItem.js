@@ -2,7 +2,7 @@ import React from 'react';
 const { AppImage } = require('../../Common/');
 import PropTypes from 'prop-types';
 
-const BrandItem = ({ item }) => {
+export const BrandItem = ({ item }) => {
   const {
     link
   } = item;
@@ -16,5 +16,3 @@ BrandItem.propTypes = {
     link: PropTypes.string.isRequired
   }).isRequired
 };
-
-export default BrandItem;

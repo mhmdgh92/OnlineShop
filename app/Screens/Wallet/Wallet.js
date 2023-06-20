@@ -6,7 +6,7 @@ import { styles } from "./styles";
 const GLOBAL = require('../Common');
 import PropTypes from "prop-types";
 
-export default function Wallet() {
+export function Wallet() {
 
   //States
   const userSlice = useSelector(state => state.user);

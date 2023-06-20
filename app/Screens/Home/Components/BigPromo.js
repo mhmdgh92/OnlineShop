@@ -4,7 +4,7 @@ const { AppImage } = require('../../Common/');
 import Swiper from 'react-native-swiper';
 import { bigPromoStyle } from './styles';
 
-const BigPromo = (props) => {
+export const BigPromo = (props) => {
 
   const {
     container,
@@ -33,6 +33,8 @@ const BigPromo = (props) => {
     data
   } = props;
 
+  return (<View />);//T,R
+
   return (
     <View style={container}>
       <Swiper autoplay>
@@ -41,5 +43,3 @@ const BigPromo = (props) => {
     </View >
   );
 }
-
-export default BigPromo;

@@ -6,14 +6,23 @@ import { normalize } from './Utils/PixelNormalization';
 import { appIconStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppIcon = (props) => {
-
+export const AppIcon = (props) => {
 
   const { container, innerIcon } = appIconStyle(props);
+
+  const {
+    name,
+    size,
+    color
+  } = props;
+
+  var _name = name ? name : "arrow-right";
+  var _size = size ? size : 19;
+  var _color = color ? color : GLOBAL.Color.white;
+
   return (
     <View style={container}>
-      <Icon style={innerIcon} size={normalize(props.size ? props.size : 19)}
-        color={props.color ? props.color : GLOBAL.Color.white} name={props.name ? props.name : "arrow-right"} />
+      <Icon style={innerIcon} size={normalize(_size)} color={_color} name={_name} />
     </View>
   );
 }
@@ -25,5 +34,3 @@ AppIcon.propTypes = {
     name: PropTypes.string
   })
 };
-
-export default AppIcon;

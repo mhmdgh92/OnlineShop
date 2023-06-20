@@ -4,7 +4,7 @@ import { heightPixel } from '../../Common/Utils/PixelNormalization';
 const { AppImage } = require('../../Common/');
 import Swiper from 'react-native-swiper';
 
-const Photos = (props) => {
+export const Photos = (props) => {
 
   function ImgItem(item, id) {
     return (
@@ -28,5 +28,3 @@ const Photos = (props) => {
     </View>
   );
 }
-
-export default Photos;

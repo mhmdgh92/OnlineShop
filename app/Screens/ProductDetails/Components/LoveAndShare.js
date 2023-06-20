@@ -5,7 +5,7 @@ import { heightPixel } from '../../Common/Utils/PixelNormalization';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 const { AppText, AppIcon } = require('../../Common/');
 
-const LoveAndShare = (props) => {
+export const LoveAndShare = (props) => {
 
   const onShare = async () => {
     const result = await Share.share({
@@ -22,5 +22,3 @@ const LoveAndShare = (props) => {
     </View>
   );
 }
-
-export default LoveAndShare;

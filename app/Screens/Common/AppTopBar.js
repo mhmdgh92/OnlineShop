@@ -5,10 +5,11 @@ import { AppText, AppIcon } from './';
 import * as RootNavigation from '../../RootNav.js';
 import { appTopBarStyle } from "./styles";
 
-const AppTopBar = (props) => {
+export const AppTopBar = (props) => {
 
   const {
-    hideLeft
+    title,
+    leftIcon
   } = props;
 
   const onBackClicked = () => {
@@ -17,15 +18,18 @@ const AppTopBar = (props) => {
 
   const { container, leftView, textStyle, rightView } = appTopBarStyle;
 
+  var _leftIcon = leftIcon ? leftIcon : "arrow-left";
+  var _title = title ? title : "My Info";
+
   return (
     <View style={container}>
       <View style={leftView}>
         <TouchableOpacity onPress={onBackClicked}>
-          <AppIcon size={38} name={props.leftIcon ? props.leftIcon : 'arrow-left'} />
+          <AppIcon size={38} name={_leftIcon} />
         </TouchableOpacity>
       </View>
       <View style={textStyle}>
-        <AppText numberOfLines={1} text={props.title ? props.title : "My Info"} size={18}
+        <AppText numberOfLines={1} text={_title} size={18}
           color={GLOBAL.Color.white} fontFamily={'Montserrat-SemiBold'} />
       </View>
       <View style={rightView}>
@@ -33,5 +37,3 @@ const AppTopBar = (props) => {
     </View>
   );
 };
-
-export default AppTopBar;

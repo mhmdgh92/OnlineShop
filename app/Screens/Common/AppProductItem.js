@@ -7,7 +7,7 @@ import StarRating from 'react-native-star-rating-widget';
 import * as RootNavigation from '../../RootNav.js';
 import { appProductItemStyle } from "./styles";
 
-const AppProductItem = (props) => {
+export const AppProductItem = (props) => {
 
   const {
     link,
@@ -49,4 +49,3 @@ const AppProductItem = (props) => {
     </View>
   );
 };
-export default AppProductItem;

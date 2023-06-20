@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadProductsData } from "../../redux/slices/productsSlice";
 import { styles } from "./style";
 
-export default function Products({ route: { params } }) {
+export function Products({ route: { params } }) {
 
   //Dispatch
   const dispatch = useDispatch();

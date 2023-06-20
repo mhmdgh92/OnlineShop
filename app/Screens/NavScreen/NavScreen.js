@@ -7,7 +7,7 @@ import { removeUser, reset } from "../../redux/slices/userSlice";
 import RNRestart from 'react-native-restart';
 import { styles } from "./styles";
 
-export default function NavScreen({ navigation }) {
+export function NavScreen({ navigation }) {
 
   //Dispatch
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ export default function NavScreen({ navigation }) {
 
   useEffect(() => {
     if (userRemoveSuccess) {
-      console.log('userRemoveSuccess');
       ResetUser();
       navigation.reset({
         index: 0,
@@ -93,7 +92,7 @@ export default function NavScreen({ navigation }) {
         {listItem('comment-question-outline', 'Help Center', 'HelpCenter')}
         {listItem('cog', 'Settings', 'Settings')}
         {listItem('information-outline', 'About Us', 'About')}
-        {listItem('logout', 'LogOut', 'LogOut')}
+        {userState ? listItem('logout', 'LogOut', 'LogOut') : listItem('login', 'Login', 'AuthStack')}
         <AppText marginTop={13} text={'App Version:0.0.1'} color={GLOBAL.Color.grey} size={13} />
       </View>
     </View>

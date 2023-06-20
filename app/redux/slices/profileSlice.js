@@ -18,18 +18,25 @@ export const saveProfile = createAsyncThunk('saveProfile', async (data) => {
     email
   } = data;
 
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .update({
-      firstName: '' + firstName,
-      lastName: '' + lastName,
-      phone: '' + phone
-    })
-    .then(() => {
-      res = data;
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .update({
+        firstName: '' + firstName,
+        lastName: '' + lastName,
+        phone: '' + phone
+      })
+      .then(() => {
+        res = data;
+      }).catch(error => {
+        console.error(error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
 
 export const profileSlice = createSlice({
@@ -53,5 +60,4 @@ export const profileSlice = createSlice({
   }
 })
 
-export const { } = profileSlice.actions;
 export default profileSlice.reducer;

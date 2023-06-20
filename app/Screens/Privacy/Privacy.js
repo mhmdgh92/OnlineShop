@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { AppTopBar, LogoAndName, AppText } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 
-export default function Privacy() {
+export function Privacy() {
 
   return (
     <View style={{ alignItems: 'center' }}>

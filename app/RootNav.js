@@ -1,30 +1,30 @@
 import React from 'react'
-import Home from './Screens/Home/Home';
-import Test from './Screens/Test/Test';
-import Welcome from './Screens/Welcome/Welcome';
-import Login from './Screens/Auth/Login';
-import Register from './Screens/Auth/Register';
-import ForgetPass from './Screens/Auth/ForgetPass';
-import Profile from './Screens/Profile/Profile';
-import Shipping from './Screens/Shipping/Shipping';
-import About from './Screens/About/About';
-import Brands from './Screens/Brands/Brands';
-import MyFav from './Screens/MyFav/MyFav';
-import MyOrders from './Screens/MyOrders/MyOrders';
-import Products from './Screens/Products/Products';
-import SearchProducts from './Screens/SearchProducts/SearchProducts';
-import ProductDetails from './Screens/ProductDetails/ProductDetails';
-import Settings from './Screens/Settings/Settings';
-import HelpCenter from './Screens/HelpCenter/HelpCenter';
-import NavScreen from './Screens/NavScreen/NavScreen';
-import Wallet from './Screens/Wallet/Wallet';
-import Sections from './Screens/Sections/Sections';
-import SubSections from './Screens/SubSections/SubSections';
-import PickLocation from './Screens/PickLocation/PickLocation';
-import Cart from './Screens/Cart/Cart';
-import ContactUs from './Screens/ContactUs/ContactUs';
-import Terms from './Screens/Terms/Terms';
-import Privacy from './Screens/Privacy/Privacy';
+import { Home } from './Screens/Home/Home';
+import { Test } from './Screens/Test/Test';
+import { Welcome } from './Screens/Welcome/Welcome';
+import { Login } from './Screens/Auth/Login';
+import { Register } from './Screens/Auth/Register';
+import { ForgetPass } from './Screens/Auth/ForgetPass';
+import { Profile } from './Screens/Profile/Profile';
+import { Shipping } from './Screens/Shipping/Shipping';
+import { About } from './Screens/About/About';
+import { Brands } from './Screens/Brands/Brands';
+import { MyFav } from './Screens/MyFav/MyFav';
+import { MyOrders } from './Screens/MyOrders/MyOrders';
+import { Products } from './Screens/Products/Products';
+import { SearchProducts } from './Screens/SearchProducts/SearchProducts';
+import { ProductDetails } from './Screens/ProductDetails/ProductDetails';
+import { Settings } from './Screens/Settings/Settings';
+import { HelpCenter } from './Screens/HelpCenter/HelpCenter';
+import { NavScreen } from './Screens/NavScreen/NavScreen';
+import { Wallet } from './Screens/Wallet/Wallet';
+import { Sections } from './Screens/Sections/Sections';
+import { SubSections } from './Screens/SubSections/SubSections';
+import { PickLocation } from './Screens/PickLocation/PickLocation';
+import { Cart } from './Screens/Cart/Cart';
+import { ContactUs } from './Screens/ContactUs/ContactUs';
+import { Terms } from './Screens/Terms/Terms';
+import { Privacy } from './Screens/Privacy/Privacy';
 import { AppIcon, AppText } from './Screens/Common/';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,13 +35,13 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const GLOBAL = require('./Screens/Common/Globals');
 
-const screenOpotions = { headerShown: false };
+const screenOptions = { headerShown: false };
 const Stack = createStackNavigator();
 
 function AuthStack() {
 
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
@@ -52,7 +52,7 @@ function AuthStack() {
 
 function HomeStack() {
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="MyOrders" component={MyOrders} />
       <Stack.Screen name="SearchProducts" component={SearchProducts} />
@@ -72,7 +72,7 @@ function HomeStack() {
 function ProductsStack() {
 
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Sections" component={Sections} />
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="ProductDetails" component={ProductDetails}
@@ -94,7 +94,7 @@ function ProductsStack() {
 function CartStack() {
 
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="Shipping" component={Shipping} />
       <Stack.Screen name="PickLocation" component={PickLocation} />
@@ -104,7 +104,7 @@ function CartStack() {
 
 function BrandsStack() {
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Brands" component={Brands} />
     </Stack.Navigator>
   );
@@ -112,7 +112,7 @@ function BrandsStack() {
 
 function ProfileStack() {
   return (
-    <Stack.Navigator screenOptions={screenOpotions}>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
   );

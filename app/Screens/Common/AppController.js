@@ -4,7 +4,7 @@ import { AppTextInput, AppText } from './';
 import { Controller } from "react-hook-form";
 import PropTypes from 'prop-types';
 
-const AppController = (props) => {
+export const AppController = (props) => {
 
   const {
     name,
@@ -68,5 +68,3 @@ AppController.propTypes = {
     editable: PropTypes.bool
   })
 };
-
-export default AppController;

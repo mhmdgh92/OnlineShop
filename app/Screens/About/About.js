@@ -5,7 +5,7 @@ import { styles } from "./styles";
 const GLOBAL = require('../Common/Globals');
 
 
-export default function About() {
+export function About() {
 
   const {
     container

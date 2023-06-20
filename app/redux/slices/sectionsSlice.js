@@ -10,18 +10,24 @@ const initialState = {
 
 export const loadSectionsData = createAsyncThunk('loadSectionsData', async () => {
   let res = [];
-  await firestore()
-    .collection('sections')
-    .get()
-    .then(documentSnapshot => {
-
-      documentSnapshot.docs.map((item) => {
-        let newSectionItem = item.data();
-        newSectionItem.name = item.id;
-        res.push(newSectionItem);
-      })
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('sections')
+      .get()
+      .then(documentSnapshot => {
+        documentSnapshot.docs.map((item) => {
+          let newSectionItem = item.data();
+          newSectionItem.name = item.id;
+          res.push(newSectionItem);
+        })
+      }).catch(error => {
+        console.error(error);
+      });
+    return res;
+  } catch (error) {
+    console.error(error);
+    return res;
+  }
 })
 
 export const sectionsSlice = createSlice({
@@ -44,5 +50,4 @@ export const sectionsSlice = createSlice({
   }
 })
 
-export const { } = sectionsSlice.actions;
 export default sectionsSlice.reducer;

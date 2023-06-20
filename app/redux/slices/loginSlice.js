@@ -32,21 +32,29 @@ export const loginAPI = createAsyncThunk('loginAPI', async (data) => {
       });
     return res;
   } catch (error) {
-    console.log('error:' + error)
+    console.error('error:' + error);
+    return res;
   }
 })
 
 export const getUserFireStoreAPI = createAsyncThunk('getUserFireStoreAPI', async (email) => {
   let res = null;
-  await firestore()
-    .collection('users')
-    .doc(email)
-    .get()
-    .then(documentSnapshot => {
-      res = documentSnapshot.data();
-      res.email = email;
-    });
-  return res;
+  try {
+    await firestore()
+      .collection('users')
+      .doc(email)
+      .get()
+      .then(documentSnapshot => {
+        res = documentSnapshot.data();
+        res.email = email;
+      }).catch(error => {
+        console.error(error)
+      });
+    return res;
+  } catch (error) {
+    console.error(error)
+    return res;
+  }
 })
 
 export const loginSlice = createSlice({
@@ -85,5 +93,4 @@ export const loginSlice = createSlice({
   }
 })
 
-export const { } = loginSlice.actions;
 export default loginSlice.reducer;

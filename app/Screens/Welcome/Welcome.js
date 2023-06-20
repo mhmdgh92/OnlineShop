@@ -4,17 +4,22 @@ import { AppText, LogoAndName, AppImage, AppBTN, AppLoader } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from "./styles";
+import Config from "react-native-config";
 
-export default function Welcome({ navigation }) {
+export function Welcome({ navigation }) {
 
   const [loading, setLoading] = useState(true);
+
+  const {
+    LUNCHED_BEFORE
+  } = Config;
 
   useEffect(() => {
     checkLunchedBefore();
   }, []);
 
   async function checkLunchedBefore() {
-    const lunchedBefore = await AsyncStorage.getItem('lunchedBefore');
+    const lunchedBefore = await AsyncStorage.getItem(LUNCHED_BEFORE);
     if (lunchedBefore) {
       moveToNextScreen();
       return;
@@ -24,7 +29,7 @@ export default function Welcome({ navigation }) {
   }
 
   async function setLunchedBeforeTrue() {
-    await AsyncStorage.setItem('lunchedBefore', JSON.stringify(true))
+    await AsyncStorage.setItem(LUNCHED_BEFORE, JSON.stringify(true))
   }
 
   function moveToNextScreen() {
@@ -36,7 +41,7 @@ export default function Welcome({ navigation }) {
 
 
   if (loading)
-    return <AppLoader />
+  return <AppLoader />
   return (
     <View style={styles.container}>
       <View style={styles.logoAndName}><LogoAndName width={300} /></View>

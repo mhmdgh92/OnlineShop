@@ -8,7 +8,7 @@ import { searchProduct } from '../../redux/slices/productsSlice';
 import { styles } from "./styles";
 import PropTypes from 'prop-types';
 
-export default function SearchProducts({ route: { params: { searchInput = '' } } }) {
+export function SearchProducts({ route: { params: { searchInput = '' } } }) {
 
   const [dataLoaded, setDataLoaded] = useState(false);
   //Dispatch

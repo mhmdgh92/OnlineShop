@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Switch } from 'react-native';
 import PropTypes from 'prop-types';
 
-const AppToggleBTN = (props) => {
+export const AppToggleBTN = (props) => {
 
   const [isEnabled, setisEnabled] = useState(props.isEnabled ? props.isEnabled : false);
 
@@ -30,5 +30,3 @@ AppToggleBTN.propTypes = {
     toggleSwitch: PropTypes.func
   })
 };
-
-export default AppToggleBTN;

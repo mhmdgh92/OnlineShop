@@ -7,7 +7,7 @@ import { ForgetPassForm } from './Components/';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
 import { forgetPassStyle } from './styles';
 
-export default function ForgetPass({ navigation }) {
+export function ForgetPass({ navigation }) {
 
   //Refs
   const forgetFormRef = useRef(null);
@@ -27,7 +27,6 @@ export default function ForgetPass({ navigation }) {
   } = forgetPassSlice;
 
   useEffect(() => {
-    console.log(send + "," + forgetPassState)
     if (send && forgetPassState) {
       setSend(false);
       navigation.goBack();
@@ -39,7 +38,6 @@ export default function ForgetPass({ navigation }) {
   }
 
   const onSubmit = data => {
-    console.log('onSubmit')
     SendForgetPassAPI(data);
     setSend(true);
   };

@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { AppTopBar, AppFlatList, AppLoader, AppIcon, AppText } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import OrderItem from './Components/OrderItem';
+import {OrderItem} from './Components/OrderItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadOrders } from "../../redux/slices/orderSlice";
 import { styles } from "./style";
 
-export default function MyOrders() {
+export function MyOrders() {
 
   //Dispatch
   const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import { ProfileForm } from './Components/';
 import { styles } from "./styles";
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function Profile({navigation}) {
+export function Profile({navigation}) {
 
   const [onUpdateProfile, setOnUpdateProfile] = useState(false);
 

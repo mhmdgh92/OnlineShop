@@ -4,7 +4,7 @@ const GLOBAL = require('../../Common/Globals');
 const { AppImage } = require('../../Common/');
 import { wideBannerStyle } from './styles';
 
-const WideBanner = (props) => {
+export const WideBanner = (props) => {
 
   const {
     container
@@ -27,5 +27,3 @@ const WideBanner = (props) => {
     </View>
   );
 }
-
-export default WideBanner;

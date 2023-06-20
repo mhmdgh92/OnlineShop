@@ -38,4 +38,4 @@ const WalletTransfareItem = (props) => {
   );
 }
 
-export default WalletTransfareItem;
+export WalletTransfareItem;

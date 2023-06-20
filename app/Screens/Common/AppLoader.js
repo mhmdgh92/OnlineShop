@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { appLoaderStyle } from "./styles";
 
-const AppLoader = () => {
+export const AppLoader = () => {
 
   const { container } = appLoaderStyle;
 
@@ -10,5 +10,3 @@ const AppLoader = () => {
     <ActivityIndicator style={container} />
   );
 }
-
-export default AppLoader;

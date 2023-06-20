@@ -4,7 +4,7 @@ const GLOBAL = require('../../Common/Globals');
 import { normalize, heightPixel } from '../../Common/Utils/PixelNormalization';
 const { AppText } = require('../../Common/');
 
-const SaleBadge = (props) => {
+export const SaleBadge = (props) => {
 
   const { discount } = props;
 
@@ -17,5 +17,3 @@ const SaleBadge = (props) => {
     </View>
   );
 }
-
-export default SaleBadge;

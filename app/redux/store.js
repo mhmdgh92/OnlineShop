@@ -27,6 +27,4 @@ export const store = configureStore({
     order: orderSlice,
     brands: brandsSlice
   }
-})
-
-export default store;
+});

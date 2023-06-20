@@ -3,7 +3,7 @@ import { AppTopBar, AppBTN, AppText, AppIcon, AppTextInput } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { styles } from "./styles";
 
-export default function ContactUs({navigation}) {
+export function ContactUs({navigation}) {
 
   const {
     container,
@@ -11,7 +11,6 @@ export default function ContactUs({navigation}) {
   } = styles;
 
   function onSignInClick() {
-    console.log('Under development!')
     Alert.alert('Your message sent!');
     navigation.goBack();
   }

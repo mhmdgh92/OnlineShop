@@ -4,7 +4,7 @@ const { AppImage, AppText, AppQuantity } = require('../../Common/');
 import { cartItemStyle } from "./style";
 import PropTypes from 'prop-types';
 
-const CartItem = ({ item, onPlusOrMinusQuantity }) => {
+export const CartItem = ({ item, onPlusOrMinusQuantity }) => {
 
   const {
     id,
@@ -48,5 +48,3 @@ CartItem.propTypes = {
   }).isRequired,
   onPlusOrMinusQuantity: PropTypes.func.isRequired
 };
-
-export default CartItem;

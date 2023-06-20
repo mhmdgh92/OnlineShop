@@ -19,8 +19,13 @@ const initialState = {
 }
 
 export const loadUser = createAsyncThunk('loadUser', async () => {
-  let data = JSON.parse(await AsyncStorage.getItem('user'));
-  return data;
+  try {
+    let data = JSON.parse(await AsyncStorage.getItem('user'));
+    return data;
+  } catch (error) {
+    console.error(error)
+    return data;
+  }
 })
 
 export const saveUser = createAsyncThunk('saveUser', async (data) => {
@@ -29,13 +34,17 @@ export const saveUser = createAsyncThunk('saveUser', async (data) => {
     await AsyncStorage.setItem('user', JSON.stringify(data));
     return data;
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 })
 
 export const removeUser = createAsyncThunk('removeUser', async () => {
-  await AsyncStorage.removeItem('user');
-  return null;
+  try {
+    await AsyncStorage.removeItem('user');
+    return null;
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 export const userSlice = createSlice({

@@ -11,14 +11,23 @@ const initialState = {
 
 export const loadHomeData = createAsyncThunk('loadHomeData', async () => {
   let res = [];
-  await firestore()
-    .collection('home')
-    .get()
-    .then(documentSnapshot => {
-      documentSnapshot.docs.map((item) => {
-        res.push(item.data());
+
+  try {
+    await firestore()
+      .collection('home')
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.docs.length > 1)
+          documentSnapshot.docs.map((item) => {
+            res.push(item.data());
+          });
+      }).catch((error) => {
+        console.error('rejected', error)
       });
-    });
+  } catch (error) {
+    console.error('rejected', error)
+  }
+
   return res;
 })
 
@@ -36,11 +45,11 @@ export const homeSlice = createSlice({
       state.homeIsLoading = false;
       state.homeErrorMessage = '';
     }, [loadHomeData.rejected]: (state, { payload }) => {
+      console.error('Rejected!')
       state.homeIsLoading = false;
       state.homeErrorMessage = payload;
     }
   }
 })
 
-export const { } = homeSlice.actions;
 export default homeSlice.reducer;

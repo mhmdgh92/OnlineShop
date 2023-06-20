@@ -3,7 +3,7 @@ import { Picker } from '@react-native-picker/picker';
 import { appPickerStyle } from "./styles";
 import PropTypes from 'prop-types';
 
-const AppPicker = (props) => {
+export const AppPicker = (props) => {
 
   const { container } = appPickerStyle(props);
 
@@ -48,5 +48,3 @@ AppPicker.propTypes = {
     picked: PropTypes.number
   })
 };
-
-export default AppPicker;
