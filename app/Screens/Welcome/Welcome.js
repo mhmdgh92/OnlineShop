@@ -18,6 +18,7 @@ export function Welcome({ navigation }) {
     checkLunchedBefore();
   }, []);
 
+  // Function to check if the app has been launched before
   async function checkLunchedBefore() {
     const lunchedBefore = await AsyncStorage.getItem(LUNCHED_BEFORE);
     if (lunchedBefore) {
@@ -28,10 +29,12 @@ export function Welcome({ navigation }) {
     setLunchedBeforeTrue();
   }
 
+  // Function to set the app launched status to true
   async function setLunchedBeforeTrue() {
     await AsyncStorage.setItem(LUNCHED_BEFORE, JSON.stringify(true))
   }
 
+  // Function to move to the next screen
   function moveToNextScreen() {
     navigation.reset({
       index: 0,
@@ -39,9 +42,9 @@ export function Welcome({ navigation }) {
     });
   }
 
-
   if (loading)
-  return <AppLoader />
+    return <AppLoader />
+
   return (
     <View style={styles.container}>
       <View style={styles.logoAndName}><LogoAndName width={300} /></View>

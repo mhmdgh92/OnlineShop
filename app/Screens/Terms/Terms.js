@@ -2,6 +2,9 @@ import { View } from 'react-native';
 import { AppTopBar, LogoAndName, AppText } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 
+/**
+ * Component for the Terms screen.
+ */
 export function Terms() {
 
   return (

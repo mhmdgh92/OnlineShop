@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadSectionsData } from "../../redux/slices/sectionsSlice";
 import { styles } from "./style";
 
+/**
+ * Component for the Sections screen.
+ */
 export function Sections() {
 
   //Dispatch

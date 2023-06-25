@@ -4,12 +4,15 @@ import MapView from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 import Permissions from 'react-native-permissions';
-import { AppIcon, AppBTN, AppLoader, AppTopBar } from '../Common/';
+import { AppIcon, AppBTN, AppTopBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { addToOrders, removeCurrentCartOrder, reset } from "../../redux/slices/orderSlice";
 import { styles } from "./style";
 
+/**
+ * Component for Picking location screen.
+ */
 export function PickLocation({ navigation, route: { params: { shipping, cart } } }) {
 
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -151,8 +154,8 @@ export function PickLocation({ navigation, route: { params: { shipping, cart } }
     confirmBTN
   } = styles;
 
-  // if (latitude === null)//T,A
-  //   return <AppLoader />
+  if (latitude === null)
+    return <AppLoader />
   return (
     <View style={container}>
       <AppTopBar title={'Pick Delivery Location'} />

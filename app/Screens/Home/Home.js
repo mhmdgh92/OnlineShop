@@ -6,13 +6,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadHomeData } from "../../redux/slices/homeSlice";
 import { styles } from "./styles";
 
+/**
+ * Component for the home screen.
+ */
 export function Home() {
 
-  //Dispatch
+  // Dispatch
   const dispatch = useDispatch();
-  //States
+
+  // States
   const homeSlice = useSelector(state => state.home);
-  //Home Reducers
+
+  // Home Reducers
   const LoadHomeData = () => { dispatch(loadHomeData()); }
 
   const {
@@ -27,14 +32,19 @@ export function Home() {
   } = styles;
 
   useEffect(() => {
+    // Load home data
     LoadHomeData();
   }, []);
 
-  if (homeIsLoading)
-    return <AppLoader />
+  if (homeIsLoading) {
+    // Display loader while home data is loading
+    return <AppLoader />;
+  }
 
-  if (!homeState || homeState.length == 0)
-    return <AppErrorScreen />
+  if (!homeState || homeState.length == 0) {
+    // Display error screen if home data is empty or not available
+    return <AppErrorScreen />;
+  }
 
   return (
     <View style={container}>
@@ -42,6 +52,7 @@ export function Home() {
       <View style={scrollableArea}>
         <ScrollView>
           <View style={innerView}>
+            {/* Render the components with home data */}
             <BigPromo data={homeState[0].data} />
             <TwoPromos data={homeState[4].data} />
             <WideBanner data={homeState[5].data[0].image} />

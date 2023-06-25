@@ -7,6 +7,9 @@ import { removeUser, reset } from "../../redux/slices/userSlice";
 import RNRestart from 'react-native-restart';
 import { styles } from "./styles";
 
+/**
+ * Component for the Nav screen.
+ */
 export function NavScreen({ navigation }) {
 
   //Dispatch

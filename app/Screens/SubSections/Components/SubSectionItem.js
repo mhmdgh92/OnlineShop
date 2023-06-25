@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 const GLOBAL = require('../../Common/Globals');
-import { heightPixel, widthPixel, normalize } from '../../Common/Utils/PixelNormalization';
 const { AppText, AppImageBackground } = require('../../Common/');
 import * as RootNavigation from '../../../RootNav.js';
 import { subSectionItemStyle } from './styles';

@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveUser } from "../../redux/slices/userSlice";
 import { styles } from "./styles";
 
+/**
+ * Component for the Settings screen.
+ */
 export function Settings({ navigation }) {
 
   //States

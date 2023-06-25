@@ -4,6 +4,9 @@ import { AppIcon, AppText, AppTopBar, AppListItem } from '../Common/';
 const GLOBAL = require('../Common');
 import { styles } from "./styles";
 
+/**
+ * Component for the Help Center screen.
+ */
 export function HelpCenter({ navigation }) {
 
   const {

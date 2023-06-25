@@ -10,6 +10,7 @@ export const WideBanner = (props) => {
     container
   } = wideBannerStyle;
 
+  // Component to render the image item
   function ImgItem(props) {
     return (
       <AppImage source={{ uri: props }} resizeMode={'cover'} width={350} height={90} />

@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadProductsData } from "../../redux/slices/productsSlice";
 import { styles } from "./style";
 
+/**
+ * Component for the Products screen.
+ */
 export function Products({ route: { params } }) {
 
   //Dispatch

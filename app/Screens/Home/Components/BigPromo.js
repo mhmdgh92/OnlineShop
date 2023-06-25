@@ -33,8 +33,6 @@ export const BigPromo = (props) => {
     data
   } = props;
 
-  return (<View />);//T,R
-
   return (
     <View style={container}>
       <Swiper autoplay>

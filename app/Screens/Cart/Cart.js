@@ -8,6 +8,9 @@ import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 import { styles } from "./style";
 import { useFocusEffect } from '@react-navigation/native';
 
+/**
+ * Component for the Cart screen.
+ */
 export function Cart({ navigation }) {
 
   // quantity: 1,

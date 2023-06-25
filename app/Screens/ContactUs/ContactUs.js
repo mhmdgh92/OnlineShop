@@ -3,6 +3,9 @@ import { AppTopBar, AppBTN, AppText, AppIcon, AppTextInput } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { styles } from "./styles";
 
+/**
+ * Component for the ContactUs screen.
+ */
 export function ContactUs({navigation}) {
 
   const {

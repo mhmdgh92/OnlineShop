@@ -8,18 +8,24 @@ import { ProfileForm } from './Components/';
 import { styles } from "./styles";
 import { useFocusEffect } from '@react-navigation/native';
 
-export function Profile({navigation}) {
+/**
+ * Component for the user profile screen.
+ */
+export function Profile({ navigation }) {
 
   const [onUpdateProfile, setOnUpdateProfile] = useState(false);
 
-  //Dispatch
+  // Dispatch
   const dispatch = useDispatch();
-  //States
+
+  // States
   const userSlice = useSelector(state => state.user);
   const profileSlice = useSelector(state => state.profile);
-  //Profile Reducers
+
+  // Profile Reducers
   const SaveProfile = (data) => { dispatch(saveProfile(data)); }
-  //User Reducers
+
+  // User Reducers
   const SaveUser = (data) => { dispatch(saveUser(data)); }
 
   const {
@@ -57,11 +63,7 @@ export function Profile({navigation}) {
   async function saveUserNewProfile(newInfo) {
     setOnUpdateProfile(false);
     const newUserState = JSON.parse(JSON.stringify(userState));
-    const {
-      firstName,
-      lastName,
-      phone
-    } = newInfo;
+    const { firstName, lastName, phone } = newInfo;
     newUserState.firstName = firstName;
     newUserState.lastName = lastName;
     newUserState.phone = phone;
@@ -70,7 +72,7 @@ export function Profile({navigation}) {
   }
 
   if (!userState)
-    return (<View />)
+    return <View />
 
   return (
     <View>
@@ -83,5 +85,4 @@ export function Profile({navigation}) {
       </ScrollView>
     </View>
   );
-
 }

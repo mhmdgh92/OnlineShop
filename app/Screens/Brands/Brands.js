@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import { AppTopBar, AppFlatList, AppBottomBar, AppLoader } from '../Common/';
-import {BrandItem} from './Components/BrandItem';
+import { AppTopBar, AppFlatList, AppLoader } from '../Common/';
+import { BrandItem } from './Components/BrandItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadData } from "../../redux/slices/brandsSlice";
 import { styles } from "./styles";
 
+/**
+ * Component for the Brands screen.
+ */
 export function Brands() {
 
-  //Dispatch
+  // Dispatch
   const dispatch = useDispatch();
-  //States
+
+  // States
   const brandsSlice = useSelector(state => state.brands);
-  //products Reducers
+
+  // Reducers
   const LoadData = (data) => { dispatch(loadData(data)); }
 
   const {
@@ -25,17 +30,24 @@ export function Brands() {
     innerView
   } = styles;
 
+  // Load data on component mount
   useEffect(() => {
     LoadData();
   }, []);
 
+  // Display loader if brands are loading
   if (brandsIsLoading)
     return <AppLoader />
+
   return (
     <View style={container}>
       <AppTopBar title={'Brands'} />
       <View style={innerView}>
-        <AppFlatList numColumns={2} data={brandsState} renderItem={({ item }) => <BrandItem key={item.id} item={item.data} />} />
+        <AppFlatList
+          numColumns={2}
+          data={brandsState}
+          renderItem={({ item }) => <BrandItem key={item.id} item={item.data} />}
+        />
       </View>
     </View>
   );

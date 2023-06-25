@@ -4,8 +4,10 @@ import { AppText, AppTopBar } from '../Common/';
 import { useSelector } from 'react-redux';
 import { styles } from "./styles";
 const GLOBAL = require('../Common');
-import PropTypes from "prop-types";
 
+/**
+ * Component for the Wallet screen.
+ */
 export function Wallet() {
 
   //States

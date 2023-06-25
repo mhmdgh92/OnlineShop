@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "46820385686",
+    "firebase_url": "https://onlineshop-ebd9a-default-rtdb.firebaseio.com",
     "project_id": "onlineshop-ebd9a",
     "storage_bucket": "onlineshop-ebd9a.appspot.com"
   },
@@ -14,15 +15,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "46820385686-l5o1t3kuo28e2nn10gs376eo5u0j5s5h.apps.googleusercontent.com",
+          "client_id": "46820385686-iugov42anam93kf3hg2hd7mehopi9vcm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mhmdgh.onlineshop",
-            "certificate_hash": "8fc92eecdf93e6af86892e8dd3584dff765a5cc4"
+            "certificate_hash": "b2c7cc0c6e03e6d63ea9209ced61f199dd3497ed"
           }
         },
         {
-          "client_id": "46820385686-7rgiu7rve89omhmiv09pi1rtli4e1gkl.apps.googleusercontent.com",
+          "client_id": "46820385686-rlv9ko785qfrqk176ac58p44uu3lma3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mhmdgh.onlineshop",
+            "certificate_hash": "b7e4266a17857cdcff316d8c74eae34b01081cf1"
+          }
+        },
+        {
+          "client_id": "46820385686-0iun7s8in6c5emefbsmi8nlb8vj9e11p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "46820385686-7rgiu7rve89omhmiv09pi1rtli4e1gkl.apps.googleusercontent.com",
+              "client_id": "46820385686-0iun7s8in6c5emefbsmi8nlb8vj9e11p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

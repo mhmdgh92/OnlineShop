@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Alert } from 'react-native';
 import { heightPixel } from '../Common/Utils/PixelNormalization';
 import { AppTopBar, AppText, AppPicker, AppBTN, AppQuantity } from '../Common/';
@@ -8,6 +8,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from "../../redux/slices/cartSlice";
 import PropTypes from "prop-types";
 
+/**
+ * Component for the Products details screen.
+ */
 export function ProductDetails({ navigation, route: { params: { data } } }) {
 
   // quantity: 1,

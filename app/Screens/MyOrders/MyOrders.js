@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadOrders } from "../../redux/slices/orderSlice";
 import { styles } from "./style";
 
+/**
+ * Component for the My Orders screen.
+ */
 export function MyOrders() {
 
   //Dispatch

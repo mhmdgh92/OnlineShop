@@ -8,6 +8,9 @@ import { searchProduct } from '../../redux/slices/productsSlice';
 import { styles } from "./styles";
 import PropTypes from 'prop-types';
 
+/**
+ * Component for the Search products screen.
+ */
 export function SearchProducts({ route: { params: { searchInput = '' } } }) {
 
   const [dataLoaded, setDataLoaded] = useState(false);

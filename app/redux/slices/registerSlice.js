@@ -17,6 +17,7 @@ export const registerAPI = createAsyncThunk('registerAPI', async (data) => {
     email,
     password
   } = data;
+  console.log('email:' + email)
   let res = null;
   try {
     await auth()
@@ -34,17 +35,62 @@ export const registerAPI = createAsyncThunk('registerAPI', async (data) => {
   }
 })
 
+export const googleRegister = createAsyncThunk('registerAPI', async (data) => {
+  try {
+    let res = null;
+    await auth()
+      .signInWithCredential(data)
+      .then((payload) => {
+        const {
+          given_name,
+          family_name,
+          email
+        } = payload.additionalUserInfo.profile;
+        res = { email: email, firstName: given_name, lastName: family_name };
+      }).catch(error => {
+        console.error('error:' + error);
+        Alert.alert(error.code);
+      });
+    return res;
+  } catch (error) {
+    console.error('error:' + error);
+    return res;
+  }
+})
+
+export const facebookRegister = createAsyncThunk('registerAPI', async (data) => {
+  try {
+    let res = null;
+    await auth()
+      .signInWithCredential(data)
+      .then((payload) => {
+        //T,NTBD
+      }).catch(error => {
+        console.error('error:' + error);
+        Alert.alert(error.code);
+      });
+    return res;
+  } catch (error) {
+    console.error('error:' + error);
+    return res;
+  }
+})
+
 export const setUserFireStoreAPI = createAsyncThunk('setUserFireStoreAPI', async (data) => {
   let res = null;
   const {
+    firstName = '',
+    lastName = '',
     email,
-    phone
+    phone = ''
   } = data;
   try {
     await firestore()
       .collection('users')
       .doc(email)
       .set({
+        firstName: firstName,
+        lastName: lastName,
         phone: phone
       })
       .then(() => {

@@ -9,16 +9,15 @@ export const TwoPromos = (props) => {
     container
   } = twoPromosStyle;
 
-  const {
-    source
-  } = props;
-
+  // Component to render the image item
   function ImgItem(props) {
+    const { source } = props;
     return (
       <AppImage source={{ uri: source }} width={167.5} height={120} />
     );
   }
 
+  // Function to render multiple image items
   function imgs(data) {
     let returnedImgs = [];
     data.map((item) => {
@@ -35,6 +34,7 @@ export const TwoPromos = (props) => {
 
   return (
     <View style={container}>
+      {/* Render the image items */}
       {imgs(data)}
     </View>
   );

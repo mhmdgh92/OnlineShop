@@ -10,6 +10,7 @@ const initialState = {
   loginState: null,
   loginIsLoading: false,
   loginIsSuccess: false,
+
   loginGetDataSuccess: false,
   loginErrorMessage: ''
 }
@@ -37,6 +38,45 @@ export const loginAPI = createAsyncThunk('loginAPI', async (data) => {
   }
 })
 
+export const googleSignIn = createAsyncThunk('loginAPI', async (data) => {
+  console.log('googleSignIn')
+  try {
+    let res = null;
+    await auth()
+      .signInWithCredential(data)
+      .then((payload) => {
+        console.log('payload')
+        res = payload.additionalUserInfo.profile.email;
+      }).catch(error => {
+        console.error('error:' + error);
+        Alert.alert(error.code);
+      });
+      console.log('finito')
+    return res;
+  } catch (error) {
+    console.error('error:' + error);
+    return res;
+  }
+})
+
+export const facebookSignIn = createAsyncThunk('loginAPI', async (data) => {
+  try {
+    let res = null;
+    await auth()
+      .signInWithCredential(data)
+      .then((payload) => {
+        res = payload.additionalUserInfo.profile.email;
+      }).catch(error => {
+        console.error('error:' + error);
+        Alert.alert(error.code);
+      });
+    return res;
+  } catch (error) {
+    console.error('error:' + error);
+    return res;
+  }
+})
+
 export const getUserFireStoreAPI = createAsyncThunk('getUserFireStoreAPI', async (email) => {
   let res = null;
   try {
@@ -45,9 +85,15 @@ export const getUserFireStoreAPI = createAsyncThunk('getUserFireStoreAPI', async
       .doc(email)
       .get()
       .then(documentSnapshot => {
-        res = documentSnapshot.data();
-        res.email = email;
+        if (documentSnapshot.data()) {
+          res = documentSnapshot.data();
+          res.email = email;
+        } else {
+          Alert.alert('You need to create an account!')
+        }
       }).catch(error => {
+        console.log(JSON.stringify(error))
+        Alert.alert(error.code);
         console.error(error)
       });
     return res;
@@ -80,6 +126,7 @@ export const loginSlice = createSlice({
     }, [getUserFireStoreAPI.pending]: (state) => {
       state.loginIsLoading = true;
     },
+
     [getUserFireStoreAPI.fulfilled]: (state, { payload }) => {
       state.loginIsLoading = false;
       state.loginGetDataSuccess = true;

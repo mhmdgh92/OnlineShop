@@ -7,16 +7,21 @@ import { ForgetPassForm } from './Components/';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
 import { forgetPassStyle } from './styles';
 
+/**
+ * Component for the forget password screen.
+ */
 export function ForgetPass({ navigation }) {
 
-  //Refs
+  // Refs
   const forgetFormRef = useRef(null);
 
-  //Dispatch
+  // Dispatch
   const dispatch = useDispatch();
-  //States
+
+  // States
   const forgetPassSlice = useSelector(state => state.forgetPass);
-  //ForgetPass Reducers
+
+  // ForgetPass Reducers
   const SendForgetPassAPI = (data) => { dispatch(sendForgetPassAPI(data)); }
 
   const [send, setSend] = useState(false);
