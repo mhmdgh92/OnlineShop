@@ -34,19 +34,23 @@ export const sectionsSlice = createSlice({
   name: 'sections',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [loadSectionsData.pending]: (state) => {
-      state.sectionsIsLoading = true;
-    },
-    [loadSectionsData.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.sectionsState = payload;
-      state.sectionsIsLoading = false;
-      state.sectionsErrorMessage = '';
-    }, [loadSectionsData.rejected]: (state, { payload }) => {
-      state.sectionsIsLoading = false;
-      state.sectionsErrorMessage = payload;
-    }
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadSectionsData.pending, (state) => {
+        state.sectionsIsLoading = true;
+      })
+      .addCase(loadSectionsData.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.sectionsState = payload;
+        state.sectionsIsLoading = false;
+        state.sectionsErrorMessage = '';
+      })
+      .addCase(loadSectionsData.rejected, (state, { payload }) => {
+        state.sectionsIsLoading = false;
+        state.sectionsErrorMessage = payload;
+      })
   }
 })
 

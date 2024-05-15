@@ -82,48 +82,53 @@ export const orderSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState
-  }, extraReducers: {
-    //Orders Loading
-    [loadOrders.pending]: (state) => {
-      state.loadOrdersLoading = true;
-    },
-    [loadOrders.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.loadOrdersState = payload;
-      state.loadOrdersLoading = false;
-      state.loadOrdersErrorMessage = '';
-    }, [loadOrders.rejected]: (state, { payload }) => {
-      state.loadOrdersLoading = false;
-      state.loadOrdersErrorMessage = payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      //Orders Loading
+      .addCase(loadOrders.pending, (state) => {
+        state.loadOrdersLoading = true;
+      })
+      .addCase(loadOrders.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.loadOrdersState = payload;
+        state.loadOrdersLoading = false;
+        state.loadOrdersErrorMessage = '';
+      })
+      .addCase(loadOrders.rejected, (state, { payload }) => {
+        state.loadOrdersLoading = false;
+        state.loadOrdersErrorMessage = payload;
+      })
 
-    //Order Adding
-    [addToOrders.pending]: (state) => {
-      state.orderAddLoading = true;
-    },
-    [addToOrders.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.orderAddState = payload;
-      state.orderAddLoading = false;
-      state.orderAddErrorMessage = '';
-    }, [addToOrders.rejected]: (state, { payload }) => {
-      state.orderAddLoading = false;
-      state.orderAddErrorMessage = payload;
-    },
+      //Order Adding
+      .addCase(addToOrders.pending, (state) => {
+        state.orderAddLoading = true;
+      })
+      .addCase(addToOrders.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.orderAddState = payload;
+        state.orderAddLoading = false;
+        state.orderAddErrorMessage = '';
+      })
+      .addCase(addToOrders.rejected, (state, { payload }) => {
+        state.orderAddLoading = false;
+        state.orderAddErrorMessage = payload;
+      })
 
-    //Order Removing
-    [removeCurrentCartOrder.pending]: (state) => {
-      state.removeCurrentCartOrderLoading = true;
-    },
-    [removeCurrentCartOrder.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.removeCurrentCartOrderState = payload;
-      state.removeCurrentCartOrderLoading = false;
-      state.removeCurrentCartOrderErrorMessage = '';
-    }, [removeCurrentCartOrder.rejected]: (state, { payload }) => {
-      state.removeCurrentCartOrderLoading = false;
-      state.removeCurrentCartOrderErrorMessage = payload;
-    },
+      //Order Removing
+      .addCase(removeCurrentCartOrder.pending, (state) => {
+        state.removeCurrentCartOrderLoading = true;
+      })
+      .addCase(removeCurrentCartOrder.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.removeCurrentCartOrderState = payload;
+        state.removeCurrentCartOrderLoading = false;
+        state.removeCurrentCartOrderErrorMessage = '';
+      })
+      .addCase(removeCurrentCartOrder.rejected, (state, { payload }) => {
+        state.removeCurrentCartOrderLoading = false;
+        state.removeCurrentCartOrderErrorMessage = payload;
+      })
   }
 })
 

@@ -35,20 +35,24 @@ export const shippingSlice = createSlice({
   name: 'shipping',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [sendShippingInfo.pending]: (state) => {
-      state.shippingLoading = true;
-      state.shippingState = null;
-    },
-    [sendShippingInfo.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.shippingState = payload;
-      state.shippingLoading = false;
-      state.shippingErrorMessage = '';
-    }, [sendShippingInfo.rejected]: (state, { payload }) => {
-      state.shippingLoading = false;
-      state.shippingErrorMessage = payload;
-    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(sendShippingInfo.pending, (state) => {
+        state.shippingLoading = true;
+        state.shippingState = null;
+      })
+      .addCase(sendShippingInfo.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.shippingState = payload;
+        state.shippingLoading = false;
+        state.shippingErrorMessage = '';
+      })
+      .addCase(sendShippingInfo.rejected, (state, { payload }) => {
+        state.shippingLoading = false;
+        state.shippingErrorMessage = payload;
+      })
   }
 })
 

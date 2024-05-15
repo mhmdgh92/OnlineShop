@@ -27,7 +27,6 @@ export const loadHomeData = createAsyncThunk('loadHomeData', async () => {
   } catch (error) {
     console.error('rejected', error)
   }
-
   return res;
 })
 
@@ -35,20 +34,25 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [loadHomeData.pending]: (state) => {
-      state.homeIsLoading = true;
-    },
-    [loadHomeData.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.homeState = payload;
-      state.homeIsLoading = false;
-      state.homeErrorMessage = '';
-    }, [loadHomeData.rejected]: (state, { payload }) => {
-      console.error('Rejected!')
-      state.homeIsLoading = false;
-      state.homeErrorMessage = payload;
-    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadHomeData.pending, (state) => {
+        console.log('homeIsLoading');
+        state.homeIsLoading = true;
+      })
+      .addCase(loadHomeData.fulfilled, (state, { payload }) => {
+        console.log('fulfilled');
+        if (payload)
+          state.homeState = payload;
+        state.homeIsLoading = false;
+        state.homeErrorMessage = '';
+      })
+      .addCase(loadHomeData.rejected, (state, { payload }) => {
+        console.error('Rejected!')
+        state.homeIsLoading = false;
+        state.homeErrorMessage = payload;
+      })
   }
 })
 

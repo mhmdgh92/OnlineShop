@@ -51,7 +51,7 @@ export const googleSignIn = createAsyncThunk('loginAPI', async (data) => {
         console.error('error:' + error);
         Alert.alert(error.code);
       });
-      console.log('finito')
+    console.log('finito')
     return res;
   } catch (error) {
     console.error('error:' + error);
@@ -108,35 +108,32 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
   },
-  extraReducers: {
-    [loginAPI.pending]: (state) => {
-      state.loginIsLoading = true;
-    },
-    [loginAPI.fulfilled]: (state, payload) => {
-      state.loginIsLoading = false;
-      if (payload.payload) {
-        state.loginIsSuccess = true;
-        state.loginState = { "email": payload.payload };
-      }
-    },
-    [loginAPI.rejected]: (state, { payload }) => {
-      state.loginIsLoading = false;
-      state.loginIsSuccess = false;
-      state.loginErrorMessage = payload
-    }, [getUserFireStoreAPI.pending]: (state) => {
-      state.loginIsLoading = true;
-    },
-
-    [getUserFireStoreAPI.fulfilled]: (state, { payload }) => {
-      state.loginIsLoading = false;
-      state.loginGetDataSuccess = true;
-      state.loginState = payload;
-    },
-    [getUserFireStoreAPI.rejected]: (state, { payload }) => {
-      state.loginIsLoading = false;
-      state.loginGetDataSuccess = false;
-      state.loginErrorMessage = payload
-    }
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginAPI.pending, (state) => { state.loginIsLoading = true; })
+      .addCase(loginAPI.fulfilled, (state, { payload }) => {
+        state.loginIsLoading = false;
+        if (payload) {
+          state.loginIsSuccess = true;
+          state.loginState = { "email": payload };
+        }
+      })
+      .addCase(loginAPI.rejected, (state, {payload}) => {
+        state.loginIsLoading = false;
+        state.loginIsSuccess = false;
+        state.loginErrorMessage = payload
+      })
+      .addCase(getUserFireStoreAPI.pending, (state) => { state.loginIsLoading = true; })
+      .addCase(getUserFireStoreAPI.fulfilled, (state, {payload}) => {
+        state.loginIsLoading = false;
+        state.loginGetDataSuccess = true;
+        state.loginState = payload;
+      })
+      .addCase(getUserFireStoreAPI.rejected, (state, {payload}) => {
+        state.loginIsLoading = false;
+        state.loginGetDataSuccess = false;
+        state.loginErrorMessage = payload
+      })
   }
 })
 

@@ -4,7 +4,7 @@ import { AppBTN, AppController, AppText, AppCheckBox } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules, passwordRules, phoneRules } from '../../Common/Utils/inputRules/';
 const GLOBAL = require('../../Common/Globals');
-import { registerFromStyle } from "./styles";
+import { registerFormStyle } from "./styles";
 
 const RegisterForm = (props, ref) => {
 
@@ -26,7 +26,7 @@ const RegisterForm = (props, ref) => {
             <AppController keyboardType={'numeric'} iconName={'cellphone'} rules={phoneRules()} control={control} error={errors.phone} name={'phone'} placeholder={'Phone'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.password} name={'password'} placeholder={'Password'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.confirmPassword} name={'confirmPassword'} placeholder={'Confirm password'} />
-            <View style={registerFromStyle.innerView}>
+            <View style={registerFormStyle.innerView}>
                 <AppCheckBox />
                 <AppText text={"\t \t I agree to the "} color={GLOBAL.Color.darkGrey} size={12} fontFamily={'Montserrat-SemiBold'} />
                 <TouchableOpacity onPress={onPrivacyClick}><AppText text={"privacy policy"} textStyle={{ textDecorationLine: 'underline' }} color={'blue'} size={12} fontFamily={'Montserrat-SemiBold'} /></TouchableOpacity>

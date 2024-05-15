@@ -61,6 +61,7 @@ export function Login({ navigation }) {
   } = loginSlice;
 
   useEffect(() => {
+
     // Check if user is already logged in
     if (userState) {
       moveToNextScreen();

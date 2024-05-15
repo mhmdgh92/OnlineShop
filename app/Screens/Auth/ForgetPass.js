@@ -1,30 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View } from 'react-native';
-import { AppBTN, AppText, LogoAndName } from '../Common/';
+import { View, ScrollView } from 'react-native';
+import { AppText, LogoAndName, AppBTN } from '../Common';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
-import { ForgetPassForm } from './Components/';
+import { ForgetPassForm } from './Components';
 import { sendForgetPassAPI } from "../../redux/slices/forgetPassSlice";
-import { forgetPassStyle } from './styles';
+import { forgetPassStyle } from "./styles";
 
 /**
- * Component for the forget password screen.
+ * Component for user forget password.
+ * 
+ * @param {object} navigation - Navigation object for navigating between screens.
  */
 export function ForgetPass({ navigation }) {
 
   // Refs
-  const forgetFormRef = useRef(null);
+  const forgetPassFormRef = useRef(null);
+
+  // State variables
+  const [send, setSend] = useState(false);
 
   // Dispatch
   const dispatch = useDispatch();
 
-  // States
+  // Redux selectors
   const forgetPassSlice = useSelector(state => state.forgetPass);
 
-  // ForgetPass Reducers
+  // // ForgetPass Reducers
   const SendForgetPassAPI = (data) => { dispatch(sendForgetPassAPI(data)); }
-
-  const [send, setSend] = useState(false);
 
   const {
     forgetPassState,
@@ -32,14 +35,18 @@ export function ForgetPass({ navigation }) {
   } = forgetPassSlice;
 
   useEffect(() => {
+    console.log(send + ',' + forgetPassState);
     if (send && forgetPassState) {
       setSend(false);
+      console.log('here');
       navigation.goBack();
     }
+
   }, [forgetPassState, send]);
 
-  function onSendClicked() {
-    forgetFormRef.current.onSendClicked();
+
+  function onSubmitClicked() {
+    forgetPassFormRef.current.onSubmit();
   }
 
   const onSubmit = data => {
@@ -48,13 +55,14 @@ export function ForgetPass({ navigation }) {
   };
 
   return (
-    <View style={forgetPassStyle.container}>
-      <LogoAndName />
-      <AppText marginTop={20} text="Forget password" size={26} />
-      <AppText marginTop={2} text={"Enter your email to get \n an activation message"} size={14}
-        color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
-      <ForgetPassForm ref={forgetFormRef} onSubmit={onSubmit} />
-      <AppBTN onPress={onSendClicked} text={'Send'} marginTop={45} loading={forgetPassIsLoading} />
-    </View>
+    <ScrollView>
+      <View style={forgetPassStyle.container}>
+        <LogoAndName />
+        <AppText marginTop={27} text="Forget password" size={24} />
+        <AppText marginTop={3} text={"Enter your email to get \n an activation message"} size={14} color={GLOBAL.Color.darkGrey} fontFamily={'Montserrat-SemiBold'} />
+        <ForgetPassForm ref={forgetPassFormRef} onSubmit={onSubmit} />
+        <AppBTN onPress={onSubmitClicked} text={'Send'} marginTop={45} loading={forgetPassIsLoading} />
+      </View>
+    </ScrollView>
   );
 }

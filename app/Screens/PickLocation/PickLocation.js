@@ -4,7 +4,7 @@ import MapView from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import LocationServicesDialogBox from "react-native-android-location-services-dialog-box";
 import Permissions from 'react-native-permissions';
-import { AppIcon, AppBTN, AppTopBar } from '../Common/';
+import { AppLoader, AppIcon, AppBTN, AppTopBar } from '../Common/';
 const GLOBAL = require('../Common/Globals');
 import { useSelector, useDispatch } from 'react-redux';
 import { addToOrders, removeCurrentCartOrder, reset } from "../../redux/slices/orderSlice";
@@ -172,7 +172,9 @@ export function PickLocation({ navigation, route: { params: { shipping, cart } }
           longitudeDelta: 0.015,
         }}
       />
-      <AppIcon style={iconStyle} name={'map-marker'} color={GLOBAL.Color.c1} size={60} />
+      <View style={iconStyle}>
+        <AppIcon name={'map-marker'} color={GLOBAL.Color.c1} size={60} />
+      </View>
       <AppBTN loading={orderAddingLoading || removeCurrentCartOrderLoading}
         text={'Confirm Location'} style={confirmBTN} onPress={() => onContinueClicked()} />
     </View>

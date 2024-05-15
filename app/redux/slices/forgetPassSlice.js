@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import auth from '@react-native-firebase/auth';
 
+//ForgetPass
 const initialState = {
   forgetPassState: null,
   forgetPassIsLoading: false,
@@ -10,46 +11,48 @@ const initialState = {
 }
 
 export const sendForgetPassAPI = createAsyncThunk('sendForgetPassAPI', async (data) => {
-  const {
-    email
-  } = data;
   try {
     let res = null;
+    const {
+      email
+    } = data;
     await auth()
       .sendPasswordResetEmail(email)
       .then(() => {
         Alert.alert('password reset email has been sent!');
         res = true;
-      })
-      .catch(error => {
-        Alert.alert(error.toString())
+      }).catch(error => {
+        Alert.alert(error.toString());
       });
-
   } catch (error) {
-    console.error(error)
+    console.error('error:' + error);
   }
   return res;
 })
 
 export const forgetPassSlice = createSlice({
-  name: 'forgetPass',
+  name: 'user',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [sendForgetPassAPI.pending]: (state) => {
-      state.forgetPassIsLoading = true;
-      state.forgetPassState = null;
-    },
-    [sendForgetPassAPI.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.forgetPassState = payload;
-      state.forgetPassIsLoading = false;
-      state.forgetPassErrorMessage = '';
-    }, [sendForgetPassAPI.rejected]: (state, { payload }) => {
-      state.forgetPassIsLoading = false;
-      state.forgetPassErrorMessage = payload;
-      state.forgetPassState = null;
-    }
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(sendForgetPassAPI.pending, (state) => {
+        state.forgetPassIsLoading = true;
+        state.forgetPassState = null;
+      })
+      .addCase(sendForgetPassAPI.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.forgetPassState = payload;
+        state.forgetPassIsLoading = false;
+        state.forgetPassErrorMessage = '';
+      })
+      .addCase(sendForgetPassAPI.rejected, (state, { payload }) => {
+        state.forgetPassIsLoading = false;
+        state.forgetPassErrorMessage = payload;
+        state.forgetPassState = null;
+      })
   }
 })
 

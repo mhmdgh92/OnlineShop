@@ -1,15 +1,15 @@
 import React, { useImperativeHandle, forwardRef } from 'react'
 import { View } from 'react-native';
-import { AppBTN, AppController } from '../../Common';
+import { AppController } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules } from '../../Common/Utils/inputRules/';
 
-export const ForgetPassForm = (props, ref) => {
+const ForgetPassForm = (props, ref) => {
 
     const { control, getValues, handleSubmit, formState: { errors } } = useForm();
 
     useImperativeHandle(ref, () => ({
-        onSendClicked: () => {
+        onSubmit: () => {
             handleSubmit(onSubmit)()
         },
     }))
@@ -25,5 +25,4 @@ export const ForgetPassForm = (props, ref) => {
     );
 
 }
-
 export default forwardRef(ForgetPassForm);

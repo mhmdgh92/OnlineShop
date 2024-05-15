@@ -95,49 +95,51 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [addToCart.pending]: (state) => {
-      state.cartAddLoading = true;
-    },
-    [addToCart.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.cartState = payload;
-      state.cartAddLoading = false;
-      state.cartErrorMessage = '';
-    }, [addToCart.rejected]: (state, { payload }) => {
-      state.cartAddLoading = false;
-      state.cartErrorMessage = payload;
-    },
+  },
 
+  extraReducers: (builder) => {
+    builder
+      .addCase(addToCart.pending, (state) => { state.cartAddLoading = true; })
+      .addCase(addToCart.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.cartState = payload;
+        state.cartAddLoading = false;
+        state.cartErrorMessage = '';
+      })
+      .addCase(addToCart.rejected, (state, { payload }) => {
+        state.cartAddLoading = false;
+        state.cartErrorMessage = payload;
+      })
 
-    [loadCartData.pending]: (state) => {
-      state.cartIsLoading = true;
-    },
-    [loadCartData.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.cartState = payload;
-      state.cartIsLoading = false;
-      state.cartErrorMessage = '';
-    }, [loadCartData.rejected]: (state, { payload }) => {
-      state.cartIsLoading = false;
-      state.cartErrorMessage = payload;
-    },
+      .addCase(loadCartData.pending, (state) => {
+        state.cartIsLoading = true;
+      })
+      .addCase(loadCartData.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.cartState = payload;
+        state.cartIsLoading = false;
+        state.cartErrorMessage = '';
+      })
+      .addCase(loadCartData.rejected, (state, { payload }) => {
+        state.cartIsLoading = false;
+        state.cartErrorMessage = payload;
+      })
 
-
-    [updateCart.pending]: (state) => {
-      state.cartHasUpdated = null;
-      state.updateCartLoading = true;
-    },
-    [updateCart.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.cartHasUpdated = payload;
-      state.updateCartLoading = false;
-      state.cartErrorMessage = '';
-    }, [updateCart.rejected]: (state, { payload }) => {
-      state.cartHasUpdated = null;
-      state.updateCartLoading = false;
-      state.cartErrorMessage = payload;
-    }
+      .addCase(updateCart.pending, (state) => {
+        state.cartHasUpdated = null;
+        state.updateCartLoading = true;
+      })
+      .addCase(updateCart.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.cartHasUpdated = payload;
+        state.updateCartLoading = false;
+        state.cartErrorMessage = '';
+      })
+      .addCase(updateCart.rejected, (state, { payload }) => {
+        state.cartHasUpdated = null;
+        state.updateCartLoading = false;
+        state.cartErrorMessage = payload;
+      })
   }
 })
 

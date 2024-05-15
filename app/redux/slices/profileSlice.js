@@ -43,20 +43,23 @@ export const profileSlice = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [saveProfile.pending]: (state) => {
-      state.updateProfileLoading = true;
-    },
-    [saveProfile.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.profileState = payload;
-      state.updateProfileLoading = false;
-      state.profileErrorMessage = '';
-    }, [saveProfile.rejected]: (state, { payload }) => {
-      state.updateProfileLoading = false;
-      state.profileErrorMessage = payload;
-    }
+  },
 
+  extraReducers: (builder) => {
+    builder
+      .addCase(saveProfile.pending, (state) => {
+        state.updateProfileLoading = true;
+      })
+      .addCase(saveProfile.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.profileState = payload;
+        state.updateProfileLoading = false;
+        state.profileErrorMessage = '';
+      })
+      .addCase(saveProfile.rejected, (state, { payload }) => {
+        state.updateProfileLoading = false;
+        state.profileErrorMessage = payload;
+      })
   }
 })
 

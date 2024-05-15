@@ -68,34 +68,39 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-  }, extraReducers: {
-    //Load Products
-    [loadProductsData.pending]: (state) => {
-      state.productsIsLoading = true;
-    },
-    [loadProductsData.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.productsState = payload;
-      state.productsIsLoading = false;
-      state.productsErrorMessage = '';
-    }, [loadProductsData.rejected]: (state, { payload }) => {
-      state.productsIsLoading = false;
-      state.productsErrorMessage = payload;
-    },
+  },
 
-    //Search Products
-    [searchProduct.pending]: (state) => {
-      state.searchProductsIsLoading = true;
-    },
-    [searchProduct.fulfilled]: (state, { payload }) => {
-      state.searchProductsState = payload;
-      state.searchProductsIsLoading = false;
-      state.searchProductsErrorMessage = '';
-    }, [searchProduct.rejected]: (state, { payload }) => {
-      state.searchProductsIsLoading = false;
-      state.searchProductsErrorMessage = payload;
-    }
 
+  extraReducers: (builder) => {
+    builder
+      //Load Products
+      .addCase(loadProductsData.pending, (state) => {
+        state.productsIsLoading = true;
+      })
+      .addCase(loadProductsData.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.productsState = payload;
+        state.productsIsLoading = false;
+        state.productsErrorMessage = '';
+      })
+      .addCase(loadProductsData.rejected, (state, { payload }) => {
+        state.productsIsLoading = false;
+        state.productsErrorMessage = payload;
+      })
+
+      //Search Products
+      .addCase(searchProduct.pending, (state) => {
+        state.searchProductsIsLoading = true;
+      })
+      .addCase(searchProduct.fulfilled, (state, { payload }) => {
+        state.searchProductsState = payload;
+        state.searchProductsIsLoading = false;
+        state.searchProductsErrorMessage = '';
+      })
+      .addCase(searchProduct.rejected, (state, { payload }) => {
+        state.searchProductsIsLoading = false;
+        state.searchProductsErrorMessage = payload;
+      })
   }
 })
 

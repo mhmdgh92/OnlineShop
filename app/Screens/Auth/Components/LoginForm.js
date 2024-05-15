@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { AppController, AppText } from '../../Common';
 import { useForm } from "react-hook-form";
 import { emailRules, passwordRules } from '../../Common/Utils/inputRules/';
-import { loginFromStyle } from "./styles";
+import { loginFormStyle } from "./styles";
 const GLOBAL = require('../../Common/Globals');
 
 const LoginForm = (props, ref) => {
@@ -27,7 +27,7 @@ const LoginForm = (props, ref) => {
             <AppController keyboardType={'email-address'} rules={emailRules()} control={control} error={errors.email} name={'email'} placeholder={'Email'} />
             <AppController secureTextEntry iconName={'lock'} rules={passwordRules()} control={control} error={errors.password} name={'password'}
                 placeholder={'Password'} />
-            <TouchableOpacity onPress={onForgotpasswordClick} style={loginFromStyle.forgetPassBTN}><AppText text={"Forget password?"} color={GLOBAL.Color.darkGrey}
+            <TouchableOpacity onPress={onForgotpasswordClick} style={loginFormStyle.forgetPassBTN}><AppText text={"Forget password?"} color={GLOBAL.Color.darkGrey}
                 size={14} fontFamily={'Montserrat-SemiBold'} />
             </TouchableOpacity>
         </View>

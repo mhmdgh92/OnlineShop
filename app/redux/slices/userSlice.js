@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+import * as Keychain from 'react-native-keychain';
 
 //////////////////////
 // USER OBJECT
@@ -20,7 +21,10 @@ const initialState = {
 
 export const loadUser = createAsyncThunk('loadUser', async () => {
   try {
-    let data = JSON.parse(await AsyncStorage.getItem('user'));
+    let credentials = await Keychain.getGenericPassword();
+    let data = null;
+    if (credentials)
+      data = JSON.parse(credentials.username);
     return data;
   } catch (error) {
     console.error(error)
@@ -31,7 +35,8 @@ export const loadUser = createAsyncThunk('loadUser', async () => {
 export const saveUser = createAsyncThunk('saveUser', async (data) => {
   try {
     userState = data;
-    await AsyncStorage.setItem('user', JSON.stringify(data));
+    const password = uuid.v4();
+    await Keychain.setGenericPassword(JSON.stringify(data), password);
     return data;
   } catch (error) {
     console.error(error)
@@ -40,7 +45,7 @@ export const saveUser = createAsyncThunk('saveUser', async (data) => {
 
 export const removeUser = createAsyncThunk('removeUser', async () => {
   try {
-    await AsyncStorage.removeItem('user');
+    await Keychain.resetGenericPassword();
     return null;
   } catch (error) {
     console.error(error)
@@ -52,22 +57,27 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState
-  }, extraReducers: {
-    [loadUser.fulfilled]: (state, { payload }) => {
-      state.userState = payload;
-      state.userLoadedSuccess = true;
-      state.userIsLoading = false;
-    }, [loadUser.pending]: (state) => {
-      state.userIsLoading = true;
-    },
-    [saveUser.fulfilled]: (state, { payload }) => {
-      state.userSaveSuccess = true;
-      state.userState = payload;
-    },
-    [removeUser.fulfilled]: (state, { payload }) => {
-      state.userRemoveSuccess = true;
-      state.userState = payload;
-    }
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadUser.pending, (state) => {
+        state.userIsLoading = true;
+      })
+      .addCase(loadUser.fulfilled, (state, { payload }) => {
+        state.userState = payload;
+        state.userLoadedSuccess = true;
+        state.userIsLoading = false;
+      })
+
+      .addCase(saveUser.fulfilled, (state, { payload }) => {
+        state.userSaveSuccess = true;
+        state.userState = payload;
+      })
+      .addCase(removeUser.fulfilled, (state, { payload }) => {
+        state.userRemoveSuccess = true;
+        state.userState = payload;
+      })
   }
 })
 

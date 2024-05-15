@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import { AppTopBar, AppIcon, AppLoader, AppFlatList, AppText, AppBTN } from '../Common/';
 const GLOBAL = require('../Common/Globals');
-import {CartItem} from './Components/CartItem';
+import { CartItem } from './Components/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCartData, updateCart } from "../../redux/slices/cartSlice";
 import { styles } from "./style";

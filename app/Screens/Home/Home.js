@@ -52,7 +52,7 @@ export function Home() {
       <View style={scrollableArea}>
         <ScrollView>
           <View style={innerView}>
-            {/* Render the components with home data */}
+            {/* Render the components with home data //T,A*/}
             <BigPromo data={homeState[0].data} />
             <TwoPromos data={homeState[4].data} />
             <WideBanner data={homeState[5].data[0].image} />

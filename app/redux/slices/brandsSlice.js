@@ -33,19 +33,21 @@ export const brandsSlice = createSlice({
   name: 'brands',
   initialState,
   reducers: {
-  }, extraReducers: {
-    [loadData.pending]: (state) => {
-      state.brandsIsLoading = true;
-    },
-    [loadData.fulfilled]: (state, { payload }) => {
-      if (payload)
-        state.brandsState = payload;
-      state.brandsIsLoading = false;
-      state.brandsErrorMessage = '';
-    }, [loadData.rejected]: (state, { payload }) => {
-      state.brandsIsLoading = false;
-      state.brandsErrorMessage = payload;
-    }
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadData.pending, (state) => { state.brandsIsLoading = true; })
+      .addCase(loadData.fulfilled, (state, { payload }) => {
+        if (payload)
+          state.brandsState = payload;
+        state.brandsIsLoading = false;
+        state.brandsErrorMessage = '';
+      })
+      .addCase(loadData.rejected, (state, { payload }) => {
+        state.brandsIsLoading = false;
+        state.brandsErrorMessage = payload;
+      })
   }
 })
 

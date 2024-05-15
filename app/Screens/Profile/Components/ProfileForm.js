@@ -28,11 +28,11 @@ export function ProfileForm(props) {
 
     return (
         <View>
-            <AppController defaultValue={firstName} iconName={'account'}
+            <AppController defaultValue={firstName ? firstName : ''} iconName={'account'}
                 rules={[nameRules(), { required: false }]} control={control} error={errors.firstName}
                 name={'firstName'} placeholder={'First Name'} />
 
-            <AppController defaultValue={lastName} iconName={'account'}
+            <AppController defaultValue={lastName ? lastName : ''} iconName={'account'}
                 rules={[nameRules(), { required: false }]} control={control} error={errors.lastName}
                 name={'lastName'} placeholder={'Last Name'} />
 

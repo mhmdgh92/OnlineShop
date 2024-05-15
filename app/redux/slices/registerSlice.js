@@ -111,35 +111,32 @@ export const registerSlice = createSlice({
   initialState,
   reducers: {
   },
-  extraReducers: {
-    [registerAPI.pending]: (state) => {
-      state.registerIsLoading = true;
-    },
-    [registerAPI.fulfilled]: (state, { payload }) => {
-      state.registerIsLoading = false;
-      if (payload) {
-        state.registerIsSuccess = true;
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerAPI.pending, (state) => { state.registerIsLoading = true; })
+      .addCase(registerAPI.fulfilled, (state, { payload }) => {
+        state.registerIsLoading = false;
+        if (payload) {
+          state.registerIsSuccess = true;
+          state.registerState = payload;
+        }
+      })
+      .addCase(registerAPI.rejected, (state, { payload }) => {
+        state.registerIsLoading = false;
+        state.registerIsSuccess = false;
+        state.registerErrorMessage = payload
+      })
+      .addCase(setUserFireStoreAPI.pending, (state) => { state.registerIsLoading = true; })
+      .addCase(setUserFireStoreAPI.fulfilled, (state, { payload }) => {
+        state.registerIsLoading = false;
+        state.registerSetDataSuccess = true;
         state.registerState = payload;
-      }
-    },
-    [registerAPI.rejected]: (state, { payload }) => {
-      state.registerIsLoading = false;
-      state.registerIsSuccess = false;
-      state.registerErrorMessage = payload
-    },
-    [setUserFireStoreAPI.pending]: (state) => {
-      state.registerIsLoading = true;
-    },
-    [setUserFireStoreAPI.fulfilled]: (state, { payload }) => {
-      state.registerIsLoading = false;
-      state.registerSetDataSuccess = true;
-      state.registerState = payload;
-    },
-    [setUserFireStoreAPI.rejected]: (state, { payload }) => {
-      state.registerIsLoading = false;
-      state.registerSetDataSuccess = false;
-      state.registerErrorMessage = payload
-    }
+      })
+      .addCase(setUserFireStoreAPI.rejected, (state, { payload }) => {
+        state.registerIsLoading = false;
+        state.registerSetDataSuccess = false;
+        state.registerErrorMessage = payload
+      })
   }
 })
 

@@ -206,6 +206,8 @@ buck-out/
 
 # Ruby / CocoaPods
 /ios/Pods/
+
+# Other
 /vendor/bundle/
 *.properties
 android/app/build.gradle
@@ -219,3 +221,4 @@ metro.config.js
 package-lock.json
 transformer.js
 yarn.lock
+.yarn
